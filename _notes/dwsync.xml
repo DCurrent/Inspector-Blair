@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<dwsync>
+<file name="account.php" server="arftp.ad.uky.edu//ehs/" local="131343282469710123" remote="131343140400000000" Dst="2" />
+<file name="account_list.php" server="arftp.ad.uky.edu//ehs/" local="131343282470001282" remote="131343140400000000" Dst="2" />
+<file name="account_list_import.php" server="arftp.ad.uky.edu//ehs/" local="131343282470241527" remote="131343140400000000" Dst="2" />
+<file name="account_reg.php" server="arftp.ad.uky.edu//ehs/" local="131343282470507340" remote="131343140400000000" Dst="2" />
+<file name="area.php" server="arftp.ad.uky.edu//ehs/" local="131343282470833099" remote="131343140400000000" Dst="2" />
+<file name="area_list.php" server="arftp.ad.uky.edu//ehs/" local="131343282470973784" remote="131343140400000000" Dst="2" />
+<file name="index.php" server="arftp.ad.uky.edu//ehs/" local="131343282472923655" remote="131343140400000000" Dst="2" />
+<file name="inspection_autoclave.php" server="arftp.ad.uky.edu//ehs/" local="131343282473089174" remote="131343140400000000" Dst="2" />
+<file name="inspection_list.php" server="arftp.ad.uky.edu//ehs/" local="131343282473294672" remote="131343140400000000" Dst="2" />
+<file name="inspection_saa.php" server="arftp.ad.uky.edu//ehs/" local="131343282473475121" remote="131343140400000000" Dst="2" />
+<file name="inspection_saa_corrections_list.php" server="arftp.ad.uky.edu//ehs/" local="131343282473620507" remote="131343141000000000" Dst="2" />
+<file name="common_inspection.php" server="arftp.ad.uky.edu//ehs/" local="131343282472031283" remote="131343140400000000" Dst="2" />
+<file name="model_location.php" server="arftp.ad.uky.edu//ehs/" local="131316982618355548" remote="131316802200000000" Dst="1" />
+<file name="insert_party.php" server="arftp.ad.uky.edu//ehs/" local="131343282472988828" remote="131343141000000000" Dst="2" />
+<file name="inspection_common.php" server="arftp.ad.uky.edu//ehs/" local="131343282473189484" remote="131343140400000000" Dst="2" />
+<file name="model_party.php" server="arftp.ad.uky.edu//ehs/" local="131243286713339733" remote="131280230400000000" Dst="1" />
+<file name="inspection_type.php" server="arftp.ad.uky.edu//ehs/" local="131343282473690697" remote="131343140400000000" Dst="2" />
+<file name="inspection_type_list.php" server="arftp.ad.uky.edu//ehs/" local="131343282473780937" remote="131343140400000000" Dst="2" />
+<file name="biological_agent.php" server="arftp.ad.uky.edu//ehs/" local="131343282471615292" remote="131343140400000000" Dst="2" />
+<file name="biological_agent_list.php" server="arftp.ad.uky.edu//ehs/" local="131343282471725735" remote="131343140400000000" Dst="2" />
+<file name="common_version_list.php" server="arftp.ad.uky.edu//ehs/" local="131343282472256883" remote="131343140400000000" Dst="2" />
+<file name="common_entry.php" server="arftp.ad.uky.edu//ehs/" local="131343282471815714" remote="131343140400000000" Dst="2" />
+<file name="config_common_entry.php" server="arftp.ad.uky.edu//ehs/" local="131343282472347123" remote="131343140400000000" Dst="2" />
+<file name="common_entry_list.php" server="arftp.ad.uky.edu//ehs/" local="131343282471906002" remote="131343140400000000" Dst="2" />
+<file name="config_common_entry_list.php" server="arftp.ad.uky.edu//ehs/" local="131343282472442396" remote="131343140400000000" Dst="2" />
+<file name="common_list.php" server="arftp.ad.uky.edu//ehs/" local="131343282472156616" remote="131343140400000000" Dst="2" />
+<file name="config_common_entry_test.php" server="arftp.ad.uky.edu//ehs/" local="131343282472527618" remote="131343140400000000" Dst="2" />
+<file name="audit_question_list.php" server="arftp.ad.uky.edu//ehs/" local="131343282471279569" remote="131343140400000000" Dst="2" />
+<file name="audit_question.php" server="arftp.ad.uky.edu//ehs/" local="131343282471148938" remote="131343140400000000" Dst="2" />
+<file name="audit_question_old.php" server="arftp.ad.uky.edu//ehs/" local="131343282471439711" remote="131343140400000000" Dst="2" />
+</dwsync>
