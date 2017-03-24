@@ -419,6 +419,244 @@
                 <input type="text" class="form-control"  name="label" id="label" placeholder="Inspection Title" value="<?php echo $_main_data->get_label(); ?>">
             </div>
         </div>-->
+        
+        <!--Details-->
+            <div class="form-group">                    	
+                <div class="col-sm-offset-2 col-sm-10">
+                    <fieldset>
+                        <legend>Findings</legend>                                
+                        <table class="table table-striped table-hover" id="tbl_sub_finding"> 
+                            <thead>
+                                <tr>
+                                    <th></th>                                                
+                                    <th></th>                            
+                                </tr>
+                            </thead>
+                            <tfoot>
+                            </tfoot>
+                            <tbody class="tbody_finding">                        
+                                <?php                              
+                                if(is_object($_obj_data_sub_detail_list) === TRUE)
+                                {   
+                                    
+                                    //////////
+                                    // Audit item query. Since we are constructing markup as we go, 
+                                    // there's no getting around multiple executions, so we'll 
+                                    // prepare the query here with bound parameters for
+                                    // maximum speed and efficiency.
+                                    
+                                    // Bound parameters.
+                                    $query_audit_items_params			= array();
+                                    $query_audit_items_param_category 	= NULL;		
+                                    
+                                    // Set up a query object and send SQL string.
+                                    $query_audit_items = new \dc\yukon\Database();
+                                    $query_audit_items->set_sql('{call inspection_question_list_select(@category 	= ?,
+                                                                                        @inclusion	= ?)}');
+                                    
+                                    // Set up bound parameters.
+                                    $query_audit_items_params = array(array(&$query_audit_items_param_category, SQLSRV_PARAM_IN),
+                                                                    array(&$inspection_type, SQLSRV_PARAM_IN));
+                                    
+                                    // Prepare query for execution.
+                                    $query_audit_items->set_params($query_audit_items_params);
+                                    $query_audit_items->prepare();
+                                     
+                                    // Generate table row for each item in list.
+                                    for($_obj_data_sub_detail_list->rewind(); $_obj_data_sub_detail_list->valid(); $_obj_data_sub_detail_list->next())
+                                    {						
+                                        $_obj_data_sub_detail = $_obj_data_sub_detail_list->current();
+                                    
+                                        // Blank IDs will cause a database error, so make sure there is a
+                                        // usable one here.
+                                        if(!$_obj_data_sub_detail->get_id()) $_obj_data_sub_party->set_id(\dc\yukon\DEFAULTS::NEW_ID);
+                                        
+                                    ?>
+                                        <tr>
+                                            <td>
+                                                <div class="form-group">
+                                                    <label class="control-label col-sm-1" for="sub_saa_detail_category_<?php echo $_obj_data_sub_detail->get_id(); ?>" title="Category Filter: Choose an item to filter the available selections in Correction List by category."><span class="glyphicon glyphicon-filter"></span></label>
+                                                    <div class="col-sm-11">         
+                                                        <!--Aera: <?php echo $_obj_data_sub_detail->get_category(); ?>-->
+                                                                                                                
+                                                        <select
+                                                            name 		= "sub_saa_detail_category[]"
+                                                            id			= "sub_saa_detail_category_<?php echo $_obj_data_sub_detail->get_id(); ?>"
+                                                            class		= "form-control"
+                                                            onChange 	= "update_corrections(this)"><?php echo $category_list_options; ?>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            
+                                                <div class="form-group">
+                                                    <label class="control-label col-sm-1" for="sub_saa_detail_correction_<?php echo $_obj_data_sub_detail->get_id(); ?>" title="Corrective Action."><span class="glyphicon glyphicon-wrench"></span></label>
+                                                    <div class="col-sm-11"> 
+                                                        <!--Correction: <?php echo $_obj_data_sub_detail->get_correction(); ?>-->
+                                                        
+                                                        <select
+                                                            name 	= "sub_saa_detail_correction[]"
+                                                            id		= "sub_saa_detail_correction_<?php echo $_obj_data_sub_detail->get_id(); ?>"
+                                                            class	= "form-control update_source_sub_saa_detail_category_<?php echo $_obj_data_sub_detail->get_id(); ?>"
+                                                            <?php if(!$_obj_data_sub_detail->get_correction()) echo 'disabled' ?> >
+                                                            <?php
+                                                            
+                                                            // Only generate list if there is a correction to list
+                                                            //if($_obj_data_sub_detail->get_correction())
+                                                            //{	
+                                                                // Generate a list for new insert. List for existing records are generated per each
+                                                                // record loop to 'select' the current record value.
+                                                                $correction_list_options_temp = '<option value="'.\dc\yukon\DEFAULTS::NEW_ID.'">Select Item</option>';
+                                                                
+                                                                // Interate through each category. At every loop we will set our bound 
+                                                                // category parameter and execute the item query.
+                                                                for($_obj_field_source_category_list->rewind();	$_obj_field_source_category_list->valid(); $_obj_field_source_category_list->next())
+                                                                {	
+                                                                    //echo '<!-- category: '.$_obj_field_source_category->get_id().'-->';
+                                                                    $_obj_field_source_category = $_obj_field_source_category_list->current();					
+                                                                    
+                                                                    // Add current category to markup as an option group.
+                                                                    $correction_list_options_temp .= '<optgroup label="'.$_obj_field_source_category->get_label().'">';
+                                                                    
+                                                                    // Set bound parameter and execute prepared query. 
+                                                                    $query_audit_items_param_category = $_obj_field_source_category->get_id();			
+                                                                    $query_audit_items->execute();
+                                                                    
+                                                                    // Set class object we will push rows from datbase into.
+                                                                    $query_audit_items->get_line_params()->set_class_name('\data\AuditQuestion');
+                                                                    
+                                                                    // Establish linked list of objects and populate with rows assuming that 
+                                                                    // rows were returned. 
+                                                                    $_obj_data_list_saa_correction_list = new SplDoublyLinkedList();
+                                                                    if($query_audit_items->get_row_exists() === TRUE) $_obj_data_list_saa_correction_list = $query_audit_items->get_line_object_list();
+                                                                    
+                                                                    // Now loop over all items returned from our prepared query execution.
+                                                                    for($_obj_data_list_saa_correction_list->rewind();	
+                                                                        $_obj_data_list_saa_correction_list->valid(); 
+                                                                        $_obj_data_list_saa_correction_list->next())
+                                                                    {	                                                               
+                                                                        $_obj_data_list_saa_correction = $_obj_data_list_saa_correction_list->current();					
+                                                                        
+                                                                        // Now let's see if this is the one selected.
+                                                                        $sub_selected = NULL;
+                                                                        
+                                                                        if($_obj_data_sub_detail->get_correction())
+                                                                        {
+                                                                            if($_obj_data_sub_detail->get_correction() == $_obj_data_list_saa_correction->get_id())
+                                                                            {
+                                                                                $sub_selected = ' selected ';
+                                                                            }								
+                                                                        }
+                                                                        
+                                                                        // Place finding into a temporary variable for text work.
+                                                                        $correction_list_options_temp_finding = $_obj_data_list_saa_correction->get_finding();
+                                                                        
+                                                                        // Remove all HTML tags and single quotes.
+                                                                        $correction_list_options_temp_finding = strip_tags($correction_list_options_temp_finding);
+                                                                        $correction_list_options_temp_finding = htmlspecialchars($correction_list_options_temp_finding, ENT_QUOTES);					
+                                                                        
+                                                                        $correction_list_options_temp .= '<option value="'.$_obj_data_list_saa_correction->get_id().'"'.$sub_selected.'>'.$correction_list_options_temp_finding.'</option>';
+                                                                                    
+                                                                        
+                                                                    }
+                                                                    
+                                                                    // Close the option group markup for this category.
+                                                                    $correction_list_options_temp .= '</optgroup>';
+                                                                }
+                                                                
+                                                                echo $correction_list_options_temp;
+                                                            //}
+                                                        ?>
+                                                        </select>
+                                                    </div>
+                                                </div>                                                        
+                                                
+                                                <div class="form-group collapse" id="div_sub_saa_detail_details_<?php echo $_obj_data_sub_detail->get_id(); ?>">
+                                                    <label class="control-label col-sm-1" for="sub_saa_detail_details_<?php echo $_obj_data_sub_detail->get_id(); ?>" title="Comments: Add any specific comments or notes here."><span class="glyphicon glyphicon-list-alt"></span></label>
+                                                    <div class="col-sm-11">
+                                                        <textarea 
+                                                            class="form-control" 
+                                                            rows="5" 
+                                                            name="sub_saa_detail_details[]" 
+                                                            id="sub_saa_detail_details_<?php echo $_obj_data_sub_detail->get_id(); ?>"><?php echo $_obj_data_sub_detail->get_details(); ?></textarea>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="form-group" id="div_sub_saa_detail_complete_<?php echo $_obj_data_sub_detail->get_id(); ?>">
+                                                    <label class="control-label col-sm-1" for="div_sub_saa_detail_complete_<?php echo $_obj_data_sub_detail->get_id(); ?>" title="Complete: Select Yes (thumbs up) or No (thumbs down) to indicate if this particular correction has been rectified."><span class="glyphicon glyphicon-ok"></span></label>
+                                                    <div class="col-sm-11">
+                                                        <label class="radio-inline">
+                                                        <input type="radio" 
+                                                            name="div_sub_saa_detail_complete[]"
+                                                            id="div_sub_saa_detail_complete_0_<?php echo $_obj_data_sub_detail->get_id(); ?>" title="Yes." disabled><span class="glyphicon glyphicon-thumbs-up" style="color:green"></span></label>
+                                                        <label class="radio-inline"><input type="radio" 
+                                                            name="div_sub_saa_detail_complete[]"
+                                                            id="div_sub_saa_detail_complete_1_<?php echo $_obj_data_sub_detail->get_id(); ?>" title="No." disabled checked><span class="glyphicon glyphicon-thumbs-down" style="color:red"></span></label>
+                                                       
+                                                    </div>
+                                                </div>
+                                               
+                                                
+                                                
+                                            </td>
+                                                                                   
+                                            <td>													
+                                                <input 
+                                                    type	="hidden" 
+                                                    name	="sub_saa_detail_id[]" 
+                                                    id		="sub_saa_detail_id_<?php echo $_obj_data_sub_detail->get_id(); ?>" 
+                                                    value	="<?php echo $_obj_data_sub_detail->get_id(); ?>" />
+                                            </td>       
+                                            <td>
+                                                <?php
+                                                    $btn_type 	= 'btn-primary';
+                                                    $btn_title	= 'Show or hide comments.';
+                                                    
+                                                    if($_obj_data_sub_detail->get_details())
+                                                    {
+                                                        $btn_type = 'btn-warning';	
+                                                        $btn_title	= 'This row has comments. Click to show or hide.';	
+                                                    }
+                                                                                                                
+                                                ?>
+                                                
+                                                <a  class		= "btn <?php echo $btn_type; ?>  btn-sm"                                                           
+                                                    type		= "button"
+                                                    data-toggle	= "collapse" 
+                                                    title		= "<?php echo $btn_title; ?>"
+                                                    data-target	= "#div_sub_saa_detail_details_<?php echo $_obj_data_sub_detail->get_id(); ?>"><span class="glyphicon glyphicon-pencil"></span></a>
+                                                
+                                            </td>
+                                            
+                                            <td>   
+                                                <button 
+                                                    type	="button" 
+                                                    class 	="btn btn-danger btn-sm" 
+                                                    name	="sub_saa_detail_row_del" 
+                                                    id		="sub_saa_detail_row_del_<?php echo $_obj_data_sub_detail->get_id(); ?>" 
+                                                    title	="Remove this item."
+                                                    onclick="deleteRow_sub_finding(this)"><span class="glyphicon glyphicon-minus"></span></button> 
+                                                        
+                                            </td>                                            
+                                        </tr>                                    
+                                <?php
+                                    }
+                                }
+                                ?>                        
+                            </tbody>                        
+                        </table>                            
+                        
+                        <button 
+                            type	="button" 
+                            class 	="btn btn-success" 
+                            name	="row_add" 
+                            id		="row_add_detail"
+                            title	="Add new item."
+                            onclick	="insRow_finding()">
+                            <span class="glyphicon glyphicon-plus"></span></button>
+                    </fieldset>
+                </div>                        
+            </div>
+ 		<!--/Details-->
  
  <script src="../../libraries/javascript/options_update.js"></script>
  

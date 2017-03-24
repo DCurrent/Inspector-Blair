@@ -17,6 +17,6 @@
 <file name="AuditQuestionRating.class.php" server="arftp.ad.uky.edu//ehs/" local="131347865930653884" remote="131347844400000000" Dst="2" />
 <file name="AuditQuestionReference.class.php" server="arftp.ad.uky.edu//ehs/" local="131347865930679018" remote="131347844400000000" Dst="2" />
 <file name="Inspection.class.php" server="arftp.ad.uky.edu//ehs/" local="131348046842634543" remote="131347902600000000" Dst="2" />
-<file name="InspectionDetail.class.php" server="arftp.ad.uky.edu//ehs/" local="131348054203427048" remote="131347909800000000" Dst="2" />
+<file name="InspectionDetail.class.php" server="arftp.ad.uky.edu//ehs/" local="131348371642639806" remote="131348227200000000" Dst="2" />
 <file name="InspectionVisit.class.php" server="arftp.ad.uky.edu//ehs/" local="131348099530931521" remote="131347955400000000" Dst="2" />
 </dwsync>
