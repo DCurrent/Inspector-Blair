@@ -2,9 +2,89 @@
 		
 	require(__DIR__.'/source/main.php');
 	
-	const LOCAL_STORED_PROC_NAME 	= 'account'; 	// Used to call stored procedures for the main record set of this script.
-	const LOCAL_BASE_TITLE 			= 'Account';	// Title display, button labels, instruction inserts, etc.
+	class class_filter_control
+	{
+		const _DATE_FORMAT  = 'Y-m-d H:i:s'; 
+		
+		private			
+			$data_common = NULL,
+			$building	= NULL,
+			$floor		= NULL,
+			$time_obj	= NULL,
+			$time_end 	= NULL,
+			$time_start	= NULL;
+		
+		public function __construct(\dc\chronofix\Chronofix $iChronofix)
+		{
+			$this->data_common = new \data\Common();
+			$this->time_obj = $iChronofix;	
+		}
+		
+		// Accessors
+		public function get_data_common()
+		{
+			return $this->data_common;
+		}
+		
+		public function get_id()
+		{
+			return $this->data_common->get_id();
+		}
+		
+		public function get_time_end()
+		{
+			return $this->time_end;
+		}
+		
+		public function get_time_start()
+		{
+			return $this->time_start;
+		}
+		
+		// Mutators
+		public function set_time_end($value)
+		{
+			// Run time through sanitizer to 
+			// get a valid and uniform date/time.
+			$this->time_obj->set_time($value);
+			$this->time_obj->sanitize();
+			
+			// Set member.			
+			$this->time_end = $this->time_obj->get_time();
+		}
+		
+		public function set_time_start($value)
+		{	
+			// Run time through sanitizer to 
+			// get a valid and uniform date/time.
+			$this->time_obj->set_time($value);
+			$this->time_obj->sanitize();
+			
+			// Set member.			
+			$this->time_start = $this->time_obj->get_time();	
+		}
+		
+		public function populate_from_request()
+		{
+			$this->data_common->populate_from_request();
+		}
+	} 
 	
+	// Get page configuration (title, description, query names, etc.)
+	$_page_config = new \dc\application\CommonEntryConfig();	
+	$_layout = $_page_config->create_config_object();
+	
+	// Start page cache.
+	$page_obj = new \dc\cache\PageCache();
+	
+	// Main navigaiton.
+	$obj_navigation_main = new class_navigation();
+	
+	// Initialize time library with settings.
+	$iChronofix 		= new \dc\chronofix\Chronofix();
+	
+	$filter_control = new class_filter_control($iChronofix);
+	$filter_control->populate_from_request();
 	// Establish sorting object, set defaults, and then get settings
 	// from user (if any).
 	$sorting = new \dc\sorting\SortControl;
@@ -38,7 +118,7 @@
 	//$paging->set_row_max(APPLICATION_SETTINGS::PAGE_ROW_MAX);
 	$paging->set_row_max(100);	
 	
-	$query->set_sql('{call '.LOCAL_STORED_PROC_NAME.'_list(@page_current 		= ?,														 
+	$query->set_sql('{call '.$_layout->get_main_sql_name().'_list(@page_current 		= ?,														 
 										@page_rows 			= ?,
 										@sort_field			= ?,
 										@sort_order			= ?)}');	
@@ -67,7 +147,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1" />
-        <title><?php echo APPLICATION_SETTINGS::NAME. ', '.LOCAL_BASE_TITLE; ?></title>        
+        <title><?php echo APPLICATION_SETTINGS::NAME. ', '.$_layout->get_title(); ?></title>        
         
          <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
@@ -91,11 +171,22 @@
         <div id="container" class="container">            
             <?php echo $navigation_obj->get_markup_nav(); ?>                                                                                
             <div class="page-header">
-                <h1><?php echo LOCAL_BASE_TITLE; ?> List</h1>
-                <p class="lead">This form allows you to view the complete <?php echo strtolower(LOCAL_BASE_TITLE);?> list. Click on a row to view or edit details.</p>
+                <h1><?php
+					// Add page title, if any.
+					if($_layout->get_title())
+					{
+						echo $_layout->get_title();
+					}?></h1>
+                <?php
+					// Add page description, if any.
+					if($_layout->get_description())
+					{
+						//echo $_layout->get_description();
+					}?>
+                <p class="lead">This form allows you to view the complete <?php echo $_layout->get_title();?> list. Click any row to view details.</p>
             </div>
             
-            <?php
+           <?php
 				// Clickable rows. Clicking on table rows
 				// should take user to a detail page for the
 				// record in that row. To do this we first get
@@ -129,22 +220,23 @@
 				// item button.
 				if(file_exists($target_file))
 				{
-					$target_url = $target_name.'&#63;id_form='.$_layout->get_id();
+					$target_url = $target_name.'?id_form='.$_layout->get_id();
 				?>
                 	<script>
 						// Clickable table row.
 						jQuery(document).ready(function($) {
 							$(".clickable-row").click(function() {
-								window.document.location = '<?php echo $target_url; ?>?id=' + $(this).data("href");
+								window.document.location = '<?php echo $target_url; ?>&id=' + $(this).data("href");
 							});
 						});
 					</script>
                     
-                    <a href="<?php echo $target_url; ?>&amp;nav_command=<?php echo \dc\recordnav\COMMANDS::NEW_BLANK;?>&amp;id=<?php echo \dc\yukon\DEFAULTS::NEW_ID; ?>" class="btn btn-success btn-block" title="Click here to start entering a new item."><span class="glyphicon glyphicon-plus"></span> <?php echo LOCAL_BASE_TITLE; ?></a>
+                    <a href="<?php echo $target_url; ?>&amp;nav_command=<?php echo \dc\recordnav\COMMANDS::NEW_BLANK;?>&amp;id=<?php echo \dc\yukon\DEFAULTS::NEW_ID; ?>" class="btn btn-success btn-block" title="Click here to start entering a new item."><span class="glyphicon glyphicon-plus"></span> <?php echo $_layout->get_title(); ?></a>
                 <?php
 				}
 				
-			?> 
+				
+			?>
           
             <div class="table-responsive">
                 <table id="tbl_account" class="table table-striped table-hover">

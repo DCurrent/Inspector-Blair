@@ -23,9 +23,9 @@
                     //
                     // If none of these can be found, then there is no default
                     // value to be had.
-                    if($_main_data->get_building_id())
+                    if($_main_data->get_building_code())
                     {			
-                        $building_selection = $_main_data->get_building_id();
+                        $building_selection = $_main_data->get_building_code();
                     }
                     else
                     {

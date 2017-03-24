@@ -18,11 +18,7 @@
 			// --Status
 			
 			// Set up database.
-			$form_common_db_conn_set = new ConnectConfig();
-			$form_common_db_conn_set->set_name(DATABASE::NAME);
-			
-			$form_common_db = new Connect($form_common_db_conn_set);
-			$form_common_query = new \dc\yukon\Database($form_common_db);			
+			$form_common_query = new \dc\yukon\Database();			
 			
 			// --Accounts (Inspector)
 			$_obj_field_source_account_list = new \data\Account();
@@ -49,57 +45,17 @@
 			// --Event type
 			$_obj_data_list_event_type_list = new \data\Common();
 		
-			$form_common_query->set_sql('{call event_type_list_unpaged()}');
+			$form_common_query->set_sql('{call inspection_status_list()}');
 			$form_common_query->query();
 			
 			$form_common_query->get_line_params()->set_class_name('\data\Common');
 			
 			$_obj_data_list_event_type_list = new SplDoublyLinkedList();
 			if($form_common_query->get_row_exists() === TRUE) $_obj_data_list_event_type_list = $form_common_query->get_line_object_list();
-			
+				
 			?>
         
-        <!--Details-->
-        <?php 
-			$_common_details_class_add = NULL; 
-			
-			if($_main_data->get_details())
-			{
-				$_common_details_class_add = 'style="background-color:orange"';
-			}
-		?>        
         
-        <div class="form-group">
-          <div class="col-sm-12" id="details_container">
-                <div class="panel panel-default">
-                    <div class="panel-heading" <?php echo $_common_details_class_add; ?>>
-                        <h4 id="h41" class="panel-title">
-                        <a class="accordion-toggle" data-toggle="collapse" href="#collapse_module_1"><span class="glyphicon glyphicon-list-alt"></span><span class="glyphicon glyphicon-menu-down pull-right"></span></a>
-                        </h4>
-                    </div>
-                
-                <div style="" id="collapse_module_1" class="panel-collapse collapse">
-                        <div class="panel-body"> 
-                            <textarea class="form-control" rows="5" name="details" id="details"><?php echo $_main_data->get_details(); ?></textarea>                        
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        
-
-		<!-- Update log -->
-        <div class="form-group">       
-            <label class="control-label col-sm-2" for="last_update">Last Update</label>
-            <div class="col-sm-10">
-                <p class="form-control-static"> <a href = "common_log_list.php?id=<?php echo $_main_data->get_id();  ?>"
-                                                    data-toggle	= ""
-                                                    title		= "View log for this record."
-                                                     target		= "_new" 
-                    ><?php if(is_object($_main_data->get_log_update())) echo date(APPLICATION_SETTINGS::TIME_FORMAT, $_main_data->get_log_update()->getTimestamp()); ?></a></p>
-            </div>
-        </div>
         
         <!-- Location display. -->
         <?php 
@@ -225,7 +181,7 @@
                             ?>
                                 <tr>
                                     <td>     
-                                        <!--Party: <?php echo $_obj_data_sub_party->get_party(); ?>-->
+                                        <!--Party: <?php echo $_obj_data_sub_party->get_item(); ?>-->
                                                                                                 
                                         <select
                                             name 	= "sub_party_party[]"
@@ -250,9 +206,9 @@
                                                     
                                                     $sub_party_selected 	= NULL;
                                                             
-                                                    if($_obj_data_sub_party->get_party())
+                                                    if($_obj_data_sub_party->get_item())
                                                     {
-                                                        if($_obj_data_sub_party->get_party() == $sub_party_value)
+                                                        if($_obj_data_sub_party->get_item() == $sub_party_value)
                                                         {
                                                             $sub_party_selected = ' selected ';
                                                         }								
@@ -625,7 +581,11 @@
 						+'name 	= "sub_visit_by[]" '
 						+'id	= "sub_visit_by_'+$temp_id_visit+'" '
 						+'class	= "form-control">'							
-						<?php																
+						<?php							
+						
+						// Set up account info.
+						$access_obj = new \dc\access\status();
+											
 						if(is_object($_obj_field_source_account_list) === TRUE)
 						{        
 							// Generate table row for each item in list.

@@ -35,7 +35,7 @@
 		// Skip navigation data and get primary data record set.	
 		$database->get_next_result();
 		
-		$database->get_line_params()->set_class_name('\data\ConfigCommonEntry');	
+		$database->get_line_params()->set_class_name('\dc\application\CommonEntry');	
 		
 		if($database->get_row_exists() === TRUE) 
 		{
