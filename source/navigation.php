@@ -87,8 +87,6 @@
                                 <a class="dropdown-toggle <?php echo $class_add; ?>" data-toggle="dropdown" href="#">System<span class="caret"></span></a>
                                 <ul class="dropdown-menu">
                                 	<li class="dropdown-header">Administration</li>
-                                    	<li><a class="disabled"  href="#"><?php echo NAV_INDENT; ?>1984</a></li>
-                                    	<li><a class="disabled"  href="#"><?php echo NAV_INDENT; ?>Access</a></li> 
                                         <li><a href="<?php echo $this->directory_prime; ?>/config_common_entry_list.php"><?php echo NAV_INDENT; ?>Common Entry Forms</a></li>
                                     	<li><a href="<?php echo $this->directory_prime; ?>?id_form=1256&amp;list=1"><?php echo NAV_INDENT; ?>Accounts</a></li>
                                     	<li><a href="<?php echo $this->directory_prime; ?>?id_form=1182&amp;list=1"><?php echo NAV_INDENT; ?>Account Roles</a></li>
