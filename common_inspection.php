@@ -875,7 +875,132 @@
 		
 		);
 		
-		$temp_id_visit--;
+		$temp_id_visit--;		
+		
 	}
+	
+	var $temp_finding = 0;
+            
+            function deleteRow_sub_finding(row)
+            {
+                var i=row.parentNode.parentNode.rowIndex;
+                document.getElementById('tbl_sub_finding').deleteRow(i);
+            }
+            
+            function insRow_finding()
+            {                
+                $('.tbody_finding').append(
+                    '<tr>'
+                        +'<td>'
+                            +'<div class="form-group">'
+                                +'<label class="control-label col-sm-1" for="sub_saa_detail_category_'+$temp_finding+'" title="Category Filter: Choose an item to filter the available selections in Correction List by category."><span class="glyphicon glyphicon-filter"></span></label> '
+                                +'<div class="col-sm-11">'
+                                                                                            
+                                    +'<select '
+                                        +'name 		= "sub_saa_detail_category[]" '
+                                        +'id		= "sub_saa_detail_category_'+$temp_finding+'" '
+                                        +'class		= "form-control" '
+                                        +'onChange 	= "update_corrections(this)"> '
+                                        +'<?php echo $category_list_options; ?> '
+                                    +'</select>'
+                                +'</div>'
+                            +'</div>'
+                        
+                            +'<div class="form-group"> '
+                                +'<label class="control-label col-sm-1" for="sub_saa_detail_correction_'+$temp_finding+'" title="Correction: Choose the nessesary correction here."><span class="glyphicon glyphicon-wrench"></span></label> '
+                                +'<div class="col-sm-11">'								
+                                    
+                                    +'<select '
+                                        +'name 	= "sub_saa_detail_correction[]" '
+                                        +'id	= "sub_saa_detail_correction_'+$temp_finding+'" '
+                                        +'class	= "form-control update_source_sub_saa_detail_category_'+$temp_finding+'"> '                                        
+                                        +'<?php echo $correction_list_options; ?>'                                        
+                                    +'</select>'
+                                +'</div>'
+                            +'</div>'                                                        
+                            
+                            +'<div class="form-group collapse" id="div_sub_saa_detail_details_'+$temp_finding+'">'
+                                +'<label class="control-label col-sm-1" for="sub_saa_detail_details_'+$temp_finding+'" title="Comments: Add any specific comments or notes here."><span class="glyphicon glyphicon-list-alt"></span></label> '
+                                +'<div class="col-sm-11">'
+                                    +'<textarea ' 
+                                        +'class	= "form-control" ' 
+                                        +'rows 	= "5" ' 
+                                        +'name	= "sub_saa_detail_details[]" ' 
+                                        +'id	= "sub_saa_detail_details_'+$temp_finding+'"></textarea>'
+                                +'</div>'
+                            +'</div>'
+							
+							+'<div class="form-group"> '
+								+'<label class="control-label col-sm-1" for="div_sub_saa_detail_complete_'+$temp_finding+'" title="Complete: Select Yes (thumbs up) or No (thumbs down) to indicate if this particular correction has been rectified."><span class="glyphicon glyphicon-ok"></span></label> '
+								+'<div class="col-sm-11">'									
+									+'<label class="radio-inline">'
+									+'<input type="radio" ' 
+										+'name="div_sub_saa_detail_complete[]" '
+										+'id="div_sub_saa_detail_complete_0_'+$temp_finding+'" title="Yes." disabled><span class="glyphicon glyphicon-thumbs-up" style="color:green"></span></label>'
+									+'<label class="radio-inline"><input type="radio" ' 
+										+'name="div_sub_saa_detail_complete[]" '
+										+'id="div_sub_saa_detail_complete_1_'+$temp_finding+'" title="No." disabled checked><span class="glyphicon glyphicon-thumbs-down" style="color:red"></span></label>'
+								   
+								+'</div>'
+                            +'</div>'
+                        +'</td>'
+                                                               
+                        +'<td>'													
+                            +'<input ' 
+                                +'type	= "hidden" ' 
+                                +'name	= "sub_saa_detail_id[]" ' 
+                                +'id	= "sub_saa_detail_id_'+$temp_finding+'" ' 
+                                +'value	= "<?php echo \dc\yukon\DEFAULTS::NEW_ID; ?>" '
+                        +'</td>'
+                        +'<td>'
+                            +'<a class		= "btn btn-primary btn-sm" '                                                           
+                            +'type			= "button" '
+                            +'data-toggle	= "collapse" ' 
+                            +'title			= "Show or hide comments." '
+                            +'data-target	= "#div_sub_saa_detail_details_'+$temp_finding+'"><span class="glyphicon glyphicon-pencil"></span></a>'
+                        +'</td>'
+                        +'<td>'
+                            +'<button ' 
+                                +'type	= "button" ' 
+                                +'class = "btn btn-danger btn-sm" ' 
+                                +'name	= "sub_saa_detail_row_del" ' 
+                                +'id	= "sub_saa_detail_row_del_'+$temp_finding+'" ' 
+                                +'onclick = "deleteRow_sub_finding(this)"><span class="glyphicon glyphicon-minus"></span></button>'       
+                        +'</td>'
+                    +'</tr>'			
+                );
+                
+                tinymce.init({
+                selector: '#sub_saa_detail_details_'+$temp_finding,
+                plugins: [
+                    "advlist autolink lists link image charmap print preview anchor",
+                    "searchreplace visualblocks code fullscreen",
+                    "insertdatetime media table contextmenu paste"
+                ],
+                toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"});
+        
+                
+                $temp_finding--;
+            }
+            
+            // Update correction list items based on category selection.
+            function update_corrections($val)
+            {
+                var $update_select_id = ".update_source_" + $($val).attr('id');	
+				var $category = null;
+		
+				           
+                // Get element by css seelctor - this returns a list.
+                var $target = document.querySelectorAll($update_select_id);
+        
+                // Iterate list and update al elements (In most cases, there will
+                // only be one).
+                for (var i = 0; i < $($target).length; i++) 
+                {
+                    $($target).attr('disabled', false);
+                    
+					$($target).load('<?php echo APPLICATION_SETTINGS::DIRECTORY_PRIME; ?>/inspection_saa_corrections_list.php?category=' + $($val).val() + '&inclusion=<?php echo $inspection_type; ?>');
+                }			
+            }
 </script>
 <!--/Include: <?php echo __FILE__; ?>-->
