@@ -152,9 +152,11 @@
 	
 	// Set up primary query with parameters and arguments.
 	$query->set_sql('{call '.$_layout->get_main_sql_name().'(@param_filter_id = ?,
-									@param_filter_id_key = ?)}');
+									@param_filter_id_key = ?,
+									@param_filter_type = ?)}');
 	$params = array(array($_main_data->get_id(), 		SQLSRV_PARAM_IN),
-					array($_main_data->get_id_key(), 	SQLSRV_PARAM_IN));
+					array($_main_data->get_id_key(), 	SQLSRV_PARAM_IN),
+					array($_layout->get_id(), 			SQLSRV_PARAM_IN));
 
 	// Apply arguments and execute query.
 	$query->set_params($params);
@@ -193,6 +195,14 @@
 	
 	$_obj_data_sub_detail_list = new SplDoublyLinkedList();
 	if($query->get_row_exists()) $_obj_data_sub_detail_list = $query->get_line_object_list();
+	
+	// Sub - Area
+	$query->get_next_result();
+	
+	$query->get_line_params()->set_class_name('\data\Area');
+	
+	$_obj_data_sub_area_list = new \data\area();
+	if($query->get_row_exists()) $_obj_data_sub_area_list = $query->get_line_object();
 	
 	
 	// Item lists....

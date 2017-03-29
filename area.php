@@ -345,9 +345,9 @@
                     <div class="col-sm-10">
                         <?php 
 							// Not a new GUID? Then echo the data.
-							if($_main_data->get_building_id())
+							if($_main_data->get_building_code())
 							{
-								echo $_main_data->get_building_id().' - '.$_main_data->get_building_name(); 
+								echo $_main_data->get_building_code().' - '.$_main_data->get_building_name(); 
 							}
 						?>
                     </div>
@@ -365,9 +365,9 @@
                     <div class="col-sm-10">
                     	<?php 
 							// Not a new GUID? Then echo the data.
-							if($_main_data->get_room_id())
+							if($_main_data->get_room_code())
 							{
-								echo trim($_main_data->get_room_id()).' - '.$_main_data->get_use_description_short(); 
+								echo trim($_main_data->get_room_code()).' - '.$_main_data->get_use_description_short(); 
 							}
 						?>
                     </div>

@@ -62,72 +62,149 @@
         
             $building_code_display = NULL;
             
-            if($_main_data->get_building_code())
+            if($_obj_data_sub_area_list->get_building_code())
             {
-                $building_code_display = trim($_main_data->get_room_id()).', '. $_main_data->get_building_code().' - '.$_main_data->get_building_name(); 
+                $building_code_display = trim($_obj_data_sub_area_list->get_building_code()).' - '.$_obj_data_sub_area_list->get_building_name(); 
             }
         
         ?>        
         
         <div class="form-group">
             <label class="control-label col-sm-2" for="building">Location</label>
-            <div class="col-sm-10">
-                <p class="form-control-static"><a href = "area.php?id=<?php echo $_main_data->get_room_code();  ?>"
-                    
-                    data-toggle	= ""
-                    title		= "View location detail."
-                    target		= "_new" 
-                    ><?php echo trim($building_code_display); ?></a></p>          
-            </div>
-        </div>
-        
-        <div class="form-group">  
-        	<div class="col-sm-2">
-            </div>          
             	<div class="col-sm-10">
-                    <table class="table table-striped table-hover">
-                        <!--caption>Location Details</caption-->
-                        <thead>
-                        </thead>
-                        <tfoot>
-                        </tfoot>
-                        <tbody id="tbody_room_data" class="">
-                            <tr>
-                                <td>Biosafety Level</td>
-                                <td>In Progress</td>
-                            </tr>
-                            
-                            <tr>
-                                <th>Chemical Lab Class</th>
-                                <td>In Progress</td>
-                            </tr>
-                            
-                            <tr>
-                                <th>Chemical Operations Class</th>
-                                <td>In Progress</td>
-                            </tr>
-                            
-                            <tr>
-                                <th>Department</th>
-                                <td>In Progress</td>
-                            </tr>
-                            
-                            <tr>
-                                <th>Hazardous Waste</th>
-                                <td>In Progress</td>
-                            </tr>
-                            
-                            <tr>
-                                <th>Radiation Usage </th>
-                                <td>In Progress</td>
-                            </tr>
-                            <tr>
-                                <th>X-ray Usage </th>
-                                <td>In Progress</td>
-                            </tr>
-                            
-                        </tbody>
-                    </table>
+            		<?php 
+						if($_obj_data_sub_area_list->get_room_code())
+						{
+					?>
+                            <table class="table table-striped table-condensed">
+                                <caption><a href = "area.php?id=<?php echo $_obj_data_sub_area_list->get_room_code();  ?>"
+                                        data-toggle	= ""
+                                        title		= "View location detail."
+                                        target		= "_new" 
+                                        ><?php echo trim($building_code_display); ?></a></caption>
+                                <thead>
+                                </thead>
+                                <tfoot>
+                                </tfoot>
+                                <tbody id="tbody_room_data" class="">
+                                    <tr>
+                                        <td>Biosafety Level</td>
+                                        <td><?php 
+                                            if($_obj_data_sub_area_list->get_biosafety_level())  
+                                            {									
+                                                echo $_obj_data_sub_area_list->get_biosafety_level();									
+                                            }
+                                            else
+                                            {	
+                                            ?>
+                                                <span class="glyphicon glyphicon-remove alert-info"></span>
+                                            <?php
+                                            }
+                                            ?></td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>Chemical Lab Class</td>
+                                        <td><?php 
+                                            if($_obj_data_sub_area_list->get_chemical_lab_class())  
+                                            {									
+                                                echo $_obj_data_sub_area_list->get_chemical_lab_class();									
+                                            }
+                                            else
+                                            {	
+                                            ?>
+                                                <span class="glyphicon glyphicon-remove alert-info"></span>
+                                            <?php
+                                            }
+                                            ?>                                    					
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>Chemical Operations Class</td>
+                                        <td><?php 
+                                            if($_obj_data_sub_area_list->get_chemical_operations_class())  
+                                            {									
+                                                echo $_obj_data_sub_area_list->get_chemical_operations_class();									
+                                            }
+                                            else
+                                            {	
+                                            ?>
+                                                <span class="glyphicon glyphicon-remove alert-info"></span>
+                                            <?php
+                                            }
+                                            ?></td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>Department</td>
+                                        <td><?php echo $_obj_data_sub_area_list->get_department();  ?></td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>Hazardous Waste</td>
+                                        <td><?php 
+                                            if($_obj_data_sub_area_list->get_hazardous_waste_generated())  
+                                            {
+                                            ?>									
+                                                <span class="glyphicon glyphicon-ok alert-warning"></span>									
+                                            <?php
+                                            }
+                                            else
+                                            {	
+                                            ?>
+                                                <span class="glyphicon glyphicon-remove alert-info"></span>
+                                            <?php
+                                            }
+                                            ?></td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>Radiation Usage</td>
+                                        <td><?php 
+                                            if($_obj_data_sub_area_list->get_radiation_usage())  
+                                            {
+                                            ?>									
+                                                <span class="glyphicon glyphicon-ok alert-warning"></span>									
+                                            <?php
+                                            }
+                                            else
+                                            {	
+                                            ?>
+                                                <span class="glyphicon glyphicon-remove alert-info"></span>
+                                            <?php
+                                            }
+                                            ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td>X-ray Usage</td>
+                                        <td><?php 
+                                            if($_obj_data_sub_area_list->get_x_ray_usage())  
+                                            {
+                                            ?>									
+                                                <span class="glyphicon glyphicon-ok alert-warning"></span>									
+                                            <?php
+                                            }
+                                            else
+                                            {	
+                                            ?>
+                                                <span class="glyphicon glyphicon-remove alert-info"></span>
+                                            <?php
+                                            }
+                                            ?></td>
+                                    </tr>
+                                    
+                                </tbody>
+                            </table>
+                	<?php
+						}
+						else
+						{
+					?>
+                    		<span class="alert-info">Enter Room Code and save record to display location information.</span>
+                    <?php
+						}
+					?>
                 </div>
             </div>
         
@@ -135,7 +212,7 @@
         <div class="form-group">
             <label class="control-label col-sm-2" for="room_code">Room Code</label>
             <div class="col-sm-9">
-                <input type="text" class="form-control"  name="room_code" id="room_code" placeholder="Room code" value="<?php echo $_main_data->get_room_code(); ?>">
+                <input type="text" class="form-control"  name="room_code" id="room_code" placeholder="Room code" value="<?php echo $_obj_data_sub_area_list->get_room_code(); ?>">
             </div>
             
             <div class="col-sm-1">

@@ -23,9 +23,9 @@
                     //
                     // If none of these can be found, then there is no default
                     // value to be had.
-                    if($_main_data->get_building_code())
+                    if($_obj_data_sub_area_list->get_building_code())
                     {			
-                        $building_selection = $_main_data->get_building_code();
+                        $building_selection = $_obj_data_sub_area_list->get_building_code();
                     }
                     else
                     {
@@ -75,7 +75,7 @@
                         <div class="col-sm-10">
                             <select name="area" 
                                 id="area" 
-                                data-current="<?php echo $_main_data->get_room_code(); ?>" 
+                                data-current="<?php echo $_obj_data_sub_area_list->get_room_code(); ?>" 
                                 
                                 data-source-url="../../libraries/inserts/room.php" 
                                 data-grouped="1" 

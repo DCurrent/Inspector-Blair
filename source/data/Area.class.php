@@ -5,11 +5,12 @@
 	interface iArea
 	{
 		// Accessors. 
-		function get_building_id();
+		function get_building_code();
 		function get_building_name();
 		function get_code();
+		function get_department();
 		function get_floor();
-		function get_room_id();
+		function get_room_code();
 		function get_use_code();
 		function get_use_definition();
 		function get_use_description_short();
@@ -25,11 +26,12 @@
 		function get_hazardous_waste_generated();
 		
 		// Mutators
-		function set_building_id($value);
+		function set_building_code($value);
 		function set_building_name($value);
 		function set_code($value);
+		function set_department($value);
 		function set_floor($value);
-		function set_room_id($value);
+		function set_room_code($value);
 		function set_use_code($value);
 		function set_use_definition($value);
 		function set_use_description_short($value);
@@ -50,7 +52,7 @@
 		protected			
 			$biosafety_level		= NULL,
 			$bio_agent				= NULL,
-			$building_id			= NULL,
+			$building_code			= NULL,
 			$building_name			= NULL,
 			$chemical_lab_class		= NULL,
 			$chemical_operations_class = NULL,
@@ -61,7 +63,7 @@
 			$hazardous_waste_generated		= NULL,
 			$laser_usage			= NULL,
 			$nfpa45_lab_unit		= NULL,
-			$room_id				= NULL,
+			$room_code				= NULL,
 			$radiation_usage		= NULL,						
 			$use_code				= NULL,
 			$use_definition			= NULL,
@@ -71,9 +73,9 @@
 			
 		// Accessors
 		public 
-			function get_building_id()
+			function get_building_code()
 			{
-				return $this->building_id;
+				return $this->building_code;
 			}
 			
 			function get_building_name()
@@ -86,14 +88,19 @@
 				return $this->code;
 			}
 			
+			function get_department()
+			{
+				return $this->department;
+			}
+			
 			function get_floor()
 			{
 				return $this->floor;
 			}
 			
-			function get_room_id()
+			function get_room_code()
 			{
-				return $this->room_id;
+				return $this->room_code;
 			}
 			
 			function get_use_code()
@@ -158,9 +165,9 @@
 		
 		// Mutators
 		public 
-			function set_building_id($value)
+			function set_building_code($value)
 			{
-				$this->building_id = $value;
+				$this->building_code = $value;
 			}
 			
 			function set_building_name($value)
@@ -173,14 +180,19 @@
 				$this->code = $value;
 			}
 			
+			function set_department($value)
+			{
+				$this->department = $value;
+			}
+			
 			function set_floor($value)
 			{
 				$this->floor = $value;
 			}
 			
-			function set_room_id($value)
+			function set_room_code($value)
 			{
-				$this->room_id = $value;
+				$this->room_code = $value;
 			}
 			
 			function set_use_code($value)

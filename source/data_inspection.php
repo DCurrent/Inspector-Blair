@@ -5,7 +5,7 @@
 	class class_common_inspection_data extends Common
 	{	
 		protected
-			$room_id			= NULL,
+			$room_code			= NULL,
 			$room_code			= NULL,
 			$building_code		= NULL,
 			$building_name		= NULL,
@@ -15,9 +15,9 @@
 			$inspection_type_label = NULL,
 			$radiation_usage	= NULL;
 		
-		public function get_room_id()
+		public function get_room_code()
 		{
-			return $this->room_id;
+			return $this->room_code;
 		}
 		
 		public function get_room_code()

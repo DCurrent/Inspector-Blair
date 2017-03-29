@@ -5,7 +5,7 @@
 	// Temp variable for text work.
 	$correction_list_options_temp_finding = NULL;
 
-	class local_class_saa_corrections_params extends Common
+	class local_class_saa_corrections_params extends \data\Common
 	{
 		private 
 			$category 	= NULL,
@@ -39,12 +39,8 @@
 		}
 	}
 
-	// Set up database.
-	$db_conn_set = new ConnectConfig();
-	$db_conn_set->set_name(DATABASE::NAME);
-	
-	$db = new Connect($db_conn_set);
-	$query = new \dc\yukon\Database($db);
+	// Set up database.	
+	$query = new \dc\yukon\Database();
 	
 	// Open local parameters collection object.
 	$_obj_params = new local_class_saa_corrections_params();

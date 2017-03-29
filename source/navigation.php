@@ -97,7 +97,8 @@
                                     	<li><a href="<?php echo $this->directory_prime; ?>?id_form=1185&amp;list=1"><?php echo NAV_INDENT; ?>Area Types</a></li>
                                         <li><a href="<?php echo $this->directory_prime; ?>?id_form=1169&amp;list=1"><?php echo NAV_INDENT; ?>Biosafety Levels</a></li>
                                         <li><a href="<?php echo $this->directory_prime; ?>?id_form=1170&amp;list=1"><?php echo NAV_INDENT; ?>Chemical Lab Classes</a></li>
-                                        <li><a href="<?php echo $this->directory_prime; ?>?id_form=1171&amp;list=1"><?php echo NAV_INDENT; ?>Chemical Operations Classes</a></li>
+                                        <li><a href="<?php echo $this->directory_prime; ?>?id_form=1171&amp;list=1"><?php echo NAV_INDENT; ?>Chemical Operations Classes</a></li>	
+                                        <li><a href="<?php echo $this->directory_prime; ?>?id_form=1608&amp;list=1"><?php echo NAV_INDENT; ?>NFPA 45 Lab Unit Hazard Classification</a></li>
                                     <li class="divider"></li>
                                     <li class="dropdown-header">Findings</li>                                    
                                     	<li><a href="<?php echo $this->directory_prime; ?>/?id_form=1548&amp;list=1"><?php echo NAV_INDENT; ?>Categories</a></li>

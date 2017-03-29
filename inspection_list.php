@@ -411,20 +411,20 @@
                                                     {	                                                               
                                                         $_obj_field_source_building = $_obj_field_source_building_list->current();
                                                         
-                                                        $sub_building_id 		= $_obj_field_source_building->get_building_id();																
+                                                        $sub_building_code 		= $_obj_field_source_building->get_building_code();																
                                                         $sub_building_name		= $_obj_field_source_building->get_building_name();
                                                         $sub_building_selected 	= NULL;
                                                                 
                                                         if($filter->get_building())
                                                         {
-                                                            if($filter->get_building() == $sub_building_id)
+                                                            if($filter->get_building() == $sub_building_code)
                                                             {
                                                                 $sub_building_selected = ' selected ';
                                                             }								
                                                         }
                                                         
                                                         ?>
-                                                        <option value="<?php echo $sub_building_id; ?>" <?php echo $sub_building_selected; ?>><?php echo $sub_building_id .' - '.$sub_building_name; ?></option>
+                                                        <option value="<?php echo $sub_building_code; ?>" <?php echo $sub_building_selected; ?>><?php echo $sub_building_code .' - '.$sub_building_name; ?></option>
                                                         <?php                                
                                                     }
                                                 }
@@ -593,7 +593,7 @@
                             ?>
                                         <tr class="clickable-row" role="button" data-href="<?php echo $detail_url; ?>">
                                             <td><?php echo $_obj_data_main->get_building_name(); ?></td>
-                                            <td><?php echo $_obj_data_main->get_room_id(); ?></td>                                            
+                                            <td><?php echo $_obj_data_main->get_room_code(); ?></td>                                            
                                             <td><?php echo $_obj_data_main->get_status_label(); ?></td>
                                             <td><?php echo $_obj_data_main->get_inspection_type_label(); ?></td>
                                             

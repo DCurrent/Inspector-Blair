@@ -134,7 +134,7 @@
 										@param_sort_order	= ?,
 										@param_date_start	= ?,
 										@param_date_end		= ?,
-										@param_building_id	= ?,
+										@param_building_code	= ?,
 										@param_floor		= ?)}');	
 	
 	$params = array(array($paging->get_page_current(), 			SQLSRV_PARAM_IN), 
@@ -280,20 +280,20 @@
                                                     {	                                                               
                                                         $_obj_field_source_building = $_obj_field_source_building_list->current();
                                                         
-                                                        $sub_building_id 		= $_obj_field_source_building->get_building_id();																
+                                                        $sub_building_code 		= $_obj_field_source_building->get_building_code();																
                                                         $sub_building_name		= $_obj_field_source_building->get_building_name();
                                                         $sub_building_selected 	= NULL;
                                                                 
                                                         if($filter_control->get_building())
                                                         {
-                                                            if($filter_control->get_building() == $sub_building_id)
+                                                            if($filter_control->get_building() == $sub_building_code)
                                                             {
                                                                 $sub_building_selected = ' selected ';
                                                             }								
                                                         }
                                                         
                                                         ?>
-                                                        <option value="<?php echo $sub_building_id; ?>" <?php echo $sub_building_selected; ?>><?php echo $sub_building_id .' - '.$sub_building_name; ?></option>
+                                                        <option value="<?php echo $sub_building_code; ?>" <?php echo $sub_building_selected; ?>><?php echo $sub_building_code .' - '.$sub_building_name; ?></option>
                                                         <?php                                
                                                     }
                                                 
@@ -442,7 +442,7 @@
                                             <td><?php if(is_object($_obj_data_main->get_create_time()) === TRUE) echo date(APPLICATION_SETTINGS::TIME_FORMAT, $_obj_data_main->get_create_time()->getTimestamp()); ?></td>
                                             <td><?php echo $_obj_data_main->get_building_name(); ?></td>
                                             <td><?php echo $_obj_data_main->get_floor(); ?></td>
-                                            <td><?php echo $_obj_data_main->get_room_id(); ?></td>
+                                            <td><?php echo $_obj_data_main->get_room_code(); ?></td>
                                         </tr>                                    
                             <?php								
                             	}
