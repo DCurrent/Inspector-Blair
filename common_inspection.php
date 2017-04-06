@@ -546,19 +546,19 @@
                                     
                                         // Blank IDs will cause a database error, so make sure there is a
                                         // usable one here.
-                                        if(!$_obj_data_sub_detail->get_id()) $_obj_data_sub_party->set_id(\dc\yukon\DEFAULTS::NEW_ID);
+                                        if(!$_obj_data_sub_detail->get_id_key()) $_obj_data_sub_party->set_id(\dc\yukon\DEFAULTS::NEW_ID);
                                         
                                     ?>
                                         <tr>
                                             <td>
                                                 <div class="form-group">
-                                                    <label class="control-label col-sm-1" for="sub_saa_detail_category_<?php echo $_obj_data_sub_detail->get_id(); ?>" title="Category Filter: Choose an item to filter the available selections in Correction List by category."><span class="glyphicon glyphicon-filter"></span></label>
+                                                    <label class="control-label col-sm-1" for="sub_saa_detail_category_<?php echo $_obj_data_sub_detail->get_id_key(); ?>" title="Category Filter: Choose an item to filter the available selections in Correction List by category."><span class="glyphicon glyphicon-filter"></span></label>
                                                     <div class="col-sm-11">         
                                                         <!--Aera: <?php echo $_obj_data_sub_detail->get_category(); ?>-->
                                                                                                                 
                                                         <select
                                                             name 		= "sub_saa_detail_category[]"
-                                                            id			= "sub_saa_detail_category_<?php echo $_obj_data_sub_detail->get_id(); ?>"
+                                                            id			= "sub_saa_detail_category_<?php echo $_obj_data_sub_detail->get_id_key(); ?>"
                                                             class		= "form-control"
                                                             onChange 	= "update_corrections(this)"><?php echo $category_list_options; ?>
                                                         </select>
@@ -566,14 +566,14 @@
                                                 </div>
                                             
                                                 <div class="form-group">
-                                                    <label class="control-label col-sm-1" for="sub_saa_detail_correction_<?php echo $_obj_data_sub_detail->get_id(); ?>" title="Corrective Action."><span class="glyphicon glyphicon-wrench"></span></label>
+                                                    <label class="control-label col-sm-1" for="sub_saa_detail_correction_<?php echo $_obj_data_sub_detail->get_id_key(); ?>" title="Corrective Action."><span class="glyphicon glyphicon-wrench"></span></label>
                                                     <div class="col-sm-11"> 
                                                         <!--Correction: <?php echo $_obj_data_sub_detail->get_correction(); ?>-->
                                                         
                                                         <select
                                                             name 	= "sub_saa_detail_correction[]"
-                                                            id		= "sub_saa_detail_correction_<?php echo $_obj_data_sub_detail->get_id(); ?>"
-                                                            class	= "form-control update_source_sub_saa_detail_category_<?php echo $_obj_data_sub_detail->get_id(); ?>"
+                                                            id		= "sub_saa_detail_correction_<?php echo $_obj_data_sub_detail->get_id_key(); ?>"
+                                                            class	= "form-control update_source_sub_saa_detail_category_<?php echo $_obj_data_sub_detail->get_id_key(); ?>"
                                                             <?php if(!$_obj_data_sub_detail->get_correction()) echo 'disabled' ?> >
                                                             <?php
                                                             
@@ -647,27 +647,27 @@
                                                     </div>
                                                 </div>                                                        
                                                 
-                                                <div class="form-group collapse" id="div_sub_saa_detail_details_<?php echo $_obj_data_sub_detail->get_id(); ?>">
-                                                    <label class="control-label col-sm-1" for="sub_saa_detail_details_<?php echo $_obj_data_sub_detail->get_id(); ?>" title="Comments: Add any specific comments or notes here."><span class="glyphicon glyphicon-list-alt"></span></label>
+                                                <div class="form-group collapse" id="div_sub_saa_detail_details_<?php echo $_obj_data_sub_detail->get_id_key(); ?>">
+                                                    <label class="control-label col-sm-1" for="sub_saa_detail_details_<?php echo $_obj_data_sub_detail->get_id_key(); ?>" title="Comments: Add any specific comments or notes here."><span class="glyphicon glyphicon-list-alt"></span></label>
                                                     <div class="col-sm-11">
                                                         <textarea 
                                                             class="form-control" 
                                                             rows="5" 
                                                             name="sub_saa_detail_details[]" 
-                                                            id="sub_saa_detail_details_<?php echo $_obj_data_sub_detail->get_id(); ?>"><?php echo $_obj_data_sub_detail->get_details(); ?></textarea>
+                                                            id="sub_saa_detail_details_<?php echo $_obj_data_sub_detail->get_id_key(); ?>"><?php echo $_obj_data_sub_detail->get_details(); ?></textarea>
                                                     </div>
                                                 </div>
                                                 
-                                                <div class="form-group" id="div_sub_saa_detail_complete_<?php echo $_obj_data_sub_detail->get_id(); ?>">
-                                                    <label class="control-label col-sm-1" for="div_sub_saa_detail_complete_<?php echo $_obj_data_sub_detail->get_id(); ?>" title="Complete: Select Yes (thumbs up) or No (thumbs down) to indicate if this particular correction has been rectified."><span class="glyphicon glyphicon-ok"></span></label>
+                                                <div class="form-group" id="div_sub_saa_detail_complete_<?php echo $_obj_data_sub_detail->get_id_key(); ?>">
+                                                    <label class="control-label col-sm-1" for="div_sub_saa_detail_complete_<?php echo $_obj_data_sub_detail->get_id_key(); ?>" title="Complete: Select Yes (thumbs up) or No (thumbs down) to indicate if this particular correction has been rectified."><span class="glyphicon glyphicon-ok"></span></label>
                                                     <div class="col-sm-11">
                                                         <label class="radio-inline">
                                                         <input type="radio" 
                                                             name="div_sub_saa_detail_complete[]"
-                                                            id="div_sub_saa_detail_complete_0_<?php echo $_obj_data_sub_detail->get_id(); ?>" title="Yes." disabled><span class="glyphicon glyphicon-thumbs-up" style="color:green"></span></label>
+                                                            id="div_sub_saa_detail_complete_0_<?php echo $_obj_data_sub_detail->get_id_key(); ?>" title="Yes." disabled><span class="glyphicon glyphicon-thumbs-up" style="color:green"></span></label>
                                                         <label class="radio-inline"><input type="radio" 
                                                             name="div_sub_saa_detail_complete[]"
-                                                            id="div_sub_saa_detail_complete_1_<?php echo $_obj_data_sub_detail->get_id(); ?>" title="No." disabled checked><span class="glyphicon glyphicon-thumbs-down" style="color:red"></span></label>
+                                                            id="div_sub_saa_detail_complete_1_<?php echo $_obj_data_sub_detail->get_id_key(); ?>" title="No." disabled checked><span class="glyphicon glyphicon-thumbs-down" style="color:red"></span></label>
                                                        
                                                     </div>
                                                 </div>
@@ -680,8 +680,8 @@
                                                 <input 
                                                     type	="hidden" 
                                                     name	="sub_saa_detail_id[]" 
-                                                    id		="sub_saa_detail_id_<?php echo $_obj_data_sub_detail->get_id(); ?>" 
-                                                    value	="<?php echo $_obj_data_sub_detail->get_id(); ?>" />
+                                                    id		="sub_saa_detail_id_<?php echo $_obj_data_sub_detail->get_id_key(); ?>" 
+                                                    value	="<?php echo $_obj_data_sub_detail->get_id_key(); ?>" />
                                             </td>       
                                             <td>
                                                 <?php
@@ -700,7 +700,7 @@
                                                     type		= "button"
                                                     data-toggle	= "collapse" 
                                                     title		= "<?php echo $btn_title; ?>"
-                                                    data-target	= "#div_sub_saa_detail_details_<?php echo $_obj_data_sub_detail->get_id(); ?>"><span class="glyphicon glyphicon-pencil"></span></a>
+                                                    data-target	= "#div_sub_saa_detail_details_<?php echo $_obj_data_sub_detail->get_id_key(); ?>"><span class="glyphicon glyphicon-pencil"></span></a>
                                                 
                                             </td>
                                             
@@ -709,7 +709,7 @@
                                                     type	="button" 
                                                     class 	="btn btn-danger btn-sm" 
                                                     name	="sub_saa_detail_row_del" 
-                                                    id		="sub_saa_detail_row_del_<?php echo $_obj_data_sub_detail->get_id(); ?>" 
+                                                    id		="sub_saa_detail_row_del_<?php echo $_obj_data_sub_detail->get_id_key(); ?>" 
                                                     title	="Remove this item."
                                                     onclick="deleteRow_sub_finding(this)"><span class="glyphicon glyphicon-minus"></span></button> 
                                                         
