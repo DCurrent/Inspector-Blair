@@ -322,7 +322,7 @@
                             
                                 // Blank IDs will cause a database error, so make sure there is a
                                 // usable one here.
-                                if(!$_obj_data_sub_visit->get_id()) $_obj_data_sub_visit->set_id(\dc\yukon\DEFAULTS::NEW_ID);
+                                if(!$_obj_data_sub_visit->get_id_key()) $_obj_data_sub_visit->set_id(\dc\yukon\DEFAULTS::NEW_ID);
                                 
                             ?>
                                 <tr>
@@ -330,7 +330,7 @@
                                         <!--Visit Type: <?php echo $_obj_data_sub_visit->get_visit_type(); ?>-->
                                         <select
                                             name 	= "sub_visit_type[]"
-                                            id		= "sub_visit_type_<?php echo $_obj_data_sub_visit->get_id(); ?>"
+                                            id		= "sub_visit_type_<?php echo $_obj_data_sub_visit->get_id_key(); ?>"
                                             class	= "form-control">
                                             <?php
                                             if(is_object($_obj_data_list_event_type_list) === TRUE)
@@ -362,7 +362,7 @@
                                         <!--Visit By: <?php echo $_obj_data_sub_visit->get_visit_by(); ?>-->                                           
                                         <select
                                             name 	= "sub_visit_by[]"
-                                            id		= "sub_visit_by_<?php echo $_obj_data_sub_visit->get_id(); ?>"
+                                            id		= "sub_visit_by_<?php echo $_obj_data_sub_visit->get_id_key(); ?>"
                                             class	= "form-control">
                                             <?php																
                                             if(is_object($_obj_field_source_account_list) === TRUE)
@@ -403,7 +403,7 @@
                                     <td>                                                    	
                                         <input 	type="text"                                                        	 
                                             name	="sub_visit_time_recorded[]" 
-                                            id		="sub_visit_time_recorded_<?php echo $_obj_data_sub_visit->get_id(); ?>" 
+                                            id		="sub_visit_time_recorded_<?php echo $_obj_data_sub_visit->get_id_key(); ?>" 
                                             class	="form-control"
                                             value 	= "<?php if($_obj_data_sub_visit->get_time_recorded()) echo date(APPLICATION_SETTINGS::TIME_FORMAT, $_obj_data_sub_visit->get_time_recorded()->getTimestamp()); ?>">
                                     </td>
@@ -412,13 +412,13 @@
                                         <input 
                                             type	="hidden" 
                                             name	="sub_visit_id[]" 
-                                            id		="sub_visit_id_<?php echo $_obj_data_sub_visit->get_id(); ?>" 
-                                            value	="<?php echo $_obj_data_sub_visit->get_id(); ?>" />
+                                            id		="sub_visit_id_<?php echo $_obj_data_sub_visit->get_id_key(); ?>" 
+                                            value	="<?php echo $_obj_data_sub_visit->get_id_key(); ?>" />
                                         <button 
                                             type	="button" 
                                             class 	="btn btn-danger btn-sm pull-right" 
                                             name	="sub_visit_row_del" 
-                                            id		="sub_visit_row_del_<?php echo $_obj_data_sub_visit->get_id(); ?>" 
+                                            id		="sub_visit_row_del_<?php echo $_obj_data_sub_visit->get_id_key(); ?>" 
                                             onclick="deleteRow_sub_visit(this)"><span class="glyphicon glyphicon-minus"></span></button>        
                                     </td>
                                 </tr>                                    
@@ -502,13 +502,13 @@
                                         <tr>
                                             <td>
                                                 <div class="form-group">
-                                                    <label class="control-label col-sm-1" for="sub_saa_detail_category_<?php echo $_obj_data_sub_detail->get_id_key(); ?>" title="Category Filter: Choose an item to filter the available selections in Correction List by category."><span class="glyphicon glyphicon-filter"></span></label>
+                                                    <label class="control-label col-sm-1" for="sub_detail_category_<?php echo $_obj_data_sub_detail->get_id_key(); ?>" title="Category Filter: Choose an item to filter the available selections in Correction List by category."><span class="glyphicon glyphicon-filter"></span></label>
                                                     <div class="col-sm-11">         
                                                         <!--Aera: <?php echo $_obj_data_sub_detail->get_category(); ?>-->
                                                                                                                 
                                                         <select
-                                                            name 		= "sub_saa_detail_category[]"
-                                                            id			= "sub_saa_detail_category_<?php echo $_obj_data_sub_detail->get_id_key(); ?>"
+                                                            name 		= "sub_detail_category[]"
+                                                            id			= "sub_detail_category_<?php echo $_obj_data_sub_detail->get_id_key(); ?>"
                                                             class		= "form-control"
                                                             onChange 	= "update_corrections(this)"><?php echo $category_list_options; ?>
                                                         </select>
@@ -516,14 +516,14 @@
                                                 </div>
                                             
                                                 <div class="form-group">
-                                                    <label class="control-label col-sm-1" for="sub_saa_detail_correction_<?php echo $_obj_data_sub_detail->get_id_key(); ?>" title="Corrective Action."><span class="glyphicon glyphicon-wrench"></span></label>
+                                                    <label class="control-label col-sm-1" for="sub_detail_correction_<?php echo $_obj_data_sub_detail->get_id_key(); ?>" title="Corrective Action."><span class="glyphicon glyphicon-wrench"></span></label>
                                                     <div class="col-sm-11"> 
                                                         <!--Correction: <?php echo $_obj_data_sub_detail->get_correction(); ?>-->
                                                         
                                                         <select
-                                                            name 	= "sub_saa_detail_correction[]"
-                                                            id		= "sub_saa_detail_correction_<?php echo $_obj_data_sub_detail->get_id_key(); ?>"
-                                                            class	= "form-control update_source_sub_saa_detail_category_<?php echo $_obj_data_sub_detail->get_id_key(); ?>"
+                                                            name 	= "sub_detail_correction[]"
+                                                            id		= "sub_detail_correction_<?php echo $_obj_data_sub_detail->get_id_key(); ?>"
+                                                            class	= "form-control update_source_sub_detail_category_<?php echo $_obj_data_sub_detail->get_id_key(); ?>"
                                                             <?php if(!$_obj_data_sub_detail->get_correction()) echo 'disabled' ?> >
                                                             <?php
                                                             
@@ -597,27 +597,27 @@
                                                     </div>
                                                 </div>                                                        
                                                 
-                                                <div class="form-group collapse" id="div_sub_saa_detail_details_<?php echo $_obj_data_sub_detail->get_id_key(); ?>">
-                                                    <label class="control-label col-sm-1" for="sub_saa_detail_details_<?php echo $_obj_data_sub_detail->get_id_key(); ?>" title="Comments: Add any specific comments or notes here."><span class="glyphicon glyphicon-list-alt"></span></label>
+                                                <div class="form-group collapse" id="div_sub_detail_details_<?php echo $_obj_data_sub_detail->get_id_key(); ?>">
+                                                    <label class="control-label col-sm-1" for="sub_detail_details_<?php echo $_obj_data_sub_detail->get_id_key(); ?>" title="Comments: Add any specific comments or notes here."><span class="glyphicon glyphicon-list-alt"></span></label>
                                                     <div class="col-sm-11">
                                                         <textarea 
                                                             class="form-control" 
                                                             rows="5" 
-                                                            name="sub_saa_detail_details[]" 
-                                                            id="sub_saa_detail_details_<?php echo $_obj_data_sub_detail->get_id_key(); ?>"><?php echo $_obj_data_sub_detail->get_details(); ?></textarea>
+                                                            name="sub_detail_details[]" 
+                                                            id="sub_detail_details_<?php echo $_obj_data_sub_detail->get_id_key(); ?>"><?php echo $_obj_data_sub_detail->get_details(); ?></textarea>
                                                     </div>
                                                 </div>
                                                 
-                                                <div class="form-group" id="div_sub_saa_detail_complete_<?php echo $_obj_data_sub_detail->get_id_key(); ?>">
-                                                    <label class="control-label col-sm-1" for="div_sub_saa_detail_complete_<?php echo $_obj_data_sub_detail->get_id_key(); ?>" title="Complete: Select Yes (thumbs up) or No (thumbs down) to indicate if this particular correction has been rectified."><span class="glyphicon glyphicon-ok"></span></label>
+                                                <div class="form-group" id="div_sub_detail_complete_<?php echo $_obj_data_sub_detail->get_id_key(); ?>">
+                                                    <label class="control-label col-sm-1" for="div_sub_detail_complete_<?php echo $_obj_data_sub_detail->get_id_key(); ?>" title="Complete: Select Yes (thumbs up) or No (thumbs down) to indicate if this particular correction has been rectified."><span class="glyphicon glyphicon-ok"></span></label>
                                                     <div class="col-sm-11">
                                                         <label class="radio-inline">
                                                         <input type="radio" 
-                                                            name="div_sub_saa_detail_complete[]"
-                                                            id="div_sub_saa_detail_complete_0_<?php echo $_obj_data_sub_detail->get_id_key(); ?>" title="Yes." disabled><span class="glyphicon glyphicon-thumbs-up" style="color:green"></span></label>
+                                                            name="div_sub_detail_complete[]"
+                                                            id="div_sub_detail_complete_0_<?php echo $_obj_data_sub_detail->get_id_key(); ?>" title="Yes." disabled><span class="glyphicon glyphicon-thumbs-up" style="color:green"></span></label>
                                                         <label class="radio-inline"><input type="radio" 
-                                                            name="div_sub_saa_detail_complete[]"
-                                                            id="div_sub_saa_detail_complete_1_<?php echo $_obj_data_sub_detail->get_id_key(); ?>" title="No." disabled checked><span class="glyphicon glyphicon-thumbs-down" style="color:red"></span></label>
+                                                            name="div_sub_detail_complete[]"
+                                                            id="div_sub_detail_complete_1_<?php echo $_obj_data_sub_detail->get_id_key(); ?>" title="No." disabled checked><span class="glyphicon glyphicon-thumbs-down" style="color:red"></span></label>
                                                        
                                                     </div>
                                                 </div>
@@ -629,8 +629,8 @@
                                             <td>													
                                                 <input 
                                                     type	="hidden" 
-                                                    name	="sub_saa_detail_id[]" 
-                                                    id		="sub_saa_detail_id_<?php echo $_obj_data_sub_detail->get_id_key(); ?>" 
+                                                    name	="sub_detail_id[]" 
+                                                    id		="sub_detail_id_<?php echo $_obj_data_sub_detail->get_id_key(); ?>" 
                                                     value	="<?php echo $_obj_data_sub_detail->get_id_key(); ?>" />
                                             </td>       
                                             <td>
@@ -650,7 +650,7 @@
                                                     type		= "button"
                                                     data-toggle	= "collapse" 
                                                     title		= "<?php echo $btn_title; ?>"
-                                                    data-target	= "#div_sub_saa_detail_details_<?php echo $_obj_data_sub_detail->get_id_key(); ?>"><span class="glyphicon glyphicon-pencil"></span></a>
+                                                    data-target	= "#div_sub_detail_details_<?php echo $_obj_data_sub_detail->get_id_key(); ?>"><span class="glyphicon glyphicon-pencil"></span></a>
                                                 
                                             </td>
                                             
@@ -658,8 +658,8 @@
                                                 <button 
                                                     type	="button" 
                                                     class 	="btn btn-danger btn-sm" 
-                                                    name	="sub_saa_detail_row_del" 
-                                                    id		="sub_saa_detail_row_del_<?php echo $_obj_data_sub_detail->get_id_key(); ?>" 
+                                                    name	="sub_detail_row_del" 
+                                                    id		="sub_detail_row_del_<?php echo $_obj_data_sub_detail->get_id_key(); ?>" 
                                                     title	="Remove this item."
                                                     onclick="deleteRow_sub_finding(this)"><span class="glyphicon glyphicon-minus"></span></button> 
                                                         
@@ -920,12 +920,12 @@
                     '<tr>'
                         +'<td>'
                             +'<div class="form-group">'
-                                +'<label class="control-label col-sm-1" for="sub_saa_detail_category_'+$temp_finding+'" title="Category Filter: Choose an item to filter the available selections in Correction List by category."><span class="glyphicon glyphicon-filter"></span></label> '
+                                +'<label class="control-label col-sm-1" for="sub_detail_category_'+$temp_finding+'" title="Category Filter: Choose an item to filter the available selections in Correction List by category."><span class="glyphicon glyphicon-filter"></span></label> '
                                 +'<div class="col-sm-11">'
                                                                                             
                                     +'<select '
-                                        +'name 		= "sub_saa_detail_category[]" '
-                                        +'id		= "sub_saa_detail_category_'+$temp_finding+'" '
+                                        +'name 		= "sub_detail_category[]" '
+                                        +'id		= "sub_detail_category_'+$temp_finding+'" '
                                         +'class		= "form-control" '
                                         +'onChange 	= "update_corrections(this)"> '
                                         +'<?php echo $category_list_options; ?> '
@@ -934,39 +934,39 @@
                             +'</div>'
                         
                             +'<div class="form-group"> '
-                                +'<label class="control-label col-sm-1" for="sub_saa_detail_correction_'+$temp_finding+'" title="Correction: Choose the nessesary correction here."><span class="glyphicon glyphicon-wrench"></span></label> '
+                                +'<label class="control-label col-sm-1" for="sub_detail_correction_'+$temp_finding+'" title="Correction: Choose the nessesary correction here."><span class="glyphicon glyphicon-wrench"></span></label> '
                                 +'<div class="col-sm-11">'								
                                     
                                     +'<select '
-                                        +'name 	= "sub_saa_detail_correction[]" '
-                                        +'id	= "sub_saa_detail_correction_'+$temp_finding+'" '
-                                        +'class	= "form-control update_source_sub_saa_detail_category_'+$temp_finding+'"> '                                        
+                                        +'name 	= "sub_detail_correction[]" '
+                                        +'id	= "sub_detail_correction_'+$temp_finding+'" '
+                                        +'class	= "form-control update_source_sub_detail_category_'+$temp_finding+'"> '                                        
                                         +'<?php echo $correction_list_options; ?>'                                        
                                     +'</select>'
                                 +'</div>'
                             +'</div>'                                                        
                             
-                            +'<div class="form-group collapse" id="div_sub_saa_detail_details_'+$temp_finding+'">'
-                                +'<label class="control-label col-sm-1" for="sub_saa_detail_details_'+$temp_finding+'" title="Comments: Add any specific comments or notes here."><span class="glyphicon glyphicon-list-alt"></span></label> '
+                            +'<div class="form-group collapse" id="div_sub_detail_details_'+$temp_finding+'">'
+                                +'<label class="control-label col-sm-1" for="sub_detail_details_'+$temp_finding+'" title="Comments: Add any specific comments or notes here."><span class="glyphicon glyphicon-list-alt"></span></label> '
                                 +'<div class="col-sm-11">'
                                     +'<textarea ' 
                                         +'class	= "form-control" ' 
                                         +'rows 	= "5" ' 
-                                        +'name	= "sub_saa_detail_details[]" ' 
-                                        +'id	= "sub_saa_detail_details_'+$temp_finding+'"></textarea>'
+                                        +'name	= "sub_detail_details[]" ' 
+                                        +'id	= "sub_detail_details_'+$temp_finding+'"></textarea>'
                                 +'</div>'
                             +'</div>'
 							
 							+'<div class="form-group"> '
-								+'<label class="control-label col-sm-1" for="div_sub_saa_detail_complete_'+$temp_finding+'" title="Complete: Select Yes (thumbs up) or No (thumbs down) to indicate if this particular correction has been rectified."><span class="glyphicon glyphicon-ok"></span></label> '
+								+'<label class="control-label col-sm-1" for="div_sub_detail_complete_'+$temp_finding+'" title="Complete: Select Yes (thumbs up) or No (thumbs down) to indicate if this particular correction has been rectified."><span class="glyphicon glyphicon-ok"></span></label> '
 								+'<div class="col-sm-11">'									
 									+'<label class="radio-inline">'
 									+'<input type="radio" ' 
-										+'name="div_sub_saa_detail_complete[]" '
-										+'id="div_sub_saa_detail_complete_0_'+$temp_finding+'" title="Yes." disabled><span class="glyphicon glyphicon-thumbs-up" style="color:green"></span></label>'
+										+'name="div_sub_detail_complete[]" '
+										+'id="div_sub_detail_complete_0_'+$temp_finding+'" title="Yes." disabled><span class="glyphicon glyphicon-thumbs-up" style="color:green"></span></label>'
 									+'<label class="radio-inline"><input type="radio" ' 
-										+'name="div_sub_saa_detail_complete[]" '
-										+'id="div_sub_saa_detail_complete_1_'+$temp_finding+'" title="No." disabled checked><span class="glyphicon glyphicon-thumbs-down" style="color:red"></span></label>'
+										+'name="div_sub_detail_complete[]" '
+										+'id="div_sub_detail_complete_1_'+$temp_finding+'" title="No." disabled checked><span class="glyphicon glyphicon-thumbs-down" style="color:red"></span></label>'
 								   
 								+'</div>'
                             +'</div>'
@@ -975,8 +975,8 @@
                         +'<td>'													
                             +'<input ' 
                                 +'type	= "hidden" ' 
-                                +'name	= "sub_saa_detail_id[]" ' 
-                                +'id	= "sub_saa_detail_id_'+$temp_finding+'" ' 
+                                +'name	= "sub_detail_id[]" ' 
+                                +'id	= "sub_detail_id_'+$temp_finding+'" ' 
                                 +'value	= "<?php echo \dc\yukon\DEFAULTS::NEW_ID; ?>" '
                         +'</td>'
                         +'<td>'
@@ -984,21 +984,21 @@
                             +'type			= "button" '
                             +'data-toggle	= "collapse" ' 
                             +'title			= "Show or hide comments." '
-                            +'data-target	= "#div_sub_saa_detail_details_'+$temp_finding+'"><span class="glyphicon glyphicon-pencil"></span></a>'
+                            +'data-target	= "#div_sub_detail_details_'+$temp_finding+'"><span class="glyphicon glyphicon-pencil"></span></a>'
                         +'</td>'
                         +'<td>'
                             +'<button ' 
                                 +'type	= "button" ' 
                                 +'class = "btn btn-danger btn-sm" ' 
-                                +'name	= "sub_saa_detail_row_del" ' 
-                                +'id	= "sub_saa_detail_row_del_'+$temp_finding+'" ' 
+                                +'name	= "sub_detail_row_del" ' 
+                                +'id	= "sub_detail_row_del_'+$temp_finding+'" ' 
                                 +'onclick = "deleteRow_sub_finding(this)"><span class="glyphicon glyphicon-minus"></span></button>'       
                         +'</td>'
                     +'</tr>'			
                 );
                 
                 tinymce.init({
-                selector: '#sub_saa_detail_details_'+$temp_finding,
+                selector: '#sub_detail_details_'+$temp_finding,
                 plugins: [
                     "advlist autolink lists link image charmap print preview anchor",
                     "searchreplace visualblocks code fullscreen",

@@ -62,23 +62,45 @@
 				
 		// Initialize main data class and populate it from
 		// post variables.
-		$_main_data = new \data\Area();						
+		$_main_data = new \data\Inspection();						
 		$_main_data->populate_from_request();
+		
+		$_sub_area_data = new \data\Area();						
+		$_sub_area_data->populate_from_request();
+		
+		$_sub_party_data = new \data\InspectionParty();						
+		$_sub_party_data->populate_from_request();
+		
+		$_sub_visit_data = new \data\InspectionVisitSub();						
+		$_sub_visit_data->populate_from_request();
+		
+		$_sub_detail_data = new \data\InspectionDetailSub();						
+		$_sub_detail_data->populate_from_request();
 			
 		// Call update stored procedure.
-		$query->set_sql('{call '.$_layout->get_main_sql_name().'_update(@id			= ?,
-												@log_update_by	= ?, 
-												@log_update_ip 	= ?,										 
-												@label 			= ?,
-												@details 		= ?)}');
+		$query->set_sql('{call '.$_layout->get_main_sql_name().'_update(@param_id_list			= ?,
+												@param_update_by	= ?, 
+												@param_update_host 	= ?,										 
+												@param_label 		= ?,
+												@param_details 		= ?,
+												@param_type			= ?,
+												@param_area			= ?,
+												@param_party		= ?,
+												@param_visit		= ?,
+												@param_detail		= ?)}');
 												
 		$params = array(array('<root><row id="'.$_main_data->get_id().'"/></root>', 		SQLSRV_PARAM_IN),
 					array($access_obj->get_id(), 				SQLSRV_PARAM_IN),
 					array($access_obj->get_ip(), 			SQLSRV_PARAM_IN),
 					array($_main_data->get_label(), 		SQLSRV_PARAM_IN),						
-					array($_main_data->get_details(),		SQLSRV_PARAM_IN));
+					array($_main_data->get_details(),		SQLSRV_PARAM_IN),
+					array('<root><row id="'.$_layout->get_id().'"/></root>',				SQLSRV_PARAM_IN),
+					array('<root><row id="'.$_sub_area_data->get_room_code().'"/></root>',	SQLSRV_PARAM_IN),
+					array($_sub_party_data->xml(),	SQLSRV_PARAM_IN),
+					array($_sub_visit_data->xml(),	SQLSRV_PARAM_IN),
+					array($_sub_detail_data->xml(),	SQLSRV_PARAM_IN));
 		
-		$query->set_params($params);			
+		$query->set_params($params);
 		$query->query();
 		
 		// Repopulate main data object with results from merge query.

@@ -19,4 +19,7 @@
 <file name="Inspection.class.php" server="arftp.ad.uky.edu//ehs/" local="131351367499193080" remote="131351223000000000" Dst="2" />
 <file name="InspectionDetail.class.php" server="arftp.ad.uky.edu//ehs/" local="131348371642639806" remote="131348227200000000" Dst="2" />
 <file name="InspectionVisit.class.php" server="arftp.ad.uky.edu//ehs/" local="131348099530931521" remote="131347955400000000" Dst="2" />
+<file name="InspectionParty.class.php" server="arftp.ad.uky.edu//ehs/" local="131359342110241404" remote="131359197600000000" Dst="2" />
+<file name="InspectionVisitSub.class.php" server="arftp.ad.uky.edu//ehs/" local="131359377130838674" remote="131359233000000000" Dst="2" />
+<file name="InspectionDetailSub.class.php" server="arftp.ad.uky.edu//ehs/" local="131359413205245013" remote="131359269000000000" Dst="2" />
 </dwsync>
