@@ -208,13 +208,13 @@
 	// Item lists....
 	
 	// Categories
-		$query->set_sql('{call audit_question_category_list(@page_current 		= ?,
-															@page_rows			= ?,
-															@inclusion			= ?)}');											
+		$query->set_sql('{call audit_question_category_list_for_inspection_entry(@param_page_current 		= ?,
+															@param_page_rows								= ?,
+															@param_filter_inclusion						= ?)}');											
 		$page_last 	= NULL;
 		$row_count 	= NULL;		
 		
-			$inspection_type = NULL;
+		$inspection_type = $_layout->get_id();
 		
 		$params = array(array(-1,			SQLSRV_PARAM_IN),
 						array(NULL,			SQLSRV_PARAM_IN),
