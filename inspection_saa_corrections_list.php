@@ -112,7 +112,7 @@
 	$query_audit_items_param_category 	= NULL;		
 	
 	// Set up a query object and send SQL string.
-	$query_audit_items = new \dc\yukon\Database($db);
+	$query_audit_items = new \dc\yukon\Database();
 	$query_audit_items->set_sql('{call inspection_question_list_select(@category 	= ?,
 														@inclusion	= ?)}');
 	
@@ -136,7 +136,7 @@
 		
 		// Only add to list if this is a category selected by user, or if all categories are selected. 
 		// This is a stop gap solution, and should be replaced with a more effciant query above.
-		if($_obj_field_source_category->get_id() == $_obj_params->get_category() || $_obj_params->get_category() == '00000000-0000-0000-0000-000000000000')
+		if($_obj_field_source_category->get_id() == $_obj_params->get_category() || $_obj_params->get_category() == \dc\yukon\DEFAULTS::NEW_ID)
 		{
 			// Add current category to markup as an option group.
 			$correction_list_options .= '<optgroup label="'.$_obj_field_source_category->get_label().'">';
@@ -147,7 +147,7 @@
 			$query_audit_items->execute();		
 			
 			// Set class object we will push rows from datbase into.
-			$query_audit_items->get_line_params()->set_class_name('class_audit_question_data');
+			$query_audit_items->get_line_params()->set_class_name('\data\AuditQuestion');
 			
 			// Establish linked list of objects and populate with rows assuming that 
 			// rows were returned. 

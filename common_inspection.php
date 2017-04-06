@@ -253,75 +253,25 @@
                             
                                 // Blank IDs will cause a database error, so make sure there is a
                                 // usable one here.
-                                if(!$_obj_data_sub_party->get_id()) $_obj_data_sub_party->set_id(\dc\yukon\DEFAULTS::NEW_ID);
+                                if(!$_obj_data_sub_party->get_item()) $_obj_data_sub_party->set_id(\dc\yukon\DEFAULTS::NEW_ID);
                                 
                             ?>
                                 <tr>
-                                    <td>     
-                                        <!--Party: <?php echo $_obj_data_sub_party->get_item(); ?>-->
-                                                                                                
-                                        <select
-                                            name 	= "sub_party_party[]"
-                                            id		= "sub_party_party_<?php echo $_obj_data_sub_party->get_id(); ?>"
-                                            class	= "form-control">
-                                            <?php																
-                                            if(is_object($_obj_field_source_party_list) === TRUE)
-                                            {        
-                                                // Generate table row for each item in list.
-                                                for($_obj_field_source_party_list->rewind(); $_obj_field_source_party_list->valid(); $_obj_field_source_party_list->next())
-                                                {	                                                               
-                                                    $_obj_field_source_party = $_obj_field_source_party_list->current();
-                                                    
-                                                    $sub_party_value 		= $_obj_field_source_party->get_id();																
-                                                    $sub_party_label		= $_obj_field_source_party->get_name_l().', '.$_obj_field_source_party->get_name_f();
-                                                    
-                                                    // Add middle name if available
-                                                    if($_obj_field_source_party->get_name_m())
-                                                    {
-                                                        $sub_party_label .= ' '.$_obj_field_source_party->get_name_m();
-                                                    }
-                                                    
-                                                    $sub_party_selected 	= NULL;
-                                                            
-                                                    if($_obj_data_sub_party->get_item())
-                                                    {
-                                                        if($_obj_data_sub_party->get_item() == $sub_party_value)
-                                                        {
-                                                            $sub_party_selected = ' selected ';
-                                                        }								
-                                                    }                                                                        
-                                                    
-                                                    // Now convert special characters.
-                                                    $sub_party_label = htmlspecialchars($sub_party_label, ENT_QUOTES);
-                                                    
-                                                    ?>
-                                                    <option value="<?php echo $sub_party_value; ?>" <?php echo $sub_party_selected ?>><?php echo $sub_party_label; ?></option>
-                                                    <?php                                
-                                                }
-                                            }
-                                        ?>
-                                        </select>
-                                    </td>
-                                    <td style="width:1px">
-                                    	<a href="#"
-                                                class		="btn btn-sm btn-info btn-responsive party_search" 
-                                                data-toggle	="modal"
-                                                data-confirm_target_id="sub_party_party_<?php echo $_obj_data_sub_party->get_id(); ?>"
-                                                title		="Find a party selection."                                                
-                                                ><span class="glyphicon glyphicon-search"></span></a>
-                                    </td>
-                                    <td style="width:1px">                              													
-                                        <input 
+                                    <td>
+                                        <a href="./?id_form=1256&amp;id=<?php echo $_obj_data_sub_party->get_item(); ?>" target="_blank"><?php echo $_obj_data_sub_party->get_name_l().', '.$_obj_data_sub_party->get_name_f(); ?>
+                                    </td>                                    
+                                    <td style="width:1px">   
+                                    	<input 
                                             type	="hidden" 
-                                            name	="sub_party_id[]" 
-                                            id		="sub_party_id_<?php echo $_obj_data_sub_party->get_id(); ?>" 
-                                            value	="<?php echo $_obj_data_sub_party->get_id(); ?>" />
+                                            name	="sub_party_party[]" 
+                                            id		="sub_party_party_<?php echo $_obj_data_sub_party->get_item(); ?>" 
+                                            value	="<?php echo $_obj_data_sub_party->get_item(); ?>" />
                                             
                                         <button 
                                             type	="button" 
                                             class 	="btn btn-danger btn-sm pull-right" 
                                             name	="sub_party_row_del" 
-                                            id		="sub_party_row_del_<?php echo $_obj_data_sub_party->get_id(); ?>" 
+                                            id		="sub_party_row_del_<?php echo $_obj_data_sub_party->get_item(); ?>" 
                                             onclick="deleteRow_sub_party(this)"><span class="glyphicon glyphicon-minus"></span></button>        
                                     </td>
                                 </tr>                                    
