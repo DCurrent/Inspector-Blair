@@ -210,7 +210,7 @@
 	// Categories
 		$query->set_sql('{call audit_question_category_list_for_inspection_entry(@param_page_current 		= ?,
 															@param_page_rows								= ?,
-															@param_filter_inclusion						= ?)}');											
+															@param_filter_inclusion							= ?)}');											
 		$page_last 	= NULL;
 		$row_count 	= NULL;		
 		
