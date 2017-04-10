@@ -77,7 +77,7 @@
                                 <ul class="dropdown-menu">
                                     <li><a href="<?php echo $this->directory_prime; ?>?id_form=1550&amp;list=1">Inspection List</a></li>
                                     <!--<li><a href="<?php echo $this->directory_prime; ?>/inspection_autoclave.php&#63;nav_command=<?php echo \dc\recordnav\COMMANDS::NEW_BLANK;?>&amp;id=<?php echo \dc\yukon\DEFAULTS::NEW_ID; ?>"><span class="glyphicon glyphicon-plus"></span> Autoclave</a></li>-->
-                                    <li><a href="<?php echo $this->directory_prime; ?>/inspection_saa.php&#63;nav_command=<?php echo \dc\recordnav\COMMANDS::NEW_BLANK;?>&amp;id=<?php echo \dc\yukon\DEFAULTS::NEW_ID; ?>"><span class="glyphicon glyphicon-plus"></span> SAA</a></li>
+                                    <li><a href="<?php echo $this->directory_prime; ?>?id_form=1550&amp;nav_command=<?php echo \dc\recordnav\COMMANDS::NEW_BLANK;?>&amp;id=<?php echo \dc\yukon\DEFAULTS::NEW_ID; ?>"><span class="glyphicon glyphicon-plus"></span> SAA</a></li>
                                     <li><a class="disabled" href="#">My Reviews</a></li>
                                     <li><a class="disabled" href="#">My Areas</a></li>
                                 </ul>
