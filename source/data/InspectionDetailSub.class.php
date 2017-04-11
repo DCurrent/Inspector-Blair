@@ -41,7 +41,7 @@
 					$result .= '<label>'.$this->label[$key].'</label>';
 					$result .= '<details>'.htmlspecialchars($this->details[$key]).'</details>';
 					$result .= '<correction>'.$this->correction[$key].'</correction>';
-					$result .= '<completed>'.$this->complete[$key].'</completed>';
+					$result .= '<complete>'.$this->complete[$key].'</complete>';
 					$result .= '</row>';									
 				}
 				

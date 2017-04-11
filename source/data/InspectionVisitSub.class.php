@@ -9,12 +9,12 @@
 		// Mutators
 		function set_sub_visit_by($value);	
 		function set_sub_visit_type($value);
-		function set_sub_time_recorded($value);	
+		function set_sub_visit_time_recorded($value);	
 		
 		function set_id($value);		
 		function set_details($value);		
 		function set_label($value);
-		function set_time_recorded($value);	
+		function set_visit_time_recorded($value);	
 	}	
 
 	class InspectionVisitSub extends Inspection implements iInspectionVisitSub
@@ -58,7 +58,7 @@
 		public function set_id($value){}		
 		public function set_details($value){}		
 		public function set_label($value){}
-		public function set_time_recorded($value){}
+		public function set_visit_time_recorded($value){}
 		
 		public function set_sub_visit_id($value)
 		{
@@ -75,7 +75,7 @@
 			return $this->visit_type = $value;
 		}
 		
-		public function set_sub_time_recorded($value)
+		public function set_sub_visit_time_recorded($value)
 		{
 			return $this->time_recorded = $value;
 		}

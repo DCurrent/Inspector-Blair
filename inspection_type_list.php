@@ -22,11 +22,7 @@
 	$navigation_obj->generate_markup_footer();	
 	
 	// Set up database.
-	$db_conn_set = new ConnectConfig();
-	$db_conn_set->set_name(DATABASE::NAME);
-	
-	$db = new Connect($db_conn_set);
-	$query = new \dc\yukon\Database($db);
+	$query = new \dc\yukon\Database();
 		
 	$paging = new \dc\recordnav\Paging();
 	$paging->set_row_max(APPLICATION_SETTINGS::PAGE_ROW_MAX);	

@@ -77,16 +77,20 @@
 						{
 					?>
                             <table class="table table-striped table-condensed">
-                                <caption><a href = "area.php?id=<?php echo $_obj_data_sub_area_list->get_room_code();  ?>"
-                                        data-toggle	= ""
-                                        title		= "View location detail."
-                                        target		= "_new" 
-                                        ><?php echo trim($building_code_display); ?></a></caption>
                                 <thead>
                                 </thead>
                                 <tfoot>
                                 </tfoot>
                                 <tbody id="tbody_room_data" class="">
+                                    <tr>
+                                        <td>Area</td>
+                                        <td><a href = "area.php?id=<?php echo $_obj_data_sub_area_list->get_room_code();  ?>"
+                                        data-toggle	= ""
+                                        title		= "View location detail."
+                                        target		= "_new" 
+                                        ><?php echo trim($building_code_display); ?></a></td>
+                                    </tr>
+                                    
                                     <tr>
                                         <td>Biosafety Level</td>
                                         <td><?php 
@@ -232,7 +236,7 @@
           <fieldset class="col-sm-10" >
                 <legend>Party Review</legend> 
                                                                   
-                <table class="table table-striped table-hover" id="tbl_sub_party"> 
+                <table class="table table-striped table-hover table-condensed" id="tbl_sub_party"> 
                     <thead>
                         <tr>
                             <th>Responsible Party</th>
@@ -258,7 +262,7 @@
                             ?>
                                 <tr>
                                     <td>
-                                        <a href="./?id_form=1256&amp;id=<?php echo $_obj_data_sub_party->get_item(); ?>" target="_blank"><?php echo $_obj_data_sub_party->get_name_l().', '.$_obj_data_sub_party->get_name_f(); ?>
+                                        <a href="./?id_form=1256&amp;id=<?php echo $_obj_data_sub_party->get_item(); ?>" target="_blank"><?php echo $_obj_data_sub_party->get_name_l().', '.$_obj_data_sub_party->get_name_f(); ?></a>
                                     </td>                                    
                                     <td style="width:1px">   
                                     	<input 
@@ -300,7 +304,7 @@
           <fieldset class="col-sm-10">
                 <legend>Audits</legend>
                                                 
-                <table class="table table-striped table-hover" id="tbl_sub_visit"> 
+                <table class="table table-striped table-hover table-condensed" id="tbl_sub_visit"> 
                     <thead>
                         <tr>
                             <th>Type</th>
@@ -326,86 +330,31 @@
                                 
                             ?>
                                 <tr>
-                                    <td>
-                                        <!--Visit Type: <?php echo $_obj_data_sub_visit->get_visit_type(); ?>-->
-                                        <select
+                                    <td><a href="./?id_form=1599&amp;id=<?php echo $_obj_data_sub_visit->get_visit_type(); ?>" target="_blank"><?php echo $_obj_data_sub_visit->get_visit_type_label(); ?></a>
+                                        <input type="hidden"
                                             name 	= "sub_visit_type[]"
                                             id		= "sub_visit_type_<?php echo $_obj_data_sub_visit->get_id_key(); ?>"
-                                            class	= "form-control">
-                                            <?php
-                                            if(is_object($_obj_data_list_event_type_list) === TRUE)
-                                            {        
-                                                // Generate table row for each item in list.
-                                                for($_obj_data_list_event_type_list->rewind();	$_obj_data_list_event_type_list->valid(); $_obj_data_list_event_type_list->next())
-                                                {	                                                               
-                                                    $_obj_data_list_event_type = $_obj_data_list_event_type_list->current();
-                                                   
-                                                    $sub_visit_type_selected = NULL;         
-                                                   
-                                                    if($_obj_data_sub_visit->get_visit_type() == $_obj_data_list_event_type->get_id())
-                                                    {
-                                                        $sub_visit_type_selected = ' selected ';
-                                                    }								
-                                                    
-                                                    
-                                                    ?>
-                                                    <option value="<?php echo $_obj_data_list_event_type->get_id(); ?>" <?php echo $sub_visit_type_selected ?>><?php echo $_obj_data_list_event_type->get_label(); ?></option>
-                                                    <?php                                
-                                                }
-                                            }
-                                        ?>
-                                        </select>
-                                        
+                                            value	="<?php echo $_obj_data_sub_visit->get_visit_type(); ?>" />                                       
                                     </td>  
                                     
-                                    <td>     
-                                        <!--Visit By: <?php echo $_obj_data_sub_visit->get_visit_by(); ?>-->                                           
-                                        <select
+                                    <td><a href="./?id_form=1256&amp;id=<?php echo $_obj_data_sub_visit->get_visit_by(); ?>" target="_blank"><?php echo $_obj_data_sub_visit->get_name_l().', '.$_obj_data_sub_visit->get_name_f(); ?></a>   
+                                    	<input type="hidden"
                                             name 	= "sub_visit_by[]"
                                             id		= "sub_visit_by_<?php echo $_obj_data_sub_visit->get_id_key(); ?>"
-                                            class	= "form-control">
-                                            <?php																
-                                            if(is_object($_obj_field_source_account_list) === TRUE)
-                                            {        
-                                                // Generate table row for each item in list.
-                                                for($_obj_field_source_account_list->rewind();	$_obj_field_source_account_list->valid(); $_obj_field_source_account_list->next())
-                                                {	                                                               
-                                                    $_obj_field_source_account = $_obj_field_source_account_list->current();
-                                                    
-                                                    $sub_account_value 		= $_obj_field_source_account->get_id();																
-                                                    $sub_account_label		= $_obj_field_source_account->get_name_l().', '.$_obj_field_source_account->get_name_f();
-                                                    $sub_account_selected 	= NULL;
-                                                            
-                                                    if($_obj_data_sub_visit->get_visit_by())
-                                                    {
-                                                        if($_obj_data_sub_visit->get_visit_by() == $sub_account_value)
-                                                        {
-                                                            $sub_account_selected = ' selected ';
-                                                        }								
-                                                    }
-                                                    else
-                                                    {
-                                                        if($_obj_field_source_account->get_account() == $access_obj->get_account())
-                                                        {
-                                                            $sub_account_selected = ' selected ';
-                                                        }
-                                                    }
-                                                    
-                                                    ?>
-                                                    <option value="<?php echo $sub_account_value; ?>" <?php echo $sub_account_selected ?>><?php echo $sub_account_label; ?></option>
-                                                    <?php                                
-                                                }
-                                            }
-                                        ?>
-                                        </select>
+                                            value	="<?php echo $_obj_data_sub_visit->get_visit_by(); ?>" />                                     
+                                        
                                     </td>
                                     
-                                    <td>                                                    	
-                                        <input 	type="text"                                                        	 
+                                    <td><?php $visit_time = NULL;
+										if($_obj_data_sub_visit->get_time_recorded()) 
+										{
+											$visit_time = date(APPLICATION_SETTINGS::TIME_FORMAT, $_obj_data_sub_visit->get_time_recorded()->getTimestamp());                                        }
+                                        ?> 
+                                        <?php echo $visit_time; ?>   
+                                        <input 	type="hidden"                                                        	 
                                             name	="sub_visit_time_recorded[]" 
                                             id		="sub_visit_time_recorded_<?php echo $_obj_data_sub_visit->get_id_key(); ?>" 
-                                            class	="form-control"
-                                            value 	= "<?php if($_obj_data_sub_visit->get_time_recorded()) echo date(APPLICATION_SETTINGS::TIME_FORMAT, $_obj_data_sub_visit->get_time_recorded()->getTimestamp()); ?>">
+                                            value 	= "<?php echo $visit_time; ?>">
                                     </td>
                                                                                   
                                     <td style="width:1px">													
@@ -452,7 +401,7 @@
                 <div class="col-sm-offset-2 col-sm-10">
                     <fieldset>
                         <legend>Findings</legend>                                
-                        <table class="table table-striped table-hover" id="tbl_sub_finding"> 
+                        <table class="table table-striped table-hover table-condensed" id="tbl_sub_finding"> 
                             <thead>
                                 <tr>
                                     <th></th>                                                
@@ -609,15 +558,20 @@
                                                 </div>
                                                 
                                                 <div class="form-group" id="div_sub_detail_complete_<?php echo $_obj_data_sub_detail->get_id_key(); ?>">
-                                                    <label class="control-label col-sm-1" for="div_sub_detail_complete_<?php echo $_obj_data_sub_detail->get_id_key(); ?>" title="Complete: Select Yes (thumbs up) or No (thumbs down) to indicate if this particular correction has been rectified."><span class="glyphicon glyphicon-ok"></span></label>
+                                                    <label class="control-label col-sm-1" for="sub_detail_complete_<?php echo $_obj_data_sub_detail->get_id_key(); ?>" title="Complete: Select to indicate this particular correction has been rectified."><span class="glyphicon glyphicon-ok"></span></label>
                                                     <div class="col-sm-11">
-                                                        <label class="radio-inline">
-                                                        <input type="radio" 
-                                                            name="div_sub_detail_complete[]"
-                                                            id="div_sub_detail_complete_0_<?php echo $_obj_data_sub_detail->get_id_key(); ?>" title="Yes." disabled><span class="glyphicon glyphicon-thumbs-up" style="color:green"></span></label>
-                                                        <label class="radio-inline"><input type="radio" 
-                                                            name="div_sub_detail_complete[]"
-                                                            id="div_sub_detail_complete_1_<?php echo $_obj_data_sub_detail->get_id_key(); ?>" title="No." disabled checked><span class="glyphicon glyphicon-thumbs-down" style="color:red"></span></label>
+                                                    	<?php
+															$finding_complete = NULL;
+															
+															if($_obj_data_sub_detail->get_complete())
+															{
+																$finding_complete = 'checked';
+															}
+														?>                                                        
+                                                        <input type="checkbox" 
+                                                            name="sub_detail_complete[]"
+                                                            value = "1"
+                                                            id="sub_detail_complete_<?php echo $_obj_data_sub_detail->get_id_key(); ?>" title="Yes." <?php echo $finding_complete; ?>>
                                                        
                                                     </div>
                                                 </div>
@@ -958,16 +912,13 @@
                             +'</div>'
 							
 							+'<div class="form-group"> '
-								+'<label class="control-label col-sm-1" for="div_sub_detail_complete_'+$temp_finding+'" title="Complete: Select Yes (thumbs up) or No (thumbs down) to indicate if this particular correction has been rectified."><span class="glyphicon glyphicon-ok"></span></label> '
+								+'<label class="control-label col-sm-1" for="sub_detail_complete_'+$temp_finding+'" title="Complete: Select to indicate this particular correction has been rectified."><span class="glyphicon glyphicon-ok"></span></label> '
 								+'<div class="col-sm-11">'									
-									+'<label class="radio-inline">'
-									+'<input type="radio" ' 
-										+'name="div_sub_detail_complete[]" '
-										+'id="div_sub_detail_complete_0_'+$temp_finding+'" title="Yes." disabled><span class="glyphicon glyphicon-thumbs-up" style="color:green"></span></label>'
-									+'<label class="radio-inline"><input type="radio" ' 
-										+'name="div_sub_detail_complete[]" '
-										+'id="div_sub_detail_complete_1_'+$temp_finding+'" title="No." disabled checked><span class="glyphicon glyphicon-thumbs-down" style="color:red"></span></label>'
-								   
+									+'<input type="checkbox" ' 
+                                    	+'name="sub_detail_complete[]" '
+                                    	+'value = "1" '
+                                        +'id="sub_detail_complete_'+$temp_finding+'" '
+										+'title="Yes.">'								   
 								+'</div>'
                             +'</div>'
                         +'</td>'
@@ -977,7 +928,7 @@
                                 +'type	= "hidden" ' 
                                 +'name	= "sub_detail_id[]" ' 
                                 +'id	= "sub_detail_id_'+$temp_finding+'" ' 
-                                +'value	= "<?php echo \dc\yukon\DEFAULTS::NEW_ID; ?>" '
+                                +'value	= "<?php echo \dc\yukon\DEFAULTS::NEW_ID; ?>" />'
                         +'</td>'
                         +'<td>'
                             +'<a class		= "btn btn-primary btn-sm" '                                                           

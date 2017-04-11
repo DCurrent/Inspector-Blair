@@ -5,8 +5,11 @@
 	interface iInspectionVisit
 	{
 		// Accessors
+		function get_name_f();
+		function get_name_l();
 		function get_visit_by();
 		function get_visit_type();
+		function get_visit_type_label();
 		function get_time_recorded();		
 		
 		// Mutators
@@ -18,9 +21,22 @@
 	class InspectionVisit extends Common implements iInspectionVisit
 	{	
 		protected
+			$name_f				= NULL,
+			$name_l				= NULL,
 			$visit_by			= NULL,
 			$visit_type			= NULL,
+			$visit_type_label	= NULL,
 			$time_recorded		= NULL;
+		
+		public function get_name_f()
+		{
+			return $this->name_f;
+		}
+		
+		public function get_name_l()
+		{
+			return $this->name_l;
+		}
 		
 		public function get_visit_by()
 		{
@@ -30,6 +46,11 @@
 		public function get_visit_type()
 		{
 			return $this->visit_type;
+		}
+		
+		public function get_visit_type_label()
+		{
+			return $this->visit_type_label;
 		}
 		
 		public function get_time_recorded()
