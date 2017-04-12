@@ -511,7 +511,7 @@
                                                 
                                                 <button 
                                                     type	="button" 
-                                                    class 	="btn btn-danger btn-sm" 
+                                                    class 	="btn btn-danger btn-sm pull-right" 
                                                     name	="sub_detail_row_del" 
                                                     id		="sub_detail_row_del_<?php echo $_obj_data_sub_detail->get_id_key(); ?>" 
                                                     title	="Remove this item."
