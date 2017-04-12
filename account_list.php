@@ -235,8 +235,11 @@
                 <?php
 				}
 				
-				
 			?>
+            
+            <p>
+            	<?php echo $paging->generate_paging_markup(); ?>
+            </p>
           
             <div class="table-responsive">
                 <table id="tbl_account" class="table table-striped table-hover">
@@ -275,8 +278,8 @@
                     </tbody>                        
                 </table>
             </div>  
-            <?php 
-				echo $paging->generate_paging_markup();
+            <?php 				
+				echo $paging->get_markup();
 				echo $navigation_obj->get_markup_footer(); 
 			?>
         </div><!--container-->        
