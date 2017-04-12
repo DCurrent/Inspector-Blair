@@ -367,7 +367,7 @@
 							// Not a new GUID? Then echo the data.
 							if($_main_data->get_room_code())
 							{
-								echo trim($_main_data->get_room_code()).' - '.$_main_data->get_use_description_short(); 
+								echo trim($_main_data->get_room_id()).' - '.$_main_data->get_use_description_short(); 
 							}
 						?>
                     </div>
@@ -382,7 +382,7 @@
                             name	="code" 
                             id		="code" 
                             placeholder="Room bar code." 
-                            value="<?php echo trim($_main_data->get_code()); ?>">
+                            value="<?php echo trim($_main_data->get_room_code()); ?>">
                     </div>
                 </div>
                 

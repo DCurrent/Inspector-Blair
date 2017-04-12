@@ -7,10 +7,11 @@
 		// Accessors. 
 		function get_building_code();
 		function get_building_name();
-		function get_code();
+		//function get_code();
 		function get_department();
 		function get_floor();
 		function get_room_code();
+		function get_room_id();	
 		function get_use_code();
 		function get_use_definition();
 		function get_use_description_short();
@@ -28,7 +29,7 @@
 		// Mutators
 		function set_building_code($value);
 		function set_building_name($value);
-		function set_code($value);
+		//function set_code($value);
 		function set_department($value);
 		function set_floor($value);
 		function set_room_code($value);
@@ -56,7 +57,7 @@
 			$building_name			= NULL,
 			$chemical_lab_class		= NULL,
 			$chemical_operations_class = NULL,
-			$code					= NULL,			
+			//$code					= NULL,			
 			$department				= NULL,		
 			$ibc_protocal			= NULL,
 			$floor					= NULL,
@@ -64,6 +65,7 @@
 			$laser_usage			= NULL,
 			$nfpa45_lab_unit		= NULL,
 			$room_code				= NULL,
+			$room_id				= NULL,
 			$radiation_usage		= NULL,						
 			$use_code				= NULL,
 			$use_definition			= NULL,
@@ -83,10 +85,10 @@
 				return $this->building_name;
 			}
 			
-			function get_code()
-			{
-				return $this->code;
-			}
+			//function get_code()
+			//{
+			//	return $this->code;
+			//}
 			
 			function get_department()
 			{
@@ -101,6 +103,11 @@
 			function get_room_code()
 			{
 				return $this->room_code;
+			}
+			
+			function get_room_id()
+			{
+				return $this->room_id;
 			}
 			
 			function get_use_code()
@@ -175,10 +182,10 @@
 				$this->building_name = $value;
 			}
 		
-			function set_code($value)
-			{
-				$this->code = $value;
-			}
+			//function set_code($value)
+			//{
+			//	$this->code = $value;
+			//}
 			
 			function set_department($value)
 			{
