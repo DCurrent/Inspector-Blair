@@ -62,7 +62,7 @@
 				
 		// Initialize main data class and populate it from
 		// post variables.
-		$_main_data = new \data\Area();						
+		$_main_data = new \data\Common();						
 		$_main_data->populate_from_request();
 			
 		// Call update stored procedure.
@@ -93,7 +93,42 @@
 		header('Location: '.$_SERVER['PHP_SELF'].'?id_form='.$_layout->get_id().'&id='.$_main_data->get_id());
 	}
 	
-	
+	function action_delete($_layout = NULL)
+	{
+		// Initialize database query object.
+		$query 	= new \dc\yukon\Database();
+		
+		// Set up account info.
+		$access_obj = new \dc\access\status();
+				
+		// Initialize main data class and populate it from
+		// post variables.
+		$_main_data = new \data\Area();						
+		$_main_data->populate_from_request();
+			
+		// Call update stored procedure.
+		$query->set_sql('{call master_delete(@param_id			= ?,
+												@param_update_by	= ?, 
+												@param_update_ip 	= ?)}');
+												
+		$params = array(array($_main_data->get_id(), 		SQLSRV_PARAM_IN),
+					array($access_obj->get_id(), 				SQLSRV_PARAM_IN),
+					array($access_obj->get_ip(), 			SQLSRV_PARAM_IN));
+		
+		$query->set_params($params);			
+		$query->query();
+		
+		// Repopulate main data object with results from merge query.
+		// We can use common data here because all we need
+		// is the ID for redirection.
+		$query->get_line_params()->set_class_name($_layout->get_main_object_name());
+		$_main_data = $query->get_line_object();
+		
+		// Now that save operation has completed, reload page using ID from
+		// database. This ensures the ID is always up to date, even with a new
+		// or copied record.
+		header('Location: '.$_SERVER['PHP_SELF'].'?id_form='.$_layout->get_id());
+	}
 			
 	
 	///////////////
@@ -127,7 +162,7 @@
 			
 		case \dc\recordnav\COMMANDS::DELETE:						
 			
-			//action_delete();	
+			action_delete($_layout);	
 			break;				
 					
 		case \dc\recordnav\COMMANDS::SAVE:
