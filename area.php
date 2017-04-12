@@ -438,7 +438,7 @@
                 </div>
                 
                 <div class="form-group">       
-                    <label class="control-label col-sm-2" for="chemical_lab_class">Chemical Lab Class</label>
+                    <label class="control-label col-sm-2" for="chemical_lab_class"><a href="./?id_form=1170&amp;list=1" target="_new">Chemical Lab Class</a></label>
                     <div class="col-sm-10">
                     	<select
                             name 	= "chemical_lab_class"
@@ -476,7 +476,7 @@
                 </div>
                 
                 <div class="form-group">       
-                    <label class="control-label col-sm-2" for="nfpa45_lab_unit">NFPA45 Lab Unit</label>
+                    <label class="control-label col-sm-2" for="nfpa45_lab_unit"><a href="./?id_form=1608&amp;list=1" target="_new">NFPA45 Lab Unit</a></label>
                     <div class="col-sm-10">
                     	<select
                             name 	= "nfpa45_lab_unit"
@@ -630,7 +630,7 @@
                 </div>     
                 
                 <div class="form-group">       
-                    <label class="control-label col-sm-2" for="biosafety_level">Biosafety Level</label>
+                    <label class="control-label col-sm-2" for="biosafety_level"><a href="./?id_form=1169&amp;list=1" target="_new">Biosafety Level</a></label>
                     <div class="col-sm-10">
                     	<select
                             name 	= "biosafety_level"
@@ -681,7 +681,7 @@
                 </div>
                 
                 <div class="form-group" id="types-container">
-                	<label class="control-label col-sm-2" for=""><a href="area_type_list.php">Types</a></label>
+                	<label class="control-label col-sm-2" for=""><a href="./?id_form=1185&amp;list=1" target="_new">Types</a></label>
                     <div class="col-sm-10">
                         <ul class="checkbox">
                         <?php                              
