@@ -199,7 +199,7 @@
 			
 			function set_room_code($value)
 			{
-				$this->room_code = $value;
+				$this->room_code = trim($value);
 			}
 			
 			function set_use_code($value)
