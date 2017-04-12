@@ -467,12 +467,11 @@
                                                         <div class="form-group">
                                                             <label class="control-label col-sm-1" for="sub_detail_details_<?php echo $_obj_data_sub_detail->get_id_key(); ?>" title="Details and notes."><span class="glyphicon glyphicon-list-alt"></span></label>
                                                             <div class="col-sm-11">	
-                                                                <?php echo $_obj_data_sub_detail->get_details(); ?>								
-                                                                <input
-                                                                    type	= "hidden"
-                                                                    name 	= "sub_detail_details[]"
-                                                                    id		= "sub_detail_details<?php echo $_obj_data_sub_detail->get_id_key(); ?>" 	
-                                                                    value 	= <?php echo $_obj_data_sub_detail->get_details(); ?> />								   
+                                                                <?php echo $_obj_data_sub_detail->get_details(); ?>	
+                                                                <textarea
+                                                                  	name 	= "sub_detail_details[]"
+                                                                    id		= "sub_detail_details<?php echo $_obj_data_sub_detail->get_id_key(); ?>"
+                                                                    style	= "display:none"><?php echo $_obj_data_sub_detail->get_details(); ?></textarea>
                                                             </div>
                                                         </div>
                                             	<?php
