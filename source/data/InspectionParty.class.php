@@ -27,11 +27,14 @@ class InspectionParty extends Common implements iInspectionParty
 		$result = '<root>';
 		
 		if(is_array($this->party) === TRUE)			
-		{
-			
+		{			
 			foreach($this->party as $key => $id)
-			{								
-				$result .= '<row id="'.$id.'" />';									
+			{
+				// Only insert if there is a value.
+				if($id)
+				{								
+					$result .= '<row id="'.$id.'" />';
+				}
 			}			
 		}
 		
