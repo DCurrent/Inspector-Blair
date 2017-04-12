@@ -56,8 +56,7 @@
 			$building_code			= NULL,
 			$building_name			= NULL,
 			$chemical_lab_class		= NULL,
-			$chemical_operations_class = NULL,
-			//$code					= NULL,			
+			$chemical_operations_class = NULL,	
 			$department				= NULL,		
 			$ibc_protocal			= NULL,
 			$floor					= NULL,
@@ -84,11 +83,6 @@
 			{
 				return $this->building_name;
 			}
-			
-			//function get_code()
-			//{
-			//	return $this->code;
-			//}
 			
 			function get_department()
 			{
@@ -182,11 +176,6 @@
 				$this->building_name = $value;
 			}
 		
-			//function set_code($value)
-			//{
-			//	$this->code = $value;
-			//}
-			
 			function set_department($value)
 			{
 				$this->department = $value;
@@ -199,7 +188,7 @@
 			
 			function set_room_code($value)
 			{
-				$this->room_code = trim($value);
+				$this->room_code = $value;
 			}
 			
 			function set_use_code($value)
