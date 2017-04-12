@@ -239,9 +239,9 @@
                 <table class="table table-striped table-hover table-condensed" id="tbl_sub_party"> 
                     <thead>
                         <tr>
-                            <th>Responsible Party</th>
-                            <th><!--Party search button--></th>
-                            <th><!--ID, Delete Button--></th>                            
+                            <th><!-- Responsible Party --></th>
+                            <th><!-- Party search button --></th>
+                            <th><!-- ID, Delete Button --></th>                            
                         </tr>
                     </thead>
                     <tfoot>
@@ -263,7 +263,10 @@
                                 <tr>
                                     <td>
                                         <a href="./?id_form=1256&amp;id=<?php echo $_obj_data_sub_party->get_item(); ?>" target="_blank"><?php echo $_obj_data_sub_party->get_name_l().', '.$_obj_data_sub_party->get_name_f(); ?></a>
-                                    </td>                                    
+                                    </td>
+                                    <td>
+                                    	<!-- Party search goes here on new row adds  -->
+                                    </td>                                  
                                     <td style="width:1px">   
                                     	<input 
                                             type	="hidden" 
