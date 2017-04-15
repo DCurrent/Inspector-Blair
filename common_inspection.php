@@ -89,7 +89,7 @@
                                         data-toggle	= ""
                                         title		= "View location detail."
                                         target		= "_new" 
-                                        ><?php echo trim($building_code_display); ?></a></td>
+                                        ><?php echo $building_code_display; ?></a></td>
                                     </tr>
                                     
                                     <tr>
