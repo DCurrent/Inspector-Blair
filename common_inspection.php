@@ -73,7 +73,8 @@
             <label class="control-label col-sm-2" for="building">Location</label>
             	<div class="col-sm-10">
             		<?php 
-						if($_obj_data_sub_area_list->get_room_code())
+						$room_code = trim($_obj_data_sub_area_list->get_room_code());
+						if($room_code)
 						{
 					?>
                             <table class="table table-striped table-condensed">
@@ -84,7 +85,7 @@
                                 <tbody id="tbody_room_data" class="">
                                     <tr>
                                         <td>Area</td>
-                                        <td><a href = "area.php?id=<?php echo $_obj_data_sub_area_list->get_room_code();  ?>"
+                                        <td><a href = "area.php?id=<?php echo $room_code;  ?>"
                                         data-toggle	= ""
                                         title		= "View location detail."
                                         target		= "_new" 
