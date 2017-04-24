@@ -369,14 +369,16 @@
 			ob_start()
 			
 			?>
-			<button 
-                    type		="submit" 
-                    name		="command"                     	
-                    class		="btn btn-warning btn-responsive record_save" 
-                    title		="Save this record."
-                    value		="<?php echo \dc\recordnav\COMMANDS::SAVE; ?>"
-                    formaction	="<?php echo $url_query->return_url_encoded(); ?>"
-                    ><span class="glyphicon glyphicon-floppy-disk"></span></button>
+			<div class="btn-group">
+				<button 
+						type		="submit" 
+						name		="command"                     	
+						class		="btn btn-warning btn-responsive record_save" 
+						title		="Save this record."
+						value		="<?php echo \dc\recordnav\COMMANDS::SAVE; ?>"
+						formaction	="<?php echo $url_query->return_url_encoded(); ?>"
+						><span class="glyphicon glyphicon-floppy-disk"></span></button>
+			</div>
 			<?php
 			
 			// Get cache contents and clean the cache.
@@ -429,7 +431,7 @@
 			?>     
             <p><?php echo $this->dialog; ?></p>                       
                             
-            <div class="btn-group" >
+            <div class="btn-group btn-group-justified" >
                        
                 <?php
 					if($first === TRUE) 	echo $this->generate_command_first();
