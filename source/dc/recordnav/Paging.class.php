@@ -131,29 +131,33 @@
 			ob_start();
 			?>
             
-            <div class="btn-group">
+            <div class="btn-group btn-group-justified">
             
 			<?php
 			// First check to see if we are on page one. If we are then we don't need a link to the previous page or the first page 
 			// so we build dummy buttons. If we aren't (on first page) then we generate links to the first page, and to the previous page.
 			if ($this->page_current == 1) 
 			{
-			?> 
-            	<button 
-                    type		="button" 
-                    name		="paging_first"
-                    id			="paging_first"
-                    class		="btn btn-primary btn-sm disabled"  
-                    title		="Go to first page."
-                    ><span class="glyphicon glyphicon-fast-backward"></span></button>
+			?>
+           		<div class="btn-group"> 
+					<button 
+						type		="button" 
+						name		="paging_first"
+						id			="paging_first"
+						class		="btn btn-primary btn-sm disabled"  
+						title		="Go to first page."
+						><span class="glyphicon glyphicon-fast-backward"></span></button>
+				</div>
                 
-                <button 
-                    type		="button" 
-                    name		="paging_prev"
-                    id			="paging_prev"
-                    class		="btn btn-primary btn-sm disabled" 
-                    title		="Go to previous page."
-                    ><span class="glyphicon glyphicon-fast-backward"></span></button>
+                <div class="btn-group"> 
+					<button 
+						type		="button" 
+						name		="paging_prev"
+						id			="paging_prev"
+						class		="btn btn-primary btn-sm disabled" 
+						title		="Go to previous page."
+						><span class="glyphicon glyphicon-backward"></span></button>
+				</div>
 			<?php
             } 
 			else 
@@ -180,21 +184,26 @@
 			if ($this->page_current == $this->page_last) 
 			{
 			?>
-				<button 
-                    type		="button" 
-                    name		="paging_next"
-                    id			="paging_next"
-                    class		="btn btn-primary btn-sm disabled" 
-                    title		="Go to the next page."
-                    ><span class="glyphicon glyphicon-forward"></span></button>
+				<div class="btn-group">
+					<button 
+						type		="button" 
+						name		="paging_next"
+						id			="paging_next"
+						class		="btn btn-primary btn-sm disabled" 
+						title		="Go to the next page."
+						><span class="glyphicon glyphicon-forward"></span></button>
+				</div>
                 
-                <button 
-                    type		="button" 
-                    name		="paging_prev"
-                    id			="paging_prev"
-                    class		="btn btn-primary btn-sm disabled" 
-                    title		="Go to the last page."
-                    ><span class="glyphicon glyphicon-fast-forward"></span></button>
+                <div class="btn-group">
+					<button 
+						type		="button" 
+						name		="paging_prev"
+						id			="paging_prev"
+						class		="btn btn-primary btn-sm disabled" 
+						title		="Go to the last page."
+						><span class="glyphicon glyphicon-fast-forward"></span></button>
+				</div>
+           
             <?php
 			} 
 			else 
