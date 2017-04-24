@@ -423,7 +423,7 @@
                 <hr />
                 <div class="form-group">
                 	<div class="col-sm-12">
-                		<?php echo $obj_navigation_rec->get_markup_cmd_save_block(); ?>
+                		<?php echo $obj_navigation_rec->get_markup(); ?>
                 	</div>
                 </div>               
             </form>
