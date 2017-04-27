@@ -53,7 +53,7 @@
 					array($access_obj->get_ip(), 				SQLSRV_PARAM_IN),
 					array($_main_data->get_label(), 			SQLSRV_PARAM_IN),						
 					array($_main_data->get_details(),			SQLSRV_PARAM_IN),
-					array($_main_data->get_code(),				SQLSRV_PARAM_IN),
+					array($_main_data->get_room_code(),			SQLSRV_PARAM_IN),
 					array($_type_data->xml(),					SQLSRV_PARAM_IN),
 					array($_biological_agent_data->xml(),		SQLSRV_PARAM_IN),
 					array($_main_data->get_radiation_usage(),	SQLSRV_PARAM_IN),
@@ -66,7 +66,7 @@
 					array($_main_data->get_nfpa45_lab_unit(),		SQLSRV_PARAM_IN),
 					array($_main_data->get_hazardous_waste_generated(),		SQLSRV_PARAM_IN));
 		
-		var_dump($params);
+		//var_dump($params);
 		//exit;
 		
 		$query->set_params($params);			
@@ -379,12 +379,12 @@
                         <input 
                             type	="text" 
                             class	="form-control"  
-                            name	="code" 
-                            id		="code" 
+                            name	="room_code" 
+                            id		="room_code" 
                             placeholder="Room bar code." 
                             value="<?php echo trim($_main_data->get_room_code()); ?>">
                     </div>
-                </div>
+                </div> 
                 
                 <div class="form-group">       
                     <label class="control-label col-sm-2" for="label">Label</label>
