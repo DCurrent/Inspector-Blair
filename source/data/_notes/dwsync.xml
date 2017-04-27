@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <dwsync>
-<file name="Account.class.php" server="arftp.ad.uky.edu//ehs/" local="131347865930403162" remote="131347844400000000" Dst="2" />
-<file name="AccountGroup.class.php" server="arftp.ad.uky.edu//ehs/" local="131347865930428229" remote="131347844400000000" Dst="2" />
-<file name="AccountGroupMember.class.php" server="arftp.ad.uky.edu//ehs/" local="131347865930463326" remote="131347844400000000" Dst="2" />
-<file name="Area.class.php" server="arftp.ad.uky.edu//ehs/" local="131364992053101920" remote="131364847800000000" Dst="2" />
-<file name="AreaType.class.php" server="arftp.ad.uky.edu//ehs/" local="131347865930553621" remote="131347844400000000" Dst="2" />
-<file name="BiologicalAgent.class.php" server="arftp.ad.uky.edu//ehs/" local="131347865930699059" remote="131347844400000000" Dst="2" />
-<file name="BiologicalAgentHost.class.php" server="arftp.ad.uky.edu//ehs/" local="131347865930724126" remote="131347844400000000" Dst="2" />
-<file name="BiologicalAgentSub.class.php" server="arftp.ad.uky.edu//ehs/" local="131347865930749192" remote="131347844400000000" Dst="2" />
-<file name="Common.class.php" server="arftp.ad.uky.edu//ehs/" local="131347865930779276" remote="131347844400000000" Dst="2" />
-<file name="Master.class.php" server="arftp.ad.uky.edu//ehs/" local="131347865930809356" remote="131347844400000000" Dst="2" />
-<file name="AccountRole.class.php" server="arftp.ad.uky.edu//ehs/" local="131347865930493406" remote="131347844400000000" Dst="2" />
-<file name="AuditQuestion.class.php" server="arftp.ad.uky.edu//ehs/" local="131347865930573675" remote="131347844400000000" Dst="2" />
-<file name="AuditQuestionCategory.class.php" server="arftp.ad.uky.edu//ehs/" local="131347865930598733" remote="131347844400000000" Dst="2" />
-<file name="AuditQuestionInclusion.class.php" server="arftp.ad.uky.edu//ehs/" local="131347865930628813" remote="131347844400000000" Dst="2" />
-<file name="AuditQuestionRating.class.php" server="arftp.ad.uky.edu//ehs/" local="131347865930653884" remote="131347844400000000" Dst="2" />
-<file name="AuditQuestionReference.class.php" server="arftp.ad.uky.edu//ehs/" local="131347865930679018" remote="131347844400000000" Dst="2" />
-<file name="Inspection.class.php" server="arftp.ad.uky.edu//ehs/" local="131351367499193080" remote="131351223000000000" Dst="2" />
-<file name="InspectionDetail.class.php" server="arftp.ad.uky.edu//ehs/" local="131364090872606510" remote="131363946600000000" Dst="2" />
-<file name="InspectionVisit.class.php" server="arftp.ad.uky.edu//ehs/" local="131363424474088304" remote="131363280000000000" Dst="2" />
-<file name="InspectionParty.class.php" server="arftp.ad.uky.edu//ehs/" local="131364998577300170" remote="131364854400000000" Dst="2" />
-<file name="InspectionVisitSub.class.php" server="arftp.ad.uky.edu//ehs/" local="131363429949104373" remote="131363285400000000" Dst="2" />
-<file name="InspectionDetailSub.class.php" server="arftp.ad.uky.edu//ehs/" local="131363453552027345" remote="131363309400000000" Dst="2" />
+<file name="Account.class.php" server="ar08.uky.edu//ehs/" local="131371223383543957" remote="131347844400000000" Dst="2" />
+<file name="AccountGroup.class.php" server="ar08.uky.edu//ehs/" local="131371223383824120" remote="131347844400000000" Dst="2" />
+<file name="AccountRole.class.php" server="ar08.uky.edu//ehs/" local="131371223401759243" remote="131347844400000000" Dst="2" />
+<file name="Area.class.php" server="ar08.uky.edu//ehs/" local="131371223403018173" remote="131364847800000000" Dst="2" />
+<file name="AccountGroupMember.class.php" server="ar08.uky.edu//ehs/" local="131371223406750075" remote="131347844400000000" Dst="2" />
+<file name="AreaType.class.php" server="ar08.uky.edu//ehs/" local="131371223419866344" remote="131347844400000000" Dst="2" />
+<file name="AuditQuestion.class.php" server="ar08.uky.edu//ehs/" local="131371223420215647" remote="131347844400000000" Dst="2" />
+<file name="AuditQuestionCategory.class.php" server="ar08.uky.edu//ehs/" local="131371223429762257" remote="131347844400000000" Dst="2" />
+<file name="AuditQuestionInclusion.class.php" server="ar08.uky.edu//ehs/" local="131371223437391123" remote="131347844400000000" Dst="2" />
+<file name="AuditQuestionRating.class.php" server="ar08.uky.edu//ehs/" local="131371223441767484" remote="131347844400000000" Dst="2" />
+<file name="AuditQuestionReference.class.php" server="ar08.uky.edu//ehs/" local="131371223448989456" remote="131347844400000000" Dst="2" />
+<file name="BiologicalAgent.class.php" server="ar08.uky.edu//ehs/" local="131371223452720371" remote="131347844400000000" Dst="2" />
+<file name="BiologicalAgentHost.class.php" server="ar08.uky.edu//ehs/" local="131371223456129523" remote="131347844400000000" Dst="2" />
+<file name="BiologicalAgentSub.class.php" server="ar08.uky.edu//ehs/" local="131371223466745951" remote="131347844400000000" Dst="2" />
+<file name="Common.class.php" server="ar08.uky.edu//ehs/" local="131371223470556791" remote="131347844400000000" Dst="2" />
+<file name="Inspection.class.php" server="ar08.uky.edu//ehs/" local="131371615982840253" remote="131371471800000000" Dst="2" />
+<file name="InspectionDetail.class.php" server="ar08.uky.edu//ehs/" local="131371223487588185" remote="131363946600000000" Dst="2" />
+<file name="InspectionDetailSub.class.php" server="ar08.uky.edu//ehs/" local="131371223487818838" remote="131363309400000000" Dst="2" />
+<file name="InspectionParty.class.php" server="ar08.uky.edu//ehs/" local="131371223500782577" remote="131364854400000000" Dst="2" />
+<file name="InspectionVisit.class.php" server="ar08.uky.edu//ehs/" local="131371223509563264" remote="131363280000000000" Dst="2" />
+<file name="InspectionVisitSub.class.php" server="ar08.uky.edu//ehs/" local="131371223510967210" remote="131363285400000000" Dst="2" />
+<file name="Master.class.php" server="ar08.uky.edu//ehs/" local="131371223520010613" remote="131347844400000000" Dst="2" />
 </dwsync>

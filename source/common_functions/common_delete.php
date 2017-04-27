@@ -3,6 +3,9 @@
 	// Delete current record.
 	function common_delete()
 	{
+		// Set up account info.
+		$access_obj = new \dc\access\status();
+		
 		// Initialize database query object.
 		$query 	= new \dc\yukon\Database();
 		

@@ -1,6 +1,6 @@
 <?php
 
-function common_check_action($action = NULL)
+function common_check_action($action = NULL, $_layout = NULL)
 {
 	switch($action)
 	{		

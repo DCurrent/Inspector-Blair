@@ -3,12 +3,59 @@
 	require(__DIR__.'/source/main.php');
 	require(__DIR__.'/source/common_functions/common_check_action.php');
 	require(__DIR__.'/source/common_functions/common_security.php');
-	require_once(__DIR__.'/source/common_functions/common_list.php');
 	
+	$_page_config = new \dc\application\CommonEntryConfig();
+	
+	$_layout = $_page_config->create_config_object();
+
 	const LOCAL_STORED_PROC_NAME 	= 'area'; 	// Used to call stored procedures for the main record set of this script.
 	const LOCAL_BASE_TITLE 			= 'Area';	// Title display, button labels, instruction inserts, etc.
 	$primary_data_class				= '\data\Area';
 			
+	// common_list
+	// Caskey, Damon V.
+	// 2017-02-22
+	//
+	// Switch to list mode for a record. Verifies the list
+	// mode file exists first.
+	function action_list($_layout = NULL)
+	{				
+		// Final result, and the target forwarding destination.
+		$result 	= '#';
+	
+		// First thing we need is the self path.				
+		$file = filter_input(INPUT_SERVER, 'PHP_SELF', FILTER_SANITIZE_URL);
+		
+		// List giles are the name of a single record file
+		// with _list added on, so all we need to do is
+		// remove the file suffix, and add '_list.php' to
+		// get the list file's name. This is also all we
+		// need for forwarding purposes.	
+		$target_name	= basename($file, '.php').'_list.php';		
+		
+		// To verify the list file exists, we have to target the
+		// file system path. We can combine the document root
+		// and self's directory to get it.
+		$root			= filter_input(INPUT_SERVER, 'DOCUMENT_ROOT', FILTER_SANITIZE_URL);
+		$directory 		= dirname($file);
+		//$target_file	= $root.$directory.'/'.$target_name;		
+		$target_file	= $root.$directory.'/';
+		
+		// Does the list file exisit? If so we can
+		// redirect to it. Otherwise, do nothing.
+		if(file_exists($target_file))
+		{	
+			// Set target url.					
+			$result = $target_name;			
+		
+			// Direct to listing.				
+			header('Location: '.$result.'?id_form='.$_layout->get_id());
+		}
+		
+		// Return final result. 
+		return $result;
+	}
+
 	// Save this record.
 	function action_save()
 	{		
@@ -99,8 +146,28 @@
 	// Apply user action request (if any). Depending on the
 	// action, the page may be reloaded with the same or
 	// another ID.
-	common_check_action($obj_navigation_rec->get_action());
-	
+	switch($obj_navigation_rec->get_action())
+	{		
+		default:		
+		case \dc\recordnav\COMMANDS::NEW_BLANK:
+			break;
+			
+		case \dc\recordnav\COMMANDS::LISTING:
+							
+			action_list($_layout);
+			break;
+			
+		case \dc\recordnav\COMMANDS::DELETE:						
+			
+			action_delete();	
+			break;				
+					
+		case \dc\recordnav\COMMANDS::SAVE:
+			
+			action_save($_layout);			
+			break;			
+	}
+
 	// Last thing to do before moving on to main html is to get data to populate objects that
 	// will then be used to generate forms and subforms. This may have already been done, 
 	// such as when making copies of a record, but normally only a only blank object 

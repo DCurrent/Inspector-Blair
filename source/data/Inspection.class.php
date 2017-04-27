@@ -14,7 +14,7 @@
 		function set_inspection_type($value);	
 	}	
 
-	class Inspection extends Common implements iInspection
+	class Inspection extends Area implements iInspection
 	{	
 		protected
 			$status				= NULL,
