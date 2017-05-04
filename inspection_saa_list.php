@@ -299,14 +299,16 @@
                     <thead>
                         <tr>
                             <th><a href="<?php echo $sorting->sort_url(2); ?>">Revision <?php echo $sorting->sorting_markup(2); ?></a></th>
+                            <th><a href="<?php echo $sorting->sort_url(3); ?>">Area <?php echo $sorting->sorting_markup(3); ?></a></th>
                             <th><a href="<?php echo $sorting->sort_url(1); ?>">Label <?php echo $sorting->sorting_markup(1); ?></a></th>             
                         </tr>
                     </thead>
                     <tfoot>
                     	<tr>
                             <th><a href="<?php echo $sorting->sort_url(2); ?>">Revision <?php echo $sorting->sorting_markup(2); ?></a></th>
-                            <th><a href="<?php echo $sorting->sort_url(1); ?>">Label <?php echo $sorting->sorting_markup(1); ?></a></th          
-                        ></tr>
+                            <th><a href="<?php echo $sorting->sort_url(3); ?>">Area <?php echo $sorting->sorting_markup(3); ?></a></th>
+                            <th><a href="<?php echo $sorting->sort_url(1); ?>">Label <?php echo $sorting->sorting_markup(1); ?></a></th>
+                   		</tr>
                     </tfoot>
                     <tbody>                        
                         <?php
@@ -318,6 +320,11 @@
                             ?>
                                         <tr class="clickable-row" role="button" data-href="<?php echo $_obj_data_main->get_id(); ?>">
                                             <td><?php if(is_object($_obj_data_main->get_create_time()) === TRUE) echo date(APPLICATION_SETTINGS::TIME_FORMAT, $_obj_data_main->get_create_time()->getTimestamp()); ?></td>
+                                            <td><?php if(trim($_obj_data_main->get_room_code()))
+														{
+															echo $_obj_data_main->get_building_name().' - '.$_obj_data_main->get_room_id(); 
+														}
+													?></td>
                                             <td><?php echo $_obj_data_main->get_label(); ?></td>
                                         </tr>                                    
                             <?php								

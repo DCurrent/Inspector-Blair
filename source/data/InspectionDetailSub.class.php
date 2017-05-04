@@ -39,9 +39,31 @@
 				{							
 					$result .= '<row id="'.$id.'">';				
 					$result .= '<label>'.$this->label[$key].'</label>';
-					$result .= '<details>'.htmlspecialchars($this->details[$key]).'</details>';
+					
+					// Details might not be sent (if unchecked). Make sure
+					// to send an empty string.
+					if(array_key_exists($key, $this->details ))
+					{
+						$result .= '<details>'.htmlspecialchars($this->details[$key]).'</details>';
+					}
+					else
+					{
+						$result .= '<details></details>';
+					}
+					
 					$result .= '<correction>'.$this->correction[$key].'</correction>';
-					$result .= '<complete>'.$this->complete[$key].'</complete>';
+					
+					// Complete might not be sent (if unchecked). Make sure
+					// to send SOME value.
+					if(array_key_exists($key, $this->complete))
+					{
+						$result .= '<complete>'.$this->complete[$key].'</complete>';
+					}
+					else
+					{
+						$result .= '<complete>0</complete>';
+					}
+					
 					$result .= '</row>';									
 				}
 				

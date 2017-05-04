@@ -417,17 +417,15 @@
                     <thead>
                         <tr>
                             <th><a href="<?php echo $sorting->sort_url(1); ?>">Revision <?php echo $sorting->sorting_markup(1); ?></a></th>
-                            <th><a href="<?php echo $sorting->sort_url(3); ?>">Building <?php echo $sorting->sorting_markup(3); ?></a></th>
-                            <th><a href="<?php echo $sorting->sort_url(4); ?>">Floor <?php echo $sorting->sorting_markup(4); ?></a></th>
-                            <th><a href="<?php echo $sorting->sort_url(5); ?>">Room <?php echo $sorting->sorting_markup(5); ?></a></th>              
+                            <th><a href="<?php echo $sorting->sort_url(3); ?>">Location <?php echo $sorting->sorting_markup(3); ?></a></th>
+                            <th><a href="<?php echo $sorting->sort_url(4); ?>">Floor <?php echo $sorting->sorting_markup(4); ?></a></th>              
                         </tr>
                     </thead>
                     <tfoot>
                     	<tr>
                             <th><a href="<?php echo $sorting->sort_url(1); ?>">Revision <?php echo $sorting->sorting_markup(1); ?></a></th>
-                            <th><a href="<?php echo $sorting->sort_url(3); ?>">Building <?php echo $sorting->sorting_markup(3); ?></a></th>
-                            <th><a href="<?php echo $sorting->sort_url(4); ?>">Floor <?php echo $sorting->sorting_markup(4); ?></a></th>
-                            <th><a href="<?php echo $sorting->sort_url(5); ?>">Room <?php echo $sorting->sorting_markup(5); ?></a></th>              
+                            <th><a href="<?php echo $sorting->sort_url(3); ?>">Location <?php echo $sorting->sorting_markup(3); ?></a></th>
+                            <th><a href="<?php echo $sorting->sort_url(4); ?>">Floor <?php echo $sorting->sorting_markup(4); ?></a></th>              
                         </tr>
                     </tfoot>
                     <tbody>                        
@@ -440,9 +438,8 @@
                             ?>
                                         <tr class="clickable-row" role="button" data-href="<?php echo $_obj_data_main->get_id(); ?>">
                                             <td><?php if(is_object($_obj_data_main->get_create_time()) === TRUE) echo date(APPLICATION_SETTINGS::TIME_FORMAT, $_obj_data_main->get_create_time()->getTimestamp()); ?></td>
-                                            <td><?php echo $_obj_data_main->get_building_name(); ?></td>
+                                            <td><?php echo $_obj_data_main->get_building_name().' - '.$_obj_data_main->get_room_id(); ?></td>
                                             <td><?php echo $_obj_data_main->get_floor(); ?></td>
-                                            <td><?php echo $_obj_data_main->get_room_code(); ?></td>
                                         </tr>                                    
                             <?php								
                             	}

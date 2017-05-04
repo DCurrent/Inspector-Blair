@@ -169,6 +169,8 @@
 				echo $obj_navigation_main->get_markup_nav(); 
 			?>                                                                                
             
+            
+           
             <div class="page-header"> 
 				<?php 
                     if($_app_form_data->get_title())

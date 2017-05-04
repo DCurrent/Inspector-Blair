@@ -133,6 +133,11 @@
 					array($_sub_visit_data->xml(),	SQLSRV_PARAM_IN),
 					array($_sub_detail_data->xml(),	SQLSRV_PARAM_IN));
 		
+		
+		// For debugging.
+		//var_dump($params);
+		//exit;
+		
 		$query->set_params($params);
 		$query->query();
 		

@@ -301,10 +301,165 @@
                 
             </fieldset>    
         </div>  
-
-		<div class="form-group">       
+                               
+        <!--<div class="form-group">
+            <label class="control-label col-sm-2" for="name">Label:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control"  name="label" id="label" placeholder="Inspection Title" value="<?php echo $_main_data->get_label(); ?>">
+            </div>
+        </div>-->
+        
+        <!--Details-->
+            <div class="form-group">                    	
+                <div class="col-sm-offset-2 col-sm-10">
+                    <fieldset>
+                        <legend>Findings</legend>                                
+                        <table class="table table-striped table-hover table-condensed" id="tbl_sub_finding"> 
+                            <thead>
+                            </thead>
+                            <tfoot>
+                            </tfoot>
+                            <tbody class="tbody_finding">                        
+                                <?php                              
+                                if(is_object($_obj_data_sub_detail_list) === TRUE)
+                                {   
+                                    $details_counter = 0;
+									
+                                    //////////
+                                    // Audit item query. Since we are constructing markup as we go, 
+                                    // there's no getting around multiple executions, so we'll 
+                                    // prepare the query here with bound parameters for
+                                    // maximum speed and efficiency.
+                                    
+                                    // Bound parameters.
+                                    $query_audit_items_params			= array();
+                                    $query_audit_items_param_category 	= NULL;		
+                                    
+                                    // Set up a query object and send SQL string.
+                                    $query_audit_items = new \dc\yukon\Database();
+                                    $query_audit_items->set_sql('{call inspection_question_list_select(@category 	= ?,
+                                                                                        @inclusion	= ?)}');
+                                    
+                                    // Set up bound parameters.
+                                    $query_audit_items_params = array(array(&$query_audit_items_param_category, SQLSRV_PARAM_IN),
+                                                                    array(&$inspection_type, SQLSRV_PARAM_IN));
+                                    
+                                    // Prepare query for execution.
+                                    $query_audit_items->set_params($query_audit_items_params);
+                                    $query_audit_items->prepare();
+                                     
+                                    // Generate table row for each item in list.
+                                    for($_obj_data_sub_detail_list->rewind(); $_obj_data_sub_detail_list->valid(); $_obj_data_sub_detail_list->next())
+                                    {	
+										$details_counter++;
+										
+                                        $_obj_data_sub_detail = $_obj_data_sub_detail_list->current();
+                                    
+                                        // Blank IDs will cause a database error, so make sure there is a
+                                        // usable one here.
+                                        if(!$_obj_data_sub_detail->get_id_key()) $_obj_data_sub_party->set_id(\dc\yukon\DEFAULTS::NEW_ID);
+                                        
+                                    ?>
+                                        <tr>
+                                            <td> 
+                                            	<!-- Correction/finding -->
+                                                <div class="form-group">
+                                                    <label class="control-label col-sm-1" for="sub_detail_correction_<?php echo $_obj_data_sub_detail->get_id_key(); ?>" title="Finding."><span class="glyphicon glyphicon-wrench"></span></label>
+                                                    <div class="col-sm-11">	
+                                                    	<?php echo $_obj_data_sub_detail->get_finding(); ?>								
+                                                        <input
+                                                            type	= "hidden"
+                                                            name 	= "sub_detail_correction[]"
+                                                            id		= "sub_detail_correction_<?php echo $_obj_data_sub_detail->get_id_key(); ?>" 	
+                                                            value 	= <?php echo $_obj_data_sub_detail->get_correction(); ?> />								   
+                                                    </div>
+                                                </div> 
+                                                
+                                                <!-- Details -->
+                                                <?php
+													if($_obj_data_sub_detail->get_details())
+													{
+												?>
+                                                        <div class="form-group">
+                                                            <label class="control-label col-sm-1" for="sub_detail_details_<?php echo $_obj_data_sub_detail->get_id_key(); ?>" title="Details and notes."><span class="glyphicon glyphicon-list-alt"></span></label>
+                                                            <div class="col-sm-11">	
+                                                                <?php echo $_obj_data_sub_detail->get_details(); ?>	
+                                                            </div>
+                                                        </div>
+                                            	<?php
+													}
+												?>
+                                           		
+                                           		<div class="form-group">                       
+                                            		<label class="control-label col-sm-1" for="sub_detail_complete_<?php echo $_obj_data_sub_detail->get_id_key(); ?>" title="Complete: Select to indicate this particular correction has been rectified."><span class="glyphicon glyphicon-ok"></span></label>
+                                                    <div class="col-sm-11">
+                                                    	<?php
+															$finding_complete_0 = NULL;
+															$finding_complete_1 = NULL;
+															
+															if($_obj_data_sub_detail->get_complete())
+															{
+																$finding_complete_1 = 'selected';
+															}
+															else
+															{
+																$finding_complete_0 = 'selected';
+															}
+														?>       
+                                                        <select name="sub_detail_complete[]"
+                                                        		id	="sub_detail_complete_<?php echo $_obj_data_sub_detail->get_id_key(); ?>">
+															<option value = "0" <?php echo $finding_complete_0; ?>>Not Complete</option>
+                                                    		<option value = "1" <?php echo $finding_complete_1; ?>>Complete</option>
+														</select>
+                                                    </div>
+                                                </div>
+                                            </td>               
+                                                  
+                                            <td>
+                                            	<textarea
+													name 	= "sub_detail_details[]"
+													id		= "sub_detail_details_<?php echo $_obj_data_sub_detail->get_id_key(); ?>"
+													style	= "display:none"><?php echo $_obj_data_sub_detail->get_details(); ?></textarea>
+                                                                    
+                                            	<input 
+                                                    type	="hidden" 
+                                                    name	="sub_detail_id[]" 
+                                                    id		="sub_detail_id_<?php echo $_obj_data_sub_detail->get_id_key(); ?>" 
+                                                    value	="<?php echo $_obj_data_sub_detail->get_id_key(); ?>" />
+                                                
+                                                <button 
+                                                    type	="button" 
+                                                    class 	="btn btn-danger btn-sm pull-right" 
+                                                    name	="sub_detail_row_del" 
+                                                    id		="sub_detail_row_del_<?php echo $_obj_data_sub_detail->get_id_key(); ?>" 
+                                                    title	="Remove this item."
+                                                    onclick="deleteRow_sub_finding(this)"><span class="glyphicon glyphicon-minus"></span></button> 
+                                                        
+                                            </td>                                            
+                                        </tr>                                    
+                                <?php
+                                    }
+                                }
+                                ?>                        
+                            </tbody>                        
+                        </table>                            
+                        
+                        <button 
+                            type	="button" 
+                            class 	="btn btn-success" 
+                            name	="row_add" 
+                            id		="row_add_detail"
+                            title	="Add new item."
+                            onclick	="insRow_finding()">
+                            <span class="glyphicon glyphicon-plus"></span></button>
+                    </fieldset>
+                </div>                        
+            </div>
+ 		<!--/Details-->
+ 
+ 		<div class="form-group" id="fg_audits">       
        	  <div class="col-sm-2">
-            </div>                
+          </div>                
           <fieldset class="col-sm-10">
                 <legend>Audits</legend>
                                                 
@@ -391,154 +546,7 @@
                     onclick	="insRow_visit()">
                     <span class="glyphicon glyphicon-plus"></span></button>
             </fieldset>
-        </div>
-                                        
-        <!--<div class="form-group">
-            <label class="control-label col-sm-2" for="name">Label:</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control"  name="label" id="label" placeholder="Inspection Title" value="<?php echo $_main_data->get_label(); ?>">
-            </div>
-        </div>-->
-        
-        <!--Details-->
-            <div class="form-group">                    	
-                <div class="col-sm-offset-2 col-sm-10">
-                    <fieldset>
-                        <legend>Findings</legend>                                
-                        <table class="table table-striped table-hover table-condensed" id="tbl_sub_finding"> 
-                            <thead>
-                            </thead>
-                            <tfoot>
-                            </tfoot>
-                            <tbody class="tbody_finding">                        
-                                <?php                              
-                                if(is_object($_obj_data_sub_detail_list) === TRUE)
-                                {   
-                                    
-                                    //////////
-                                    // Audit item query. Since we are constructing markup as we go, 
-                                    // there's no getting around multiple executions, so we'll 
-                                    // prepare the query here with bound parameters for
-                                    // maximum speed and efficiency.
-                                    
-                                    // Bound parameters.
-                                    $query_audit_items_params			= array();
-                                    $query_audit_items_param_category 	= NULL;		
-                                    
-                                    // Set up a query object and send SQL string.
-                                    $query_audit_items = new \dc\yukon\Database();
-                                    $query_audit_items->set_sql('{call inspection_question_list_select(@category 	= ?,
-                                                                                        @inclusion	= ?)}');
-                                    
-                                    // Set up bound parameters.
-                                    $query_audit_items_params = array(array(&$query_audit_items_param_category, SQLSRV_PARAM_IN),
-                                                                    array(&$inspection_type, SQLSRV_PARAM_IN));
-                                    
-                                    // Prepare query for execution.
-                                    $query_audit_items->set_params($query_audit_items_params);
-                                    $query_audit_items->prepare();
-                                     
-                                    // Generate table row for each item in list.
-                                    for($_obj_data_sub_detail_list->rewind(); $_obj_data_sub_detail_list->valid(); $_obj_data_sub_detail_list->next())
-                                    {						
-                                        $_obj_data_sub_detail = $_obj_data_sub_detail_list->current();
-                                    
-                                        // Blank IDs will cause a database error, so make sure there is a
-                                        // usable one here.
-                                        if(!$_obj_data_sub_detail->get_id_key()) $_obj_data_sub_party->set_id(\dc\yukon\DEFAULTS::NEW_ID);
-                                        
-                                    ?>
-                                        <tr>
-                                            <td> 
-                                            	<!-- Correction/finding -->
-                                                <div class="form-group">
-                                                    <label class="control-label col-sm-1" for="sub_detail_correction_<?php echo $_obj_data_sub_detail->get_id_key(); ?>" title="Finding."><span class="glyphicon glyphicon-wrench"></span></label>
-                                                    <div class="col-sm-11">	
-                                                    	<?php echo $_obj_data_sub_detail->get_finding(); ?>								
-                                                        <input
-                                                            type	= "hidden"
-                                                            name 	= "sub_detail_correction[]"
-                                                            id		= "sub_detail_correction_<?php echo $_obj_data_sub_detail->get_id_key(); ?>" 	
-                                                            value 	= <?php echo $_obj_data_sub_detail->get_correction(); ?> />								   
-                                                    </div>
-                                                </div> 
-                                                
-                                                <!-- Details -->
-                                                <?php
-													if($_obj_data_sub_detail->get_details())
-													{
-												?>
-                                                        <div class="form-group">
-                                                            <label class="control-label col-sm-1" for="sub_detail_details_<?php echo $_obj_data_sub_detail->get_id_key(); ?>" title="Details and notes."><span class="glyphicon glyphicon-list-alt"></span></label>
-                                                            <div class="col-sm-11">	
-                                                                <?php echo $_obj_data_sub_detail->get_details(); ?>	
-                                                                <textarea
-                                                                  	name 	= "sub_detail_details[]"
-                                                                    id		= "sub_detail_details<?php echo $_obj_data_sub_detail->get_id_key(); ?>"
-                                                                    style	= "display:none"><?php echo $_obj_data_sub_detail->get_details(); ?></textarea>
-                                                            </div>
-                                                        </div>
-                                            	<?php
-													}
-												?>
-                                            </td>                          
-                                            <td>													
-                                            	<!-- Complete -->
-                                                <div class="form-group">                       
-                                            		<label class="control-label col-sm-1" for="sub_detail_complete_<?php echo $_obj_data_sub_detail->get_id_key(); ?>" title="Complete: Select to indicate this particular correction has been rectified."><span class="glyphicon glyphicon-ok"></span></label>
-                                                    <div class="col-sm-11">
-                                                    	<?php
-															$finding_complete = NULL;
-															
-															if($_obj_data_sub_detail->get_complete())
-															{
-																$finding_complete = 'checked';
-															}
-														?>                                                        
-                                                        <input type="checkbox" 
-                                                            name="sub_detail_complete[]"
-                                                            value = "1"
-                                                            id="sub_detail_complete_<?php echo $_obj_data_sub_detail->get_id_key(); ?>" title="Yes." <?php echo $finding_complete; ?>>
-                                                       
-                                                    </div>
-                                                </div>
-                                            </td>       
-                                            <td>
-                                            	<input 
-                                                    type	="hidden" 
-                                                    name	="sub_detail_id[]" 
-                                                    id		="sub_detail_id_<?php echo $_obj_data_sub_detail->get_id_key(); ?>" 
-                                                    value	="<?php echo $_obj_data_sub_detail->get_id_key(); ?>" />
-                                                
-                                                <button 
-                                                    type	="button" 
-                                                    class 	="btn btn-danger btn-sm pull-right" 
-                                                    name	="sub_detail_row_del" 
-                                                    id		="sub_detail_row_del_<?php echo $_obj_data_sub_detail->get_id_key(); ?>" 
-                                                    title	="Remove this item."
-                                                    onclick="deleteRow_sub_finding(this)"><span class="glyphicon glyphicon-minus"></span></button> 
-                                                        
-                                            </td>                                            
-                                        </tr>                                    
-                                <?php
-                                    }
-                                }
-                                ?>                        
-                            </tbody>                        
-                        </table>                            
-                        
-                        <button 
-                            type	="button" 
-                            class 	="btn btn-success" 
-                            name	="row_add" 
-                            id		="row_add_detail"
-                            title	="Add new item."
-                            onclick	="insRow_finding()">
-                            <span class="glyphicon glyphicon-plus"></span></button>
-                    </fieldset>
-                </div>                        
-            </div>
- 		<!--/Details-->
+        </div><!--/fg_audits-->
  
  <script src="../../libraries/javascript/options_update.js"></script>
  
@@ -811,19 +819,19 @@
                                         +'id	= "sub_detail_details_'+$temp_finding+'"></textarea>'
                                 +'</div>'
                             +'</div>'
-                        +'</td>'
-                        +'<td>'
-                            +'<div class="form-group"> '
+                        
+							+'<div class="form-group"> '                      
 								+'<label class="control-label col-sm-1" for="sub_detail_complete_'+$temp_finding+'" title="Complete: Select to indicate this particular correction has been rectified."><span class="glyphicon glyphicon-ok"></span></label> '
-								+'<div class="col-sm-11">'									
-									+'<input type="checkbox" ' 
-                                    	+'name="sub_detail_complete[]" '
-                                    	+'value = "1" '
-                                        +'id="sub_detail_complete_'+$temp_finding+'" '
-										+'title="Yes.">'								   
+								+'<div class="col-sm-11"> '								 
+									+'<select name="sub_detail_complete[]" id ="sub_detail_complete_'+$temp_finding+'">'
+										+'<option value = "0" selected>Not Complete</option>'
+										+'<option value = "1">Complete</option>'
+									+'</select>'
 								+'</div>'
-                            +'</div>'
-                        +'</td>'
+							+'</div>'
+					
+						+'</td>'
+                        
                         +'<td>'
 							+'<input ' 
                                 +'type	= "hidden" ' 

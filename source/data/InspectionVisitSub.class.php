@@ -26,6 +26,8 @@
 			
 		public function xml()
 		{
+			$result = NULL;
+			
 			if(is_array($this->id))
 			{
 			
@@ -37,9 +39,6 @@
 					$visit_by 	= $this->visit_by[$key];
 					$visit_type	= $this->visit_type[$key];
 						
-					if($visit_by == NULL) 	$visit_by 	= DB_DEFAULTS::NEW_ID;
-					if($visit_type == NULL) $visit_type = DB_DEFAULTS::NEW_ID;
-					
 					$result .= '<row id="'.$id.'">';				
 					$result .= '<label>'.$this->label[$key].'</label>';
 					$result .= '<details>'.htmlspecialchars($this->details[$key]).'</details>';

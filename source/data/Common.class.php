@@ -69,7 +69,12 @@
 				// pass it the $_REQUEST var (using $key string)
 				// as its value argument. 
 				if(isset($_REQUEST[$key]))
-				{					
+				{	
+					
+					// Debugging
+					// echo '<br /><br />'.$method.'<br />';					
+					// var_dump($_REQUEST[$key]);
+					
 					$target->$method($_REQUEST[$key]);					
 				}
 			}			
