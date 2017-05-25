@@ -12,11 +12,11 @@ abstract class DEFAULTS
 {
 	// Connection options.
 	const 
-		HOST 		= 'gensql.ad.uky.edu\general',		// Database host (server name or address)
-		NAME 		= 'inspection',			// Database logical name.
-		USER 		= 'EHSInfo_User',		// User name to access database.
-		PASSWORD	= 'ehsinfo',			// Password to access database.
-		CHARSET		= 'UTF-8';				// Character set.
+		HOST 		= '',		// Database host (server name or address)
+		NAME 		= '',		// Database logical name.
+		USER 		= '',		// User name to access database.
+		PASSWORD	= '',		// Password to access database.
+		CHARSET		= 'UTF-8';	// Character set.
 	
 	// Query options.
 	const 
