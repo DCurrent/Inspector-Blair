@@ -1,6 +1,3 @@
 [submodule "source/dc/Yukon"]
 	path = source/dc/Yukon
 	url = git://github.com/DCurrent/Yukon
-[submodule "dc/source/yukon"]
-	path = dc/source/yukon
-	url = git://github.com/dcurrent/yukon
