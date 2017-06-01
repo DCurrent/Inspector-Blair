@@ -53,16 +53,21 @@
 					
 					$result .= '<correction>'.$this->correction[$key].'</correction>';
 					
-					// Complete might not be sent (if unchecked). Make sure
-					// to send SOME value.
-					if(array_key_exists($key, $this->complete))
+					
+					// HTML radio buttons cannot be part of the 
+					// same array like other inputs since the name is what
+					// locks a group of radio buttons together. 
+					// That means we have to identify each set of radio
+					// buttons as a unique request and break them down
+					// here.
+					$complete = NULL;
+					
+					if(isset($_REQUEST['sub_detail_complete_'.$id]))
 					{
-						$result .= '<complete>'.$this->complete[$key].'</complete>';
+						$complete = $_REQUEST['sub_detail_complete_'.$id];
 					}
-					else
-					{
-						$result .= '<complete>0</complete>';
-					}
+							
+					$result .= '<complete>'.$complete.'</complete>';
 					
 					$result .= '</row>';									
 				}
