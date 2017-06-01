@@ -125,114 +125,82 @@
 				
 		public function generate_paging_markup()
 		{			
+			$i			= 0;
 			$url_query	= new \dc\url\URLFix;
+			$page_url	= NULL;
+			$active 	= NULL;
 		
 			// Start caching page contents.
 			ob_start();
 			?>
-            
-            <div class="btn-group btn-group-justified">
-            
+			
+			<ul class="pagination">
+			
 			<?php
-			// First check to see if we are on page one. If we are then we don't need a link to the previous page or the first page 
-			// so we build dummy buttons. If we aren't (on first page) then we generate links to the first page, and to the previous page.
-			if ($this->page_current == 1) 
+			$max_buttons = 7;
+			
+			/* if the page number is < 3, render the page number
+			// if the page number is within +-2 of the current page, render the page number
+			// if the page number is > the total number of pages -3 render the page number
+			// if the last page number wasn't rendered and dots haven't already been rendered render dots '...' do indicate a gap
+
+			for($i=1; $i <= $this->page_last; $i++)
 			{
-			?>
-           		<div class="btn-group"> 
-					<button 
-						type		="button" 
-						name		="paging_first"
-						id			="paging_first"
-						class		="btn btn-primary btn-sm disabled"  
-						title		="Go to first page."
-						><span class="glyphicon glyphicon-fast-backward"></span></button>
-				</div>
-                
-                <div class="btn-group"> 
-					<button 
-						type		="button" 
-						name		="paging_prev"
-						id			="paging_prev"
-						class		="btn btn-primary btn-sm disabled" 
-						title		="Go to previous page."
-						><span class="glyphicon glyphicon-backward"></span></button>
-				</div>
+				$url_query->set_data(self::REQUEST_KEY_PAGE_NUMBER, $i);				
+				$page_url = $url_query->return_url_encoded();
+				
+				// Reset active css.
+				$active = NULL;
+					
+				if($i == $this->page_current)
+				{
+					$active = 'active';
+				}
+				
+				if($i < ($max_buttons / 2))
+				{
+				?>
+					<li class = "<?php echo $active; ?>"><a href="<?php echo $page_url; ?>"><?php echo $i; ?></a></li>
+				<?php
+				}
+				else if($i == round ($max_buttons / 2, 0))
+				{
+				?>
+					<li class="disabled"><a href="<?php echo $page_url; ?>">...</a></li>
+				<?php
+				}
+							
+			}
+			*/
+				?>
+			
 			<?php
-            } 
-			else 
-			{				
-				// Build URL query.		
-				$url_query->set_data(self::REQUEST_KEY_PAGE_NUMBER, 1);			
-			?>
-            	<a                   
-                    class		="btn btn-primary btn-sm" 
-                    title		="Go to first page."
-                    href="<?php echo $url_query->return_url_encoded(); ?>"><span class="glyphicon glyphicon-fast-backward"></span></a>
-            <?php
-				// Build URL query.		
-				$url_query->set_data(self::REQUEST_KEY_PAGE_NUMBER, $this->page_current-1);
-			?>                
-               	<a 
-                   	class		="btn btn-primary btn-sm" 
-                    title		="Go to previous page." 
-                    href="<?php echo $url_query->return_url_encoded(); ?>"><span class="glyphicon glyphicon-backward"></span></a>
-			<?php
-            } 
-						
-			// This does the same as above, only checking if we are on the last page, and then generating the Next and Last links.
-			if ($this->page_current == $this->page_last) 
+			
+			// else do nothing
+			for($i=1; $i <= $this->page_last; $i++)
 			{
+				// Build URL query.		
+				$url_query->set_data(self::REQUEST_KEY_PAGE_NUMBER, $this->page_current);
+				$page_url = $url_query->return_url_encoded();
+				
+				// Reset active css.
+				$active = NULL;
+					
+				if($i == $this->page_current)
+				{
+					$active = 'active';
+				}
+				?>
+					<li class = "<?php echo $active; ?>"><a href="<?php echo $page_url; ?>"><?php echo $i; ?></a></li>
+				<?php	
+				
+			}
+			
 			?>
-				<div class="btn-group">
-					<button 
-						type		="button" 
-						name		="paging_next"
-						id			="paging_next"
-						class		="btn btn-primary btn-sm disabled" 
-						title		="Go to the next page."
-						><span class="glyphicon glyphicon-forward"></span></button>
-				</div>
-                
-                <div class="btn-group">
-					<button 
-						type		="button" 
-						name		="paging_prev"
-						id			="paging_prev"
-						class		="btn btn-primary btn-sm disabled" 
-						title		="Go to the last page."
-						><span class="glyphicon glyphicon-fast-forward"></span></button>
-				</div>
-           
-            <?php
-			} 
-			else 
-			{		
-				// Build URL query for "next" page.		
-				$url_query->set_data(self::REQUEST_KEY_PAGE_NUMBER, $this->page_current+1);							
-			?>
-            	<a                    
-                    class		="btn btn-primary btn-sm" 
-                    title		="Go to the next page."
-                    href="<?php echo $url_query->return_url_encoded(); ?>"><span class="glyphicon glyphicon-forward"></span></a>
+			</ul>
             
-			<?php
-				// Build URL query for "last" page.
-				$url_query->set_data(self::REQUEST_KEY_PAGE_NUMBER, $this->page_last);				
-			?>    
-                <a                    
-                    class		="btn btn-primary btn-sm" 
-                    title		="Go to the last page."
-                   	href="<?php echo $url_query->return_url_encoded(); ?>"><span class="glyphicon glyphicon-fast-forward"></span></a>
-            
-			<?php
-            }			
-			?>           
-            </div>
-            
-            <!--Current page inidicator-->
-            <br /><span class="text-muted">Page <?php echo $this->page_current; ?> of <?php echo $this->page_last; ?> (<?php echo $this->row_count_total; ?>
-            <?php echo ($this->row_count_total == 1 ? 'record' : 'records'); ?>)</span>
+			<!--Record count inidicator-->
+            <br /><span class="badge"><?php echo $this->row_count_total; ?>&nbsp;<?php echo ($this->row_count_total == 1 ? 'record' : 'records'); ?></span>
 			
 			<?php
 			
