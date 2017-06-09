@@ -288,8 +288,14 @@
 			// Get id we'll be using.
 			$id = $this->id_next;
 		
+			// If we're working on a new record, and user clicks the next button, we
+			// want to make sure the ID is not blank. Otherwise the next and 
+			// previous buttons will be "broken" until reset by user directly 
+			// locating a valid record.
+			if($this->id == \dc\yukon\DEFAULTS::NEW_ID) $id = \dc\yukon\DEFAULTS::NEW_ID;
+			
 			$url_query->set_data('id', $id);
-			$link = $url_query->return_url_encoded();		
+			$link = $url_query->return_url_encoded();			
 			$disabled = NULL;
 					
 				
