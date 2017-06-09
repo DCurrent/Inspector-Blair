@@ -296,8 +296,7 @@
 			
 			$url_query->set_data('id', $id);
 			$link = $url_query->return_url_encoded();			
-			$disabled = NULL;
-					
+			$disabled = NULL;					
 				
 			// Start caching.
 			ob_start()
@@ -305,7 +304,7 @@
 			?>               
                 <a href="<?php echo $link; ?>"                                                
                     class		="btn btn-primary btn-responsive <?php echo $disabled; ?>" 
-                    title		="Go to next record."
+                    title		="Go to the next record."
                     ><span class="glyphicon glyphicon-forward"></span></a>
 			<?php
 			
