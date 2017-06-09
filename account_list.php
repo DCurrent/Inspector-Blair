@@ -146,24 +146,21 @@
 <!DOCtype html>
 <html lang="en">
     <head>
-        <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1" />
+       	<meta charset="utf-8">
+    	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    	<meta name="viewport" content="width=device-width, initial-scale=1">
         <title><?php echo APPLICATION_SETTINGS::NAME. ', '.$_layout->get_title(); ?></title>        
         
-         <!-- Latest compiled and minified CSS -->
+        <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
         <link rel="stylesheet" href="source/css/style.css" />
         <link rel="stylesheet" href="source/css/print.css" media="print" />
         
-        
-  
-		
         <!-- jQuery library -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
         
         <!-- Latest compiled JavaScript -->
         <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-        
-        <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.js"></script>
         
     </head>
     
@@ -237,9 +234,10 @@
 				
 			?>
             
-            <p>
-            	<?php echo $paging->generate_paging_markup(); ?>
-            </p>
+            &nbsp;
+            <?php echo $paging->generate_paging_markup(); ?>
+            <br />
+            &nbsp;
           
             <div class="table-responsive">
                 <table id="tbl_account" class="table table-striped table-hover">
@@ -278,10 +276,13 @@
                     </tbody>                        
                 </table>
             </div>  
-            <?php 				
-				echo $paging->get_markup();
-				echo $navigation_obj->get_markup_footer(); 
-			?>
+                        
+            <?php echo $paging->get_markup(); ?>
+            <br />
+            &nbsp;
+			<?php echo $navigation_obj->get_markup_footer(); ?>
+       		<br />
+            &nbsp;			
         </div><!--container-->        
     <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

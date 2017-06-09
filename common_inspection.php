@@ -390,29 +390,27 @@
 													}
 												?>
                                            		
-                                           		<div class="form-group">                       
-                                            		<label class="control-label col-sm-1" for="sub_detail_complete_<?php echo $_obj_data_sub_detail->get_id_key(); ?>" title="Complete: Select to indicate this particular correction has been rectified."><span class="glyphicon glyphicon-ok"></span></label>
-                                                    <div class="col-sm-11">
-                                                    	<?php
-															$finding_complete_0 = NULL;
-															$finding_complete_1 = NULL;
-															
-															if($_obj_data_sub_detail->get_complete())
-															{
-																$finding_complete_1 = 'selected';
-															}
-															else
-															{
-																$finding_complete_0 = 'selected';
-															}
-														?>       
-                                                        <select name="sub_detail_complete[]"
-                                                        		id	="sub_detail_complete_<?php echo $_obj_data_sub_detail->get_id_key(); ?>">
-															<option value = "0" <?php echo $finding_complete_0; ?>>Not Complete</option>
-                                                    		<option value = "1" <?php echo $finding_complete_1; ?>>Complete</option>
-														</select>
-                                                    </div>
-                                                </div>
+                                           		<!-- Complete toggles. Current value: <?php echo $_obj_data_sub_detail->get_complete(); ?>-->
+												<div class="form-group">	
+													<label class="control-label col-sm-1" for="sub_detail_complete_<?php echo $_obj_data_sub_detail->get_id_key(); ?>" title="Complete: Select to indicate this particular correction has been rectified."><span class="glyphicon glyphicon-ok"></span></label>								
+													<div class="col-sm-11">
+														<label class="radio-inline"><input type="radio" 
+															class	= "sub_detail_complete_<?php echo $_obj_data_sub_detail->get_id_key(); ?>"
+															name	= "sub_detail_complete_<?php echo $_obj_data_sub_detail->get_id_key(); ?>"
+															id		= "sub_detail_complete_<?php echo $_obj_data_sub_detail->get_id_key(); ?>_1"
+															value	= "1"
+															required
+															<?php if($_obj_data_sub_detail->get_complete()){ echo ' checked'; } ?>><span class="glyphicon glyphicon-thumbs-up text-success" style="font-size:large;"></span></label>
+														&nbsp;
+														<label class="radio-inline"><input type	= "radio" 
+															class	= "sub_detail_complete_<?php echo $_obj_data_sub_detail->get_id_key(); ?>"
+															name	= "sub_detail_complete_<?php echo $_obj_data_sub_detail->get_id_key(); ?>" 
+															id		= "sub_detail_complete_<?php echo $_obj_data_sub_detail->get_id_key(); ?>_0"
+															value	= "0"
+															required
+															<?php if(!$_obj_data_sub_detail->get_complete()){ echo ' checked'; } ?>><span class="glyphicon glyphicon-thumbs-down text-danger" style="font-size:large;"></span></label>   
+													</div>
+												</div>
                                             </td>               
                                                   
                                             <td>
@@ -820,15 +818,24 @@
                                 +'</div>'
                             +'</div>'
                         
-							+'<div class="form-group"> '                      
-								+'<label class="control-label col-sm-1" for="sub_detail_complete_'+$temp_finding+'" title="Complete: Select to indicate this particular correction has been rectified."><span class="glyphicon glyphicon-ok"></span></label> '
-								+'<div class="col-sm-11"> '								 
-									+'<select name="sub_detail_complete[]" id ="sub_detail_complete_'+$temp_finding+'">'
-										+'<option value = "0" selected>Not Complete</option>'
-										+'<option value = "1">Complete</option>'
-									+'</select>'
-								+'</div>'
-							+'</div>'
+							+'<div class="form-group"> '	
+								+'<label class="control-label col-sm-1" for="sub_detail_complete_'+$temp_finding+'" title="Complete: Select to indicate this particular correction has been rectified."><span class="glyphicon glyphicon-ok"></span></label>'								
+								+ '<div class="col-sm-11"> '
+									+ '<label class="radio-inline"><input type="radio" '
+										+ 'class	= "sub_detail_complete_'+$temp_finding+'" '
+										+ 'name	= "sub_detail_complete_'+$temp_finding+'" '
+										+ 'id		= "sub_detail_complete_'+$temp_finding+'_1" '
+										+ 'value	= "1" '
+										+ 'required><span class="glyphicon glyphicon-thumbs-up text-success" style="font-size:large;"></span></label> '
+									+ '&nbsp;'
+									+ '<label class="radio-inline"><input type	= "radio" '
+										+ 'class	= "sub_detail_complete_'+$temp_finding+'" '
+										+ 'name	= "sub_detail_complete_'+$temp_finding+'" '
+										+ 'id		= "sub_detail_complete_'+$temp_finding+'_0" '
+										+ 'value	= "0" '
+										+ 'required checked><span class="glyphicon glyphicon-thumbs-down text-danger" style="font-size:large;"></span></label>'
+								+ '</div>'
+							+ '</div>'
 					
 						+'</td>'
                         

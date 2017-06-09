@@ -133,8 +133,9 @@
 			// Start caching page contents.
 			ob_start();
 			?>
-			
-			<ul class="pagination">
+			<nav aria-label="Record paging">
+		
+				<ul class="pagination">
 			
 			<?php
 			$max_buttons = 7;
@@ -180,7 +181,7 @@
 			for($i=1; $i <= $this->page_last; $i++)
 			{
 				// Build URL query.		
-				$url_query->set_data(self::REQUEST_KEY_PAGE_NUMBER, $this->page_current);
+				$url_query->set_data(self::REQUEST_KEY_PAGE_NUMBER, $i);
 				$page_url = $url_query->return_url_encoded();
 				
 				// Reset active css.
@@ -191,16 +192,17 @@
 					$active = 'active';
 				}
 				?>
-					<li class = "<?php echo $active; ?>"><a href="<?php echo $page_url; ?>"><?php echo $i; ?></a></li>
+					<li class = "page-item <?php echo $active; ?>"><a class="page-link" href="<?php echo $page_url; ?>"><?php echo $i; ?></a></li>
 				<?php	
 				
 			}
 			
 			?>
 			</ul>
+			</nav>
             
 			<!--Record count inidicator-->
-            <br /><span class="badge"><?php echo $this->row_count_total; ?>&nbsp;<?php echo ($this->row_count_total == 1 ? 'record' : 'records'); ?></span>
+            <span class="badge badge-default"><?php echo $this->row_count_total; ?>&nbsp;<?php echo ($this->row_count_total == 1 ? 'record' : 'records'); ?></span>
 			
 			<?php
 			
