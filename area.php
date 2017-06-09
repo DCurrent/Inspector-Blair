@@ -420,7 +420,9 @@
                     <label class="control-label col-sm-2" for="revision">Revision</label>
                     <div class="col-sm-10">
                         <p class="form-control-static"> 
-                        <?php if(is_object($_main_data->get_create_time()))
+                        <?php 	
+								// If this is a new or non-exisiting record, alert the user.
+								if(!($_main_data->get_id() < 0))
 								{
 								?>
                                 <a id="revision" href = "common_version_list.php?id=<?php echo $_main_data->get_id();  ?>"
@@ -433,7 +435,7 @@
 								else
 								{
 								?>
-                                	<span class="alert-success">New Record. Fill out form and save to create first revision.</span>
+                                	<span class="alert-success">New or unsaved record. Fill out form and save to create first revision.</span>
                                 <?php
 								}
 								?>
@@ -469,7 +471,13 @@
 							// Not a new GUID? Then echo the data.
 							if($_main_data->get_room_code())
 							{
-								echo trim($_main_data->get_room_id()).' - '.$_main_data->get_use_description_short(); 
+								echo trim($_main_data->get_room_id());
+								
+								// Add description if it is available.
+								if($_main_data->get_use_description_short())
+								{
+									echo ' - '.$_main_data->get_use_description_short();
+								}				
 							}
 						?>
                     </div>
