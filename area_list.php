@@ -435,8 +435,18 @@
 								for($_obj_data_main_list->rewind(); $_obj_data_main_list->valid(); $_obj_data_main_list->next())
 								{						
 									$_obj_data_main = $_obj_data_main_list->current();
+									
+									$_class_addition = NULL;
+									
+									// If this is a record that does not exist in 
+									// the local database, let's alert the user
+									// by adding a visual touch.
+									if($_obj_data_main->get_id() == \dc\yukon\DEFAULTS::NEW_ID)
+									{
+										$_class_addition = 'alert-info';
+									}
                             ?>
-                                        <tr class="clickable-row" role="button" data-href="<?php echo $_obj_data_main->get_id(); ?>&amp;room_code=<?php echo $_obj_data_main->get_room_code(); ?>">
+                                        <tr class="clickable-row <?php echo $_class_addition; ?>" role="button" data-href="<?php echo $_obj_data_main->get_id(); ?>&amp;room_code=<?php echo $_obj_data_main->get_room_code(); ?>">
                                             <td><?php if(is_object($_obj_data_main->get_create_time()) === TRUE) echo date(APPLICATION_SETTINGS::TIME_FORMAT, $_obj_data_main->get_create_time()->getTimestamp()); ?></td>
                                             <td><?php echo $_obj_data_main->get_building_name().' - '.$_obj_data_main->get_room_id(); ?></td>
                                             <td><?php echo $_obj_data_main->get_floor(); ?></td>
