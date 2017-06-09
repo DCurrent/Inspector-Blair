@@ -225,9 +225,11 @@
 	
 	// Set up primary query with parameters and arguments.
 	$query->set_sql('{call '.LOCAL_STORED_PROC_NAME.'(@param_filter_id = ?,
-									@param_filter_id_key = ?)}');
+									@param_filter_id_key 	= ?,
+									@param_filter_room_code = ?)}');
 	$params = array(array($_main_data->get_id(), 		SQLSRV_PARAM_IN),
-					array($_main_data->get_id_key(), 	SQLSRV_PARAM_IN));
+					array($_main_data->get_id_key(), 	SQLSRV_PARAM_IN),
+				   array($_main_data->get_room_code(), 	SQLSRV_PARAM_IN));
 
 	// Apply arguments and execute query.
 	$query->set_params($params);

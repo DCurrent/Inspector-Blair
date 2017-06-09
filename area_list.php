@@ -436,7 +436,7 @@
 								{						
 									$_obj_data_main = $_obj_data_main_list->current();
                             ?>
-                                        <tr class="clickable-row" role="button" data-href="<?php echo $_obj_data_main->get_id(); ?>">
+                                        <tr class="clickable-row" role="button" data-href="<?php echo $_obj_data_main->get_id(); ?>&amp;room_code=<?php echo $_obj_data_main->get_room_code(); ?>">
                                             <td><?php if(is_object($_obj_data_main->get_create_time()) === TRUE) echo date(APPLICATION_SETTINGS::TIME_FORMAT, $_obj_data_main->get_create_time()->getTimestamp()); ?></td>
                                             <td><?php echo $_obj_data_main->get_building_name().' - '.$_obj_data_main->get_room_id(); ?></td>
                                             <td><?php echo $_obj_data_main->get_floor(); ?></td>
