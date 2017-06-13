@@ -78,7 +78,7 @@ class Chronofix implements iChronofix
 			// it is a valid date, pass on as a result.
 			if($this->is_valid($time_str))
 			{				
-				$obj_date = new DateTime($time_str);
+				$obj_date = new \DateTime($time_str);
 			
 				$result = $obj_date->format($this->settings->get_format());
 			}
@@ -98,7 +98,7 @@ class Chronofix implements iChronofix
 	
 		// Create a date object from date
 		// string based on format.						
-		$date = DateTime::createFromFormat($this->settings->get_format(), $value);
+		$date = \DateTime::createFromFormat($this->settings->get_format(), $value);
 		
 		// Date object valid?
 		if($date)
