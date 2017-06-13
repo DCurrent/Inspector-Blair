@@ -3,12 +3,11 @@
 	require_once(__DIR__.'/source/main.php');
 	require_once(__DIR__.'/source/common_functions/common_security.php');	
 	
-	class class_filter_control
+	class class_filter_control extends \data\AuditQuestion
 	{
 		const _DATE_FORMAT  = 'Y-m-d H:i:s'; 
 		
 		private			
-			$data_common = NULL,
 			$building	= NULL,
 			$floor		= NULL,
 			$time_obj	= NULL,
@@ -16,22 +15,11 @@
 			$time_start	= NULL;
 		
 		public function __construct(\dc\chronofix\Chronofix $iChronofix)
-		{
-			$this->data_common = new \data\Common();
+		{			
 			$this->time_obj = $iChronofix;	
 		}
 		
-		// Accessors
-		public function get_data_common()
-		{
-			return $this->data_common;
-		}
-		
-		public function get_id()
-		{
-			return $this->data_common->get_id();
-		}
-		
+		// Accessors		
 		public function get_time_end()
 		{
 			return $this->time_end;
@@ -63,12 +51,7 @@
 			
 			// Set member.			
 			$this->time_start = $this->time_obj->get_time();	
-		}
-		
-		public function populate_from_request()
-		{
-			$this->data_common->populate_from_request();
-		}
+		}	
 	} 
 	
 	// Get page configuration (title, description, query names, etc.)
