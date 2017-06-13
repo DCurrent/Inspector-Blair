@@ -121,7 +121,8 @@
 								@param_category				= ?,
 								@param_inclusion			= ?,
 								@param_rating				= ?,
-								@param_reference			= ?)}');
+								@param_reference			= ?,
+								@param_status				= ?)}');
 												
 		$params = array(array('<root><row id="'.$_main_data->get_id().'"/></root>', 		SQLSRV_PARAM_IN),
 					array($access_obj->get_id(), 				SQLSRV_PARAM_IN),
@@ -133,7 +134,8 @@
 					array($_category->xml(),				SQLSRV_PARAM_IN),
 					array($_inclusion->xml(),				SQLSRV_PARAM_IN),
 					array($_rating->xml(),					SQLSRV_PARAM_IN),
-					array($_reference->xml(), 				SQLSRV_PARAM_IN));
+					array($_reference->xml(), 				SQLSRV_PARAM_IN),
+					array($_main_data->get_status(),		SQLSRV_PARAM_IN));
 		
 		var_dump($params);
 		
@@ -417,6 +419,25 @@
                     	</p>
                     </div>
                 </div>
+                
+                <div class="form-group" id="fg_status">	
+					<label class="control-label col-sm-2" for="status" title="">Status</label>								
+					<div class="col-sm-10">
+						<label class="radio-inline"><input type="radio" 
+							name	= "status"
+							id		= "status_1"
+							value	= "1"
+							required
+							<?php if($_main_data->get_status()){ echo ' checked'; } ?>>Active</label>
+						&nbsp;
+						<label class="radio-inline"><input type	= "radio"							
+							name	= "status" 
+							id		= "status_0"
+							value	= "0"
+							required
+							<?php if(!$_main_data->get_status()){ echo ' checked'; } ?>>Inactive</label>   
+					</div>
+				</div><!--#fg_status-->
                 
                 <div class="form-group">
                 	<label class="control-label col-sm-2" for="finding">Finding:</label>
