@@ -295,7 +295,7 @@
           	<?php echo $paging->generate_paging_markup(); ?>
             
             <!--div class="table-responsive"-->
-                <table class="table table-striped table-hover">
+                <table class="table table-hover">
                     <thead>
                         <tr>
                             <th><a href="<?php echo $sorting->sort_url(2); ?>">Revision <?php echo $sorting->sorting_markup(2); ?></a></th>
@@ -315,8 +315,18 @@
 								for($_obj_data_main_list->rewind(); $_obj_data_main_list->valid(); $_obj_data_main_list->next())
 								{						
 									$_obj_data_main = $_obj_data_main_list->current();
+									
+									$_class_addition = NULL;
+									
+									// If this is a record that is marked
+									// inactive, let's give the user a
+									// heads up.
+									if(!$_obj_data_main->get_status())
+									{
+										$_class_addition = 'alert-info';
+									}
                             ?>
-                                        <tr class="clickable-row" role="button" data-href="<?php echo $_obj_data_main->get_id(); ?>">
+                                        <tr class="clickable-row <?php echo $_class_addition; ?>" role="button" data-href="<?php echo $_obj_data_main->get_id(); ?>">
                                             <td><?php if(is_object($_obj_data_main->get_create_time()) === TRUE) echo date(APPLICATION_SETTINGS::TIME_FORMAT, $_obj_data_main->get_create_time()->getTimestamp()); ?></td>
                                             <td><?php echo $_obj_data_main->get_finding(); ?></td>
                                         </tr>                                    

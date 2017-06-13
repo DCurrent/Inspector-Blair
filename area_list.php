@@ -223,7 +223,7 @@
                         </h4>
                     </div><!--#filter_header-->
                 
-                	<div style="" id="collapse_module_1" class="panel-collapse collapse" id="filter_collapse">
+                	<div id="collapse_module_1" class="panel-collapse collapse" id="filter_collapse">
                         <div class="panel-body" id="filter_body">                         
                                                        
                             <form class="form-horizontal" role="form" id="form_filter" method="get">
@@ -413,7 +413,7 @@
           	<?php echo $paging->generate_paging_markup(); ?>
             
             <!--div class="table-responsive"-->
-                <table class="table table-striped table-hover">
+                <table class="table table-hover">
                     <thead>
                         <tr>
                             <th><a href="<?php echo $sorting->sort_url(1); ?>">Revision <?php echo $sorting->sorting_markup(1); ?></a></th>
