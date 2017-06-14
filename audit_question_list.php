@@ -94,14 +94,16 @@
 										@param_sort_field	= ?,
 										@param_sort_order	= ?,
 										@param_date_start	= ?,
-										@param_date_end		= ?)}');	
+										@param_date_end		= ?,
+										@param_status		= ?)}');	
 	
 	$params = array(array($paging->get_page_current(), 			SQLSRV_PARAM_IN), 
 					array($paging->get_row_max(), 				SQLSRV_PARAM_IN),
 					array($sorting->get_sort_field(),			SQLSRV_PARAM_IN),
 					array($sorting->get_sort_order(),			SQLSRV_PARAM_IN),
 					array($filter_control->get_time_start(),	SQLSRV_PARAM_IN),
-					array($filter_control->get_time_end(),		SQLSRV_PARAM_IN));
+					array($filter_control->get_time_end(),		SQLSRV_PARAM_IN),
+					array($filter_control->get_status(),		SQLSRV_PARAM_IN));
 
 	// Debugging tools
 	//var_dump($params);
@@ -208,6 +210,51 @@
                                             value="<?php echo $filter_control->get_time_end(); ?>">
                                     </div>
                                 </div><!--#group_filter_time-->
+                                
+                                <?php
+									
+									$check_active	= NULL;
+									$check_inactive	= NULL;
+									$check_all		= NULL;
+								
+									// What is status filter state. We have
+									// to evaluate 0, not just lack of 1.
+									if($filter_control->get_status() == 1)
+									{
+										$check_active	= ' checked';
+									}
+									else if($filter_control->get_status() === 0)
+									{
+										$check_inactive = ' checked';
+									}
+									else
+									{
+										$check_all = ' checked';
+									}									
+								?>
+                                        
+                                <div class="form-group" id="filter_status">	
+									<label class="control-label col-sm-2" for="status" title="">Status</label>								
+									<div class="col-sm-10">
+										<label class="radio-inline"><input type="radio" 
+											name	= "status"
+											id		= "status_1"
+											value	= "1"											
+											<?php echo $check_active; ?>>Active</label>
+										&nbsp;
+										<label class="radio-inline"><input type	= "radio"							
+											name	= "status" 
+											id		= "status_0"
+											value	= "0"											
+											<?php echo $check_inactive; ?>>Inactive</label>
+										&nbsp;
+										<label class="radio-inline"><input type	= "radio"							
+											name	= "status" 
+											id		= "status_All"
+											value	= "-1"											
+											<?php echo $check_all; ?>>All</label>   
+									</div>
+								</div><!--#filter_status-->
                                 
                                 <button 
                                     type	="submit"

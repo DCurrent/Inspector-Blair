@@ -1,3 +1,4 @@
+
 SET ANSI_NULLS ON
 GO
 
@@ -12,7 +13,7 @@ CREATE TABLE [dbo].[tbl_audit_question](
 	[details] [varchar](max) NULL,
 	[finding] [varchar](max) NULL,
 	[corrective_action] [varchar](max) NULL,
-	[status] [bit] NULL,
+	[status] [smallint] NULL,
  CONSTRAINT [PK__tbl_audi__3213E83F0BB1B5A5] PRIMARY KEY CLUSTERED 
 (
 	[id_key] ASC
