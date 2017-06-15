@@ -12,7 +12,8 @@
 			$floor		= NULL,
 			$time_obj	= NULL,
 			$time_end 	= NULL,
-			$time_start	= NULL;
+			$time_start	= NULL,
+			$category	= NULL;
 		
 		public function __construct(\dc\chronofix\Chronofix $iChronofix)
 		{			
@@ -30,7 +31,21 @@
 			return $this->time_start;
 		}
 		
+		public function get_category()
+		{
+			if(!$this->category)
+			{
+				return -1;
+			}
+			return $this->category;
+		}
+		
 		// Mutators
+		public function set_category($value)
+		{ 
+			$this->category = $value;
+		}
+		
 		public function set_time_end($value)
 		{
 			// Run time through sanitizer to 
@@ -52,7 +67,7 @@
 			// Set member.			
 			$this->time_start = $this->time_obj->get_time();	
 		}	
-	} 
+	}
 	
 	// Get page configuration (title, description, query names, etc.)
 	$_page_config = new \dc\application\CommonEntryConfig();	
@@ -82,7 +97,7 @@
 	
 	// Set up database.
 	$query = new \dc\yukon\Database();
-		
+	
 	$paging = new \dc\recordnav\Paging();
 	$paging->set_row_max(APPLICATION_SETTINGS::PAGE_ROW_MAX);
 	
@@ -95,7 +110,8 @@
 										@param_sort_order	= ?,
 										@param_date_start	= ?,
 										@param_date_end		= ?,
-										@param_status		= ?)}');	
+										@param_status		= ?,
+										@param_category		= ?)}');	
 	
 	$params = array(array($paging->get_page_current(), 			SQLSRV_PARAM_IN), 
 					array($paging->get_row_max(), 				SQLSRV_PARAM_IN),
@@ -103,7 +119,8 @@
 					array($sorting->get_sort_order(),			SQLSRV_PARAM_IN),
 					array($filter_control->get_time_start(),	SQLSRV_PARAM_IN),
 					array($filter_control->get_time_end(),		SQLSRV_PARAM_IN),
-					array($filter_control->get_status(),		SQLSRV_PARAM_IN));
+					array($filter_control->get_status(),		SQLSRV_PARAM_IN),
+				   	array($filter_control->get_category(),		SQLSRV_PARAM_IN));
 
 	// Debugging tools
 	//var_dump($params);
@@ -122,6 +139,28 @@
 	
 	//$_obj_data_paging = new \dc\recordnav\Paging();
 	if($query->get_row_exists()) $paging = $query->get_line_object();
+
+	// Filter list population.
+	// Categories
+		$query->set_sql('{call audit_question_category_list(@param_page_current 		= ?,
+															@param_page_rows			= ?)}');											
+		$page_last 	= NULL;
+		$row_count 	= NULL;		
+		
+		$inspection_type = $_layout->get_id();
+		
+		$params = array(array(-1,			SQLSRV_PARAM_IN),
+						array(NULL,			SQLSRV_PARAM_IN));
+
+		$query->set_params($params);
+		$query->query();
+		
+		$query->get_line_params()->set_class_name('\data\Common');
+		
+		$_obj_field_source_category_list = new SplDoublyLinkedList();
+		if($query->get_row_exists() === TRUE) $_obj_field_source_category_list = $query->get_line_object_list();
+
+
 ?>
 
 <!DOCtype html>
@@ -211,6 +250,40 @@
                                     </div>
                                 </div><!--#group_filter_time-->
                                 
+                                <div class="form-group">
+                                    <label class="control-label col-sm-2" for="category">Category</label>
+                                    <div class="col-sm-10">
+                                        <select name="category" 
+                                            id="category" 
+                                            data-current="" 
+                                            class="form-control">
+                                              	<option value="-1" selected>All</option>
+                                               	<?php
+                                                if(is_object($_obj_field_source_category_list) === TRUE)
+                                                {        
+                                                    // Generate table row for each item in list.
+                                                    for($_obj_field_source_category_list->rewind();	$_obj_field_source_category_list->valid(); $_obj_field_source_category_list->next())
+                                                    {	                                                               
+                                                        $_obj_field_source_category = $_obj_field_source_category_list->current();
+                                                        
+														$sub_category_selected = NULL;
+														
+														if($_obj_field_source_category->get_id() == $filter_control->get_category())
+														{
+															$sub_category_selected = ' selected ';
+														}
+														
+                                                        ?>
+                                                        <option value="<?php echo $_obj_field_source_category->get_id(); ?>" <?php echo $sub_category_selected; ?>><?php echo $_obj_field_source_category->get_label(); ?></option>
+                                                        <?php                                
+                                                    }
+                                                }
+                                                ?>                                                                            
+                                        </select>
+                                    </div>                
+                                </div>
+                                
+                                <!-- Status filter -->
                                 <?php
 									
 									$check_active	= NULL;
