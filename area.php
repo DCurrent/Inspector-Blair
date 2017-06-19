@@ -19,7 +19,7 @@
 		$access_obj = new \dc\access\status();
 		
 		// Initialize database query object.
-		$query 	= new \dc\yukon\Database();
+		$query 	= new \dc\yukon\Database($yukon_connection);
 		
 		// Initialize main data class and populate it from
 		// post variables. All we need is the ID, so
@@ -93,7 +93,7 @@
 	function action_save()
 	{		
 		// Initialize database query object.
-		$query 	= new \dc\yukon\Database();
+		$query 	= new \dc\yukon\Database($yukon_connection);
 		
 		// Set up account info.
 		$access_obj = new \dc\access\status();
@@ -214,7 +214,7 @@
 	// has been an object established at some point above.
 	
 	// Initialize database query object.
-	$query 	= new \dc\yukon\Database();
+	$query 	= new \dc\yukon\Database($yukon_connection);
 	
 	// Initialize a blank main data object.
 	$_main_data = new $primary_data_class();	

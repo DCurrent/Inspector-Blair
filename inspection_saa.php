@@ -14,7 +14,7 @@
 		$access_obj = new \dc\access\status();
 		
 		// Initialize database query object.
-		$query 	= new \dc\yukon\Database();
+		$query 	= new \dc\yukon\Database($yukon_connection);
 		
 		// Initialize main data class and populate it from
 		// post variables. All we need is the ID, so
@@ -88,7 +88,7 @@
 	function action_save($_layout = NULL)
 	{		
 		// Initialize database query object.
-		$query 	= new \dc\yukon\Database();
+		$query 	= new \dc\yukon\Database($yukon_connection);
 		
 		// Set up account info.
 		$access_obj = new \dc\access\status();
@@ -195,7 +195,7 @@
 	}
 	
 	// Initialize database query object.
-	$query 	= new \dc\yukon\Database();
+	$query 	= new \dc\yukon\Database($yukon_connection);
 	
 	// Class name has to be populated into local var to
 	// be instantiated.
@@ -310,7 +310,7 @@
 		$query_audit_items_param_category 	= NULL;		
 		
 		// Set up a query object and send SQL string.
-		$query_audit_items = new \dc\yukon\Database();
+		$query_audit_items = new \dc\yukon\Database($yukon_connection);
 		$query_audit_items->set_sql('{call inspection_question_list_select(@category 	= ?,
 															@inclusion	= ?)}');
 		

@@ -40,7 +40,7 @@
 	$obj_navigation_main->generate_markup_footer();	
 				
 	// Set up database.
-	$query = new \dc\yukon\Database();		
+	$query = new \dc\yukon\Database($yukon_connection);		
 			
 	// Record navigation.
 	$obj_navigation_rec = new \dc\recordnav\RecordNav();	

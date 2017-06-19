@@ -40,7 +40,7 @@
 	}
 
 	// Set up database.	
-	$query = new \dc\yukon\Database();
+	$query = new \dc\yukon\Database($yukon_connection);
 	
 	// Open local parameters collection object.
 	$_obj_params = new local_class_saa_corrections_params();
@@ -112,7 +112,7 @@
 	$query_audit_items_param_category 	= NULL;		
 	
 	// Set up a query object and send SQL string.
-	$query_audit_items = new \dc\yukon\Database();
+	$query_audit_items = new \dc\yukon\Database($yukon_connection);
 	$query_audit_items->set_sql('{call inspection_question_list_select(@category 	= ?,
 														@inclusion	= ?)}');
 	

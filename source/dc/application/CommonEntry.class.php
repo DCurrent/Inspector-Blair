@@ -4,7 +4,8 @@
 	
 	interface iCommonEntry
 	{
-		// Accessors
+		// Accessors		
+		function get_database_connection();
 		function get_description();
 		function get_file_name();
 		function get_id_form();
@@ -13,20 +14,22 @@
 		function get_slug();
 		function get_title();
 		
-		// Mutators
+		// Mutators		
+		function set_database_connection($value);
 		function set_description($value);
 		function set_file_name($value);
 		function set_id_form($value);
 		function set_main_sql_name($value);
 		function set_main_object_name($value);
 		function set_slug($value);
-		function set_title($value);	
+		function set_title($value);
 	}
 	
 	class CommonEntry extends \data\Common implements iCommonEntry
 	{
 		protected
-			$create_time		= NULL,
+			$create_time			= NULL,
+			$database_connection	= NULL,
 			$description		= NULL,
 			$file_name			= NULL,		// If provided, redirect here instead of the common form.
 			$id_form			= NULL,		// Same as ID - used to avoid name conflict with record ID in a form's URL query string.
@@ -35,8 +38,14 @@
 			$slug				= NULL,
 			$title				= NULL;		// Title the form will display.
 		
-		public function __construct()
-		{			
+		public function __construct($database_connection = NULL)
+		{
+			$this->database_connection = $database_connection;
+		}
+		
+		public function get_database_connection()
+		{
+			return $this->database_connection;
 		}
 		
 		// Accessors
@@ -75,7 +84,12 @@
 			return $this->title;
 		}
 		
-		// Mutators			
+		// Mutators	
+		public function set_database_connection($value)
+		{
+			$this->database_connection = $value;
+		}
+		
 		public function set_description($value)
 		{
 			$this->description = $value;	

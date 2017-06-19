@@ -3,6 +3,8 @@
 	require(__DIR__.'/settings.php');				// User defined settings.
 	require(__DIR__.'/navigation.php');	
 	
+	
+
 	// Load class using namespace.
 	function blair_load_class($class_name) 
 	{
@@ -51,11 +53,26 @@
     }
 	
     spl_autoload_register('blair_load_class');
+
+	// Prepare default database configuration.
+		// Establish connection configuration object.
+		$yukon_connect_config = new \dc\yukon\ConnectConfig();
+		
+		// Use application defaults as connection arguments.
+		$yukon_connect_config->set_host(DATABASE::HOST);
+		$yukon_connect_config->set_name(DATABASE::NAME);
+		$yukon_connect_config->set_user(DATABASE::USER);
+		$yukon_connect_config->set_password(DATABASE::PASSWORD);
+
+		// Open connection with configuration arguments.
+		$yukon_connection = new dc\yukon\Connect($yukon_connect_config);
+
+	// Prepare common entry configuration.
+		$common_entry_config = new dc\application\CommonEntry($yukon_connection);
 	
+
 	// Replace default session handler.
-	$session_handler = new \dc\nahoni\Session();
-	session_set_save_handler($session_handler, TRUE);
-	
-	
+	$session_handler = new \dc\nahoni\Session($yukon_connection);
+	session_set_save_handler($session_handler, TRUE);	
 		
 ?>
