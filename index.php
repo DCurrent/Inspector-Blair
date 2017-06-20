@@ -1,5 +1,6 @@
 <?php 
 
+	// Config and libraries.
 	require(__DIR__.'/source/main.php');
 	
 	function common_form_redirect()
