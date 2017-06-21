@@ -71,8 +71,12 @@
 		$common_entry_config = new dc\application\CommonEntry($yukon_connection);
 	
 
-	// Replace default session handler.
-	$session_handler = new \dc\nahoni\Session($yukon_connection);
-	session_set_save_handler($session_handler, TRUE);	
+	// Replace PHPs default session handler.
+		// Prepare session handler configuration.
+		$session_config = new \dc\nahoni\SessionConfig();
+		$session_config->set_database(new dc\yukon\Database($yukon_connection));
+
+		$session_handler = new \dc\nahoni\Session($session_config);
+		session_set_save_handler($session_handler, TRUE);	
 		
 ?>
