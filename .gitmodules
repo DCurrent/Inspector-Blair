@@ -1,6 +1,6 @@
 [submodule "source/dc/chronofix"]
 	path = source/dc/chronofix
-	url = https://github.com/dcurrent/chronofix
+	url = https://github.com/DCurrent/Chronofix
 [submodule "source/dc/yukon"]
 	path = source/dc/yukon
 	url = https://github.com/DCurrent/Yukon
