@@ -67,7 +67,7 @@
 	}
 	
 	// Verify user access.
-	common_security();
+	common_security($yukon_database);
 		
 	// Start page cache.
 	$page_obj = new \dc\cache\PageCache();

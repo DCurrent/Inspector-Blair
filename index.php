@@ -3,7 +3,7 @@
 	// Central config and libraries.
 	require(__DIR__.'/source/main.php');
 	
-	function common_form_redirect()
+	function common_form_redirect($yukon_connection)
 	{
 		$result = FALSE;
 		$request_form = NULL;
@@ -115,12 +115,13 @@
 				
 	}	
 	
-	common_form_redirect();
+	common_form_redirect($yukon_connection);
 	
 	$page_obj = new \dc\cache\PageCache();
 	
 	$access_obj_process = new \dc\access\process();
 	$access_obj_process->get_config()->set_authenticate_url(APPLICATION_SETTINGS::DIRECTORY_PRIME);	
+	$access_obj_process->get_config()->set_database($yukon_database);
 	$access_obj_process->process_control();
 	
 	//var_dump($_POST);
@@ -130,6 +131,7 @@
 	//Get and verify log in status.
 	$access_obj = new \dc\access\status();
 	$access_obj->get_config()->set_authenticate_url(APPLICATION_SETTINGS::DIRECTORY_PRIME);	
+	$access_obj->get_config()->set_database($yukon_database);
 	$access_obj->verify();
 	
 	// Set up navigaiton.

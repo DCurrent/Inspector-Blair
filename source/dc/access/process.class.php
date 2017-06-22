@@ -404,7 +404,7 @@
 			$req_account 			= $this->data_account->get_account();
 			$req_credential			= $this->data_account->get_credential();						
 			
-			$query = new \dc\yukon\Database($yukon_connection);			
+			$query = $this->config->get_database();			
 		
 			// Query the local account table using given account and password.
 			$query->set_sql("{call account_login(@account 		= ?,														 
@@ -441,7 +441,7 @@
 			// Get values.
 			$account = $this->data_account->get_account();
 			
-			$query = new \dc\yukon\Database($yukon_connection);			
+			$query = $this->config->get_database();			
 		
 			// Query the local account table using given account and password.
 			$query->set_sql("{call account_lookup(@account = ?)}");				

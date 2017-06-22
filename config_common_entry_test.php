@@ -65,7 +65,7 @@ ALTER TABLE [dbo].[tbl_config_table] CHECK CONSTRAINT [FK_tbl_config_table_tbl_m
 	}
 	
 	// Verify user access.
-	common_security();
+	common_security($yukon_database);
 		
 	// Start page cache.
 	$page_obj = new \dc\cache\PageCache();

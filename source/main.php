@@ -65,7 +65,8 @@
 		$yukon_connect_config->set_password(DATABASE::PASSWORD);
 
 		// Open connection with configuration arguments.
-		$yukon_connection = new dc\yukon\Connect($yukon_connect_config);
+		$yukon_connection 	= new dc\yukon\Connect($yukon_connect_config);
+		$yukon_database		= new dc\yukon\Database($yukon_connection);
 
 	// Prepare common entry configuration.
 		$common_entry_config = new dc\application\CommonEntry($yukon_connection);
@@ -74,7 +75,7 @@
 	// Replace PHPs default session handler.
 		// Prepare session handler configuration.
 		$session_config = new \dc\nahoni\SessionConfig();
-		$session_config->set_database(new dc\yukon\Database($yukon_connection));
+		$session_config->set_database($yukon_database);
 
 		$session_handler = new \dc\nahoni\Session($session_config);
 		session_set_save_handler($session_handler, TRUE);	

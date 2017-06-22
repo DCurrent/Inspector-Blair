@@ -7,8 +7,8 @@
 	interface iconfig
 	{
 		// Accessors	
+		function get_database();
 		function get_administrator();
-		function get_database_connection();
 		function get_ldap_host_bind();		
 		function get_ldap_host_dir();		
 		function get_ldap_base_dn();		
@@ -19,8 +19,8 @@
 		function get_use_local();
 		
 		// Mutators
+		function set_database($value);
 		function set_administrator($value);
-		function set_database_connection($value);
 		function set_ldap_host_bind($value);	
 		function set_ldap_host_dir($value);			
 		function set_ldap_base_dn($value);		
@@ -34,7 +34,7 @@
 	{
 		private
 			$administrator			= NULL,
-			$database_connection	= NULL,
+			$database				= NULL,
 			$ldap_host_bind			= NULL,
 			$ldap_host_dir			= NULL,
 			$ldap_base_dn			= NULL,
@@ -63,9 +63,9 @@
 			return $this->administrator;
 		}
 		
-		public function get_database_connection()
+		public function get_database()
 		{
-			return $this->database_connection;
+			return $this->database;
 		}
 		
 		public function get_ldap_host_bind()
@@ -114,9 +114,9 @@
 			$this->administrator = $value;
 		}
 		
-		public function set_database_connection($value)
+		public function set_database($value)
 		{
-			$this->database_connection = $value;
+			$this->database = $value;
 		}
 		
 		public function set_ldap_host_bind($value)
