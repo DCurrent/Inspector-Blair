@@ -94,7 +94,7 @@
 	$params = array('%'.$post->get_filter().'%');
 	
 	$query->set_params($params);
-	$query->query();		
+	$query->query_run();		
 	
 	// There should always be records, but verify just in case.
 	if($query->get_row_exists())

@@ -82,7 +82,7 @@
 			
 						
 			$query->set_params($params);
-			$query->query();
+			$query->query_run();
 			
 			// Refrsh page to the previous record.				
 			header('Location: '.$_SERVER['PHP_SELF']);			
@@ -130,7 +130,7 @@
 						array($access_obj->get_ip(), 			SQLSRV_PARAM_IN));
 			
 			$query->set_params($params);			
-			$query->query();
+			$query->query_run();
 			
 			// Repopulate main data object with results from merge query.
 			$query->get_line_params()->set_class_name('\data\Common');
@@ -161,7 +161,7 @@
 	$params = array(array($_main_data->get_id(), SQLSRV_PARAM_IN));
 
 	$query->set_params($params);
-	$query->query();
+	$query->query_run();
 	
 	// Query for navigation data and populate navigation object.
 	$_obj_navigation = new \dc\recordnav\DataNavigation();

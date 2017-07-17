@@ -80,7 +80,7 @@
 					array($_main_data->get_details(),		SQLSRV_PARAM_IN));
 		
 		$query->set_params($params);			
-		$query->query();
+		$query->query_run();
 		
 		// Repopulate main data object with results from merge query.
 		// We can use common data here because all we need
@@ -117,7 +117,7 @@
 					array($access_obj->get_ip(), 			SQLSRV_PARAM_IN));
 		
 		$query->set_params($params);			
-		$query->query();
+		$query->query_run();
 		
 		// Repopulate main data object with results from merge query.
 		// We can use common data here because all we need
@@ -194,7 +194,7 @@
 
 	// Apply arguments and execute query.
 	$query->set_params($params);
-	$query->query();
+	$query->query_run();
 	
 	// Get navigation record set and populate navigation object.		
 	$query->get_line_params()->set_class_name('\dc\recordnav\RecordNav');	

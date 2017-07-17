@@ -53,7 +53,7 @@
 	
 		// Apply parameters and execute query.
 		$query_app_form->set_params($params_app_form);
-		$query_app_form->query();	
+		$query_app_form->query_run();	
 		
 		// We use class objects, so set up the target
 		// class to populate. Navigation results come first,
@@ -119,7 +119,7 @@
 			$query->set_sql('{call inspection_primary_delete(@id = ?)}');			
 			
 			$query->set_params(array(array($_main_data->get_id(), SQLSRV_PARAM_IN)));
-			$query->query();
+			$query->query_run();
 			
 			// Refresh page to the previous record.				
 			header('Location: '.$_SERVER['PHP_SELF']);			

@@ -126,7 +126,7 @@
 	//exit;
 
 	$query->set_params($params);
-	$query->query();
+	$query->query_run();
 	
 	$query->get_line_params()->set_class_name($primary_data_class);
 	$_obj_data_main_list = $query->get_line_object_list();

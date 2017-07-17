@@ -26,7 +26,7 @@
 					array($_main_data->get_details(),		SQLSRV_PARAM_IN));
 		
 		$query->set_params($params);			
-		$query->query();
+		$query->query_run();
 		
 		// Repopulate main data object with results from merge query.
 		// We can use common data here because all we need

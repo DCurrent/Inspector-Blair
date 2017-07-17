@@ -30,7 +30,7 @@
 					
 		// Apply arguments and execute query.
 		$database->set_params($params);
-		$database->query();
+		$database->query_run();
 		
 		// Skip navigation data and get primary data record set.	
 		$database->get_next_result();
@@ -155,7 +155,7 @@
 	//exit;
 
 	$query->set_params($params);
-	$query->query();
+	$query->query_run();
 	
 	$query->get_line_params()->set_class_name($primary_data_class);
 	$_obj_data_main_list = $query->get_line_object_list();

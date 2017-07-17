@@ -26,7 +26,7 @@
 		
 					
 		$query->set_params($params);
-		$query->query();	
+		$query->query_run();	
 		
 		// Refrsh page.
 		header('Location: '.$_SERVER['PHP_SELF']);

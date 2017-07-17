@@ -152,7 +152,7 @@
 	
 
 	$query->set_params($params);
-	$query->query();
+	$query->query_run();
 	
 	$query->get_line_params()->set_class_name('\data\Account');
 	$_obj_access_data_account = $query->get_line_object();
@@ -221,7 +221,7 @@
 	
 
 	$query->set_params($params);
-	$query->query();	
+	$query->query_run();	
 	$query->get_line_params()->set_class_name('class_common_inspection_data');
 	$_obj_data_main_list = $query->get_line_object_list();
 	
@@ -237,7 +237,7 @@
 		
 		$query->set_sql('{call event_type_list_unpaged}');
 			
-		$query->query();
+		$query->query_run();
 		$query->get_line_params()->set_class_name('class_common_inspection_data');
 		
 		//$_obj_data_list_status_list = new class_common_inspection_data();
@@ -247,7 +247,7 @@
 		$_obj_field_source_account_list = new \data\Account();
 	
 		$query->set_sql('{call account_list_inspector()}');
-		$query->query();		
+		$query->query_run();		
 		
 		$query->get_line_params()->set_class_name('\data\Account');
 		
@@ -258,7 +258,7 @@
 		$_obj_field_source_building_list = new \data\Area();
 	
 		$query->set_sql('{call building_list()}');
-		$query->query();
+		$query->query_run();
 		
 		$query->get_line_params()->set_class_name('\data\Area');
 		

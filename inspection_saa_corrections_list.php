@@ -54,7 +54,7 @@
 					array($_obj_params->get_inclusion(), SQLSRV_PARAM_IN));
 	
 	$query->set_params($params);
-	$query->query();
+	$query->query_run();
 	
 	// Set class object we will push rows from datbase into.
 	$query->get_line_params()->set_class_name('class_audit_question_data');
@@ -94,7 +94,7 @@
 						array($_obj_params->get_inclusion(),			SQLSRV_PARAM_IN));
 
 	$query->set_params($params);
-	$query->query();
+	$query->query_run();
 	
 	$query->get_line_params()->set_class_name('\data\Common');
 	

@@ -48,7 +48,7 @@ ALTER TABLE [dbo].[tbl_config_table] CHECK CONSTRAINT [FK_tbl_config_table_tbl_m
 		$params = array(array('tbl_config_table', 		SQLSRV_PARAM_IN));
 		
 		$query->set_params($params);			
-		$query->query();
+		$query->query_run();
 		
 		// Repopulate main data object with results from merge query.
 		// We can use common data here because all we need
@@ -100,7 +100,7 @@ ALTER TABLE [dbo].[tbl_config_table] CHECK CONSTRAINT [FK_tbl_config_table_tbl_m
 
 	// Apply arguments and execute query.
 	$query->set_params($params);
-	$query->query();
+	$query->query_run();
 	
 	// Get navigation record set and populate navigation object.		
 	$query->get_line_params()->set_class_name('\dc\recordnav\RecordNav');	

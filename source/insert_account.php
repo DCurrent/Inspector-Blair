@@ -136,7 +136,7 @@
 	$_obj_data_list = new \data\Account();
 
 	$query->set_sql('{call account_list_inspector()}');
-	$query->query();		
+	$query->query_run();		
 	
 	$query->get_line_params()->set_class_name('\data\Account');
 	

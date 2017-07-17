@@ -124,7 +124,7 @@
 	//exit;
 
 	$yukon_database->set_params($params);
-	$yukon_database->query();
+	$yukon_database->query_run();
 	
 	$yukon_database->get_line_params()->set_class_name($_layout->get_main_object_name());
 	$_obj_data_main_list = $yukon_database->get_line_object_list();

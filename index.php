@@ -37,7 +37,7 @@
 	
 		// Apply arguments and execute query.
 		$database->set_params($params);
-		$database->query();
+		$database->query_run();
 		
 		// Skip navigation data and get primary data record set.	
 		$database->get_next_result();

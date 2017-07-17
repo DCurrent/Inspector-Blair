@@ -44,7 +44,7 @@
 					array($row_count, 					SQLSRV_PARAM_OUT, SQLSRV_PHPTYPE_INT));
 
 	$query->set_params($params);
-	$query->query();
+	$query->query_run();
 	
 	$query->get_line_params()->set_class_name('\data\Common');
 	$_obj_data_main_list = $query->get_line_object_list();

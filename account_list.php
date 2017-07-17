@@ -131,7 +131,7 @@
 					array($sorting->get_sort_order(), 	SQLSRV_PARAM_IN));
 
 	$query->set_params($params);
-	$query->query();
+	$query->query_run();
 	
 	$query->get_line_params()->set_class_name('\data\Account');
 	$_obj_data_main_list = $query->get_line_object_list();

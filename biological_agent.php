@@ -48,7 +48,7 @@
 		//exit;
 		
 		$query->set_params($params);			
-		$query->query();
+		$query->query_run();
 		
 		// Repopulate main data object with results from merge query.
 		// We can use common data here because all we need
@@ -109,7 +109,7 @@
 
 	// Apply arguments and execute query.
 	$query->set_params($params);
-	$query->query();
+	$query->query_run();
 	
 	// Get navigation record set and populate navigation object.		
 	$query->get_line_params()->set_class_name('\dc\recordnav\RecordNav');	
@@ -145,7 +145,7 @@
 		$query->set_sql('{call biological_host_list(@param_page_current = ?)}');
 		$query->set_params(array(-1));
 		
-		$query->query();
+		$query->query_run();
 		$query->get_line_params()->set_class_name('\data\Common');
 		
 		$_obj_field_source_host_list = new SplDoublyLinkedList();
@@ -171,7 +171,7 @@
 		$query->set_sql('{call biological_risk_group_list(@param_page_current = ?)}');
 		$query->set_params(array(-1));
 		
-		$query->query();
+		$query->query_run();
 		$query->get_line_params()->set_class_name('\data\Common');
 		
 		$_obj_field_source_risk_group_list = new SplDoublyLinkedList();

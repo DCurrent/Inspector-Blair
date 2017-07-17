@@ -151,7 +151,7 @@
 	//exit;
 
 	$query->set_params($params);
-	$query->query();
+	$query->query_run();
 	
 	$query->get_line_params()->set_class_name('\data\Area');
 	$_obj_data_main_list = $query->get_line_object_list();
@@ -182,7 +182,7 @@
 	
 		$query->set_sql('{call area_floor_list(@param_page_current = ?)}');
 		$query->query(array(-1));
-		$query->query();
+		$query->query_run();
 		
 		$query->get_line_params()->set_class_name('\data\Area');
 		

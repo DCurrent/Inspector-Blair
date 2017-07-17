@@ -39,7 +39,7 @@
 					array(1000, 		SQLSRV_PARAM_IN));
 
 	$query->set_params($params);
-	$query->query();
+	$query->query_run();
 	
 	$query->get_line_params()->set_class_name('\data\Account');
 	$_obj_data_main_list = $query->get_line_object_list();
@@ -137,7 +137,7 @@
 										
 										
 										$query->set_params($params);			
-										$query->query();
+										$query->query_run();
 										
 										// Insert the roles.
 										$query->set_sql("INSERT INTO tbl_account_role (fk_id, role) VALUES (?, ?)");
@@ -146,7 +146,7 @@
 														array('cd0a6b6c-ed15-40c0-95be-cbf0953a593e', SQLSRV_PARAM_IN));
 														
 										$query->set_params($params);			
-										$query->query();
+										$query->query_run();
 									}
 									
                             ?>

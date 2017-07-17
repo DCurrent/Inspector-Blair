@@ -75,7 +75,7 @@
 	
 
 	$query->set_params($params);
-	$query->query();
+	$query->query_run();
 	
 	$query->get_line_params()->set_class_name('class_common_inspection_data');
 	
@@ -138,7 +138,7 @@
 			$query->set_sql('{call inspection_primary_delete(@id = ?)}');			
 			
 			$query->set_params(array(array($_main_data->get_id(), SQLSRV_PARAM_IN)));
-			$query->query();
+			$query->query_run();
 			
 			// Refrsh page to the previous record.				
 			header('Location: '.$_SERVER['PHP_SELF']);			
@@ -197,7 +197,7 @@
 			{
 			
 				$query->set_params($params);			
-				$query->query();
+				$query->query_run();
 				
 				// Repopulate main data object with results from merge query.
 				$query->get_line_params()->set_class_name('class_common_inspection_data');
@@ -222,7 +222,7 @@
 								array($access_obj->get_ip(), 			SQLSRV_PARAM_IN));
 				
 				$query->set_params($params);			
-				$query->query();
+				$query->query_run();
 				
 				// --visits
 				$_obj_data_sub_request = new class_inspection_visit_data();
@@ -242,7 +242,7 @@
 								array($access_obj->get_ip(), 			SQLSRV_PARAM_IN));
 				
 				$query->set_params($params);			
-				$query->query();
+				$query->query_run();
 				
 				// --detail
 				$_obj_data_sub_request = new class_inspection_autoclave_detail_data();
@@ -262,7 +262,7 @@
 								array($access_obj->get_ip(), 			SQLSRV_PARAM_IN));
 				
 				$query->set_params($params);			
-				$query->query();
+				$query->query_run();
 							
 				//echo '<br/> XML: '.$_obj_data_sub_request->xml();
 				
@@ -293,7 +293,7 @@
 		$_obj_data_list_status_list = new \data\Common();
 	
 		$query->set_sql('{call inspection_status_list_unpaged()}');
-		$query->query();
+		$query->query_run();
 		
 		$query->get_line_params()->set_class_name('\data\Common');
 		
@@ -304,7 +304,7 @@
 		$_obj_field_source_account_list = new \data\Account();
 	
 		$query->set_sql('{call account_list_inspector()}');
-		$query->query();
+		$query->query_run();
 		
 		$query->get_line_params()->set_class_name('\data\Account');
 		
@@ -315,7 +315,7 @@
 		$_obj_data_list_event_type_list = new \data\Common();
 	
 		$query->set_sql('{call event_type_list_unpaged()}');
-		$query->query();
+		$query->query_run();
 		
 		$query->get_line_params()->set_class_name('\data\Common');
 		
@@ -327,7 +327,7 @@
 		$_obj_data_list_autoclave_maker_list = new \data\Common();
 	
 		$query->set_sql('{call autoclave_maker_list_unpaged()}');
-		$query->query();
+		$query->query_run();
 		
 		$query->get_line_params()->set_class_name('\data\Common');
 		
@@ -338,7 +338,7 @@
 		$_obj_data_list_biowaste_list = new \data\Common();
 	
 		$query->set_sql('{call biowaste_list_unpaged()}');
-		$query->query();
+		$query->query_run();
 		
 		$query->get_line_params()->set_class_name('\data\Common');
 		

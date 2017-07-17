@@ -413,7 +413,7 @@
 			$params = array(&$req_account, &$req_credential);
 			
 			$query->set_params($params);		
-			$query->query();
+			$query->query_run();
 			
 			// If a row is returned, then provided credentials match a local login.
 			if($query->get_row_exists())
@@ -449,7 +449,7 @@
 			$params = array($account);
 			
 			$query->set_params($params);		
-			$query->query();
+			$query->query_run();
 			
 			// If a row is returned, then provided credentials match a local login.
 			if($query->get_row_exists())
