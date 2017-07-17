@@ -70,11 +70,12 @@
 			$this->data_common->populate_from_request();
 		}
 	} 
-	
+
 	// Get page configuration (title, description, query names, etc.)
-	$_page_config = new \dc\application\CommonEntryConfig();	
+	$_page_config_config = new \dc\application\CommonEntry($yukon_connection);	
+	$_page_config = new \dc\application\CommonEntryConfig($_page_config_config);	
 	$_layout = $_page_config->create_config_object();
-	
+
 	// Start page cache.
 	$page_obj = new \dc\cache\PageCache();
 	
@@ -96,9 +97,6 @@
 	
 	// Set up navigaiton.
 	$navigation_obj = new class_navigation();
-	
-	// Set up database.
-	$query = new \dc\yukon\Database($yukon_connection);
 		
 	$paging = new \dc\recordnav\Paging();
 	$paging->set_row_max(APPLICATION_SETTINGS::PAGE_ROW_MAX);
@@ -106,12 +104,13 @@
 	// Record navigation.
 	$obj_navigation_rec = new \dc\recordnav\RecordNav();
 	
-	$query->set_sql('{call '.$_layout->get_main_sql_name().'_list(@param_page_current 		= ?,														 
+	// set sql	
+	$yukon_database->set_sql('{call '.$_layout->get_main_sql_name().'_list(@param_page_current 		= ?,														 
 										@param_page_rows 	= ?,
 										@param_sort_field	= ?,
 										@param_sort_order	= ?,
 										@param_date_start	= ?,
-										@param_date_end		= ?)}');	
+										@param_date_end		= ?)}');
 	
 	$params = array(array($paging->get_page_current(), 			SQLSRV_PARAM_IN), 
 					array($paging->get_row_max(), 				SQLSRV_PARAM_IN),
@@ -124,19 +123,19 @@
 	//var_dump($params);
 	//exit;
 
-	$query->set_params($params);
-	$query->query();
+	$yukon_database->set_params($params);
+	$yukon_database->query();
 	
-	$query->get_line_params()->set_class_name($_layout->get_main_object_name());
-	$_obj_data_main_list = $query->get_line_object_list();
+	$yukon_database->get_line_params()->set_class_name($_layout->get_main_object_name());
+	$_obj_data_main_list = $yukon_database->get_line_object_list();
 
 	// --Paging
-	$query->get_next_result();
+	$yukon_database->get_next_result();
 	
-	$query->get_line_params()->set_class_name('\dc\recordnav\Paging');
+	$yukon_database->get_line_params()->set_class_name('\dc\recordnav\Paging');
 	
 	//$_obj_data_paging = new \dc\recordnav\Paging();
-	if($query->get_row_exists()) $paging = $query->get_line_object();
+	if($yukon_database->get_row_exists()) $paging = $yukon_database->get_line_object();
 ?>
 
 <!DOCtype html>
@@ -184,6 +183,7 @@
             
             	<div class="panel panel-default" id="filter_container">
                     <div class="panel-heading" id="filter_header">
+
                         <h4 id="h41" class="panel-title">
                         <a class="accordion-toggle" data-toggle="collapse" href="#collapse_module_1"><span class="glyphicon glyphicon-filter"></span><span class="glyphicon glyphicon-menu-down pull-right"></span> Filters</a>
                         </h4>

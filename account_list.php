@@ -71,7 +71,8 @@
 	} 
 	
 	// Get page configuration (title, description, query names, etc.)
-	$_page_config = new \dc\application\CommonEntryConfig();	
+	$_page_config_config = new \dc\application\CommonEntry($yukon_connection);	
+	$_page_config = new \dc\application\CommonEntryConfig($_page_config_config);	
 	$_layout = $_page_config->create_config_object();
 	
 	// Start page cache.

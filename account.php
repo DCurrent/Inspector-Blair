@@ -3,7 +3,8 @@
 	require(__DIR__.'/source/main.php');
 	require(__DIR__.'/source/common_functions/common_list.php');
 	
-	$_page_config = new \dc\application\CommonEntryConfig();	
+	$_page_config_config = new \dc\application\CommonEntry($yukon_connection);	
+	$_page_config = new \dc\application\CommonEntryConfig($_page_config_config);	
 	$_layout = $_page_config->create_config_object();
 	
 	// Delete this record.

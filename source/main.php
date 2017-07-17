@@ -65,11 +65,11 @@
 		$yukon_connect_config->set_password(DATABASE::PASSWORD);
 
 		// Open connection with configuration arguments.
-		$yukon_connection 	= new dc\yukon\Connect($yukon_connect_config);
-		$yukon_database		= new dc\yukon\Database($yukon_connection);
+		$yukon_connection 	= new \dc\yukon\Connect($yukon_connect_config);
+		$yukon_database		= new \dc\yukon\Database($yukon_connection);
 
 	// Prepare common entry configuration.
-		$common_entry_config = new dc\application\CommonEntry($yukon_connection);
+		$common_entry_config = new \dc\application\CommonEntry($yukon_connection);
 	
 
 	// Replace PHPs default session handler.
