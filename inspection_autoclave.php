@@ -77,7 +77,7 @@
 	$query->set_params($params);
 	$query->query_run();
 	
-	$query->get_line_params()->set_class_name('class_common_inspection_data');
+	$query->get_line_config()->set_class_name('class_common_inspection_data');
 	
 	if($query->get_row_exists() === TRUE) $_main_data = $query->get_line_object();
 	
@@ -86,7 +86,7 @@
 	// --Parties
 	$query->get_next_result();
 	
-	$query->get_line_params()->set_class_name('class_inspection_party_data');
+	$query->get_line_config()->set_class_name('class_inspection_party_data');
 	
 	$_obj_data_sub_party_list = new SplDoublyLinkedList();
 	if($query->get_row_exists()) $_obj_data_sub_party_list = $query->get_line_object_list();
@@ -94,7 +94,7 @@
 	// --Visits
 	$query->get_next_result();
 	
-	$query->get_line_params()->set_class_name('class_inspection_visit_data');
+	$query->get_line_config()->set_class_name('class_inspection_visit_data');
 	
 	$_obj_data_sub_visit_list = new SplDoublyLinkedList();
 	if($query->get_row_exists()) $_obj_data_sub_visit_list = $query->get_line_object_list();
@@ -102,7 +102,7 @@
 	// --Details
 	$query->get_next_result();
 	
-	$query->get_line_params()->set_class_name('class_inspection_autoclave_detail_data');
+	$query->get_line_config()->set_class_name('class_inspection_autoclave_detail_data');
 	
 	$_obj_data_sub_detail_list = new SplDoublyLinkedList();
 	if($query->get_row_exists()) $_obj_data_sub_detail_list = $query->get_line_object_list();
@@ -200,7 +200,7 @@
 				$query->query_run();
 				
 				// Repopulate main data object with results from merge query.
-				$query->get_line_params()->set_class_name('class_common_inspection_data');
+				$query->get_line_config()->set_class_name('class_common_inspection_data');
 				$_main_data = $query->get_line_object();
 				
 				// Sub table saving.
@@ -295,7 +295,7 @@
 		$query->set_sql('{call inspection_status_list_unpaged()}');
 		$query->query_run();
 		
-		$query->get_line_params()->set_class_name('\data\Common');
+		$query->get_line_config()->set_class_name('\data\Common');
 		
 		$_obj_data_list_status_list = array();
 		if($query->get_row_exists() === TRUE) $_obj_data_list_status_list = $query->get_line_object_list();
@@ -306,7 +306,7 @@
 		$query->set_sql('{call account_list_inspector()}');
 		$query->query_run();
 		
-		$query->get_line_params()->set_class_name('\data\Account');
+		$query->get_line_config()->set_class_name('\data\Account');
 		
 		$_obj_field_source_account_list = array();
 		if($query->get_row_exists() === TRUE) $_obj_field_source_account_list = $query->get_line_object_list();		
@@ -317,7 +317,7 @@
 		$query->set_sql('{call event_type_list_unpaged()}');
 		$query->query_run();
 		
-		$query->get_line_params()->set_class_name('\data\Common');
+		$query->get_line_config()->set_class_name('\data\Common');
 		
 		$_obj_data_list_event_type_list = array();
 		if($query->get_row_exists() === TRUE) $_obj_data_list_event_type_list = $query->get_line_object_list();
@@ -329,7 +329,7 @@
 		$query->set_sql('{call autoclave_maker_list_unpaged()}');
 		$query->query_run();
 		
-		$query->get_line_params()->set_class_name('\data\Common');
+		$query->get_line_config()->set_class_name('\data\Common');
 		
 		$_obj_data_list_autoclave_maker_list = array();
 		if($query->get_row_exists() === TRUE) $_obj_data_list_autoclave_maker_list = $query->get_line_object_list();
@@ -340,7 +340,7 @@
 		$query->set_sql('{call biowaste_list_unpaged()}');
 		$query->query_run();
 		
-		$query->get_line_params()->set_class_name('\data\Common');
+		$query->get_line_config()->set_class_name('\data\Common');
 		
 		$_obj_data_list_biowaste_list = array();
 		if($query->get_row_exists() === TRUE) $_obj_data_list_biowaste_list = $query->get_line_object_list();		

@@ -155,7 +155,7 @@
 		// Repopulate main data object with results from merge query.
 		// We can use common data here because all we need
 		// is the ID for redirection.
-		$query->get_line_params()->set_class_name('\data\Common');
+		$query->get_line_config()->set_class_name('\data\Common');
 		$_main_data = $query->get_line_object();
 		
 		// Now that save operation has completed, reload page using ID from
@@ -236,13 +236,13 @@
 	$query->query_run();
 	
 	// Get navigation record set and populate navigation object.		
-	$query->get_line_params()->set_class_name('\dc\recordnav\RecordNav');	
+	$query->get_line_config()->set_class_name('\dc\recordnav\RecordNav');	
 	if($query->get_row_exists() === TRUE) $obj_navigation_rec = $query->get_line_object();	
 	
 	// Get primary data record set.	
 	$query->get_next_result();
 	
-	$query->get_line_params()->set_class_name($primary_data_class);	
+	$query->get_line_config()->set_class_name($primary_data_class);	
 	if($query->get_row_exists() === TRUE) $_main_data = $query->get_line_object();	
 	
 	// Biological Agents (Taken from main query).
@@ -250,7 +250,7 @@
 	
 		$query->get_next_result();
 		
-		$query->get_line_params()->set_class_name('\data\BiologicalAgentSub');
+		$query->get_line_config()->set_class_name('\data\BiologicalAgentSub');
 		
 		$_obj_data_sub_agent_list = new SplDoublyLinkedList();
 		if($query->get_row_exists() === TRUE)	$_obj_data_sub_agent_list = $query->get_line_object_list();		
@@ -262,7 +262,7 @@
 	
 		$query->get_next_result();
 		
-		$query->get_line_params()->set_class_name('\data\AreaType');
+		$query->get_line_config()->set_class_name('\data\AreaType');
 		
 		$_obj_field_source_type_list = new SplDoublyLinkedList();
 		if($query->get_row_exists() === TRUE) $_obj_field_source_type_list = $query->get_line_object_list();
@@ -274,7 +274,7 @@
 			$query->set_params(array(-1));
 			
 			$query->query_run();
-			$query->get_line_params()->set_class_name('\data\Common');
+			$query->get_line_config()->set_class_name('\data\Common');
 			
 			$_obj_field_source_agent_list = new SplDoublyLinkedList();
 			if($query->get_row_exists() === TRUE)
@@ -300,7 +300,7 @@
 			$query->set_params(array(-1));
 			
 			$query->query_run();
-			$query->get_line_params()->set_class_name('\data\Common');
+			$query->get_line_config()->set_class_name('\data\Common');
 			
 			$_obj_field_source_chemical_operations_list = new SplDoublyLinkedList();
 			if($query->get_row_exists() === TRUE)
@@ -315,7 +315,7 @@
 			//$query->set_params(array(-1));
 			
 			//$query->query_run();
-			//$query->get_line_params()->set_class_name('\data\Common');
+			//$query->get_line_config()->set_class_name('\data\Common');
 			
 			//$_obj_field_source_chemical_lab_list = new SplDoublyLinkedList();
 			
@@ -336,7 +336,7 @@
 			$query->set_params(array(-1));
 			
 			$query->query_run();
-			$query->get_line_params()->set_class_name('\data\Common');
+			$query->get_line_config()->set_class_name('\data\Common');
 			
 			$_obj_field_source_biosafety_level_list = new SplDoublyLinkedList();
 			

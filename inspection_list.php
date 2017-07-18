@@ -154,7 +154,7 @@
 	$query->set_params($params);
 	$query->query_run();
 	
-	$query->get_line_params()->set_class_name('\data\Account');
+	$query->get_line_config()->set_class_name('\data\Account');
 	$_obj_access_data_account = $query->get_line_object();
 	
 	//echo $access_obj->get_account();
@@ -222,13 +222,13 @@
 
 	$query->set_params($params);
 	$query->query_run();	
-	$query->get_line_params()->set_class_name('class_common_inspection_data');
+	$query->get_line_config()->set_class_name('class_common_inspection_data');
 	$_obj_data_main_list = $query->get_line_object_list();
 	
 	// --Paging
 	$query->get_next_result();
 	
-	$query->get_line_params()->set_class_name('\dc\recordnav\Paging');
+	$query->get_line_config()->set_class_name('\dc\recordnav\Paging');
 	if($query->get_row_exists()) $paging = $query->get_line_object();
 	
 	// Datalist list generation.
@@ -238,7 +238,7 @@
 		$query->set_sql('{call event_type_list_unpaged}');
 			
 		$query->query_run();
-		$query->get_line_params()->set_class_name('class_common_inspection_data');
+		$query->get_line_config()->set_class_name('class_common_inspection_data');
 		
 		//$_obj_data_list_status_list = new class_common_inspection_data();
 		$_obj_data_list_status_list = $query->get_line_object_list();
@@ -249,7 +249,7 @@
 		$query->set_sql('{call account_list_inspector()}');
 		$query->query_run();		
 		
-		$query->get_line_params()->set_class_name('\data\Account');
+		$query->get_line_config()->set_class_name('\data\Account');
 		
 		$_obj_field_source_account_list = array();
 		if($query->get_row_exists() === TRUE) $_obj_field_source_account_list = $query->get_line_object_list();
@@ -260,7 +260,7 @@
 		$query->set_sql('{call building_list()}');
 		$query->query_run();
 		
-		$query->get_line_params()->set_class_name('\data\Area');
+		$query->get_line_config()->set_class_name('\data\Area');
 		
 		$_obj_field_source_building_list = array();
 		if($query->get_row_exists() === TRUE) $_obj_field_source_building_list = $query->get_line_object_list();

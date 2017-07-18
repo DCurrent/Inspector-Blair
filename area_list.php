@@ -153,13 +153,13 @@
 	$query->set_params($params);
 	$query->query_run();
 	
-	$query->get_line_params()->set_class_name('\data\Area');
+	$query->get_line_config()->set_class_name('\data\Area');
 	$_obj_data_main_list = $query->get_line_object_list();
 
 	// --Paging
 	$query->get_next_result();
 	
-	$query->get_line_params()->set_class_name('\dc\recordnav\Paging');
+	$query->get_line_config()->set_class_name('\dc\recordnav\Paging');
 	
 	//$_obj_data_paging = new \dc\recordnav\Paging();
 	if($query->get_row_exists()) $paging = $query->get_line_object();
@@ -172,7 +172,7 @@
 		$query->set_sql('{call area_building_list(@param_page_current = ?)}');
 		$query->query(array(-1));
 		
-		$query->get_line_params()->set_class_name('\data\Area');
+		$query->get_line_config()->set_class_name('\data\Area');
 		
 		$_obj_field_source_building_list = new SplDoublyLinkedList();
 		if($query->get_row_exists() === TRUE) $_obj_field_source_building_list = $query->get_line_object_list();
@@ -184,7 +184,7 @@
 		$query->query(array(-1));
 		$query->query_run();
 		
-		$query->get_line_params()->set_class_name('\data\Area');
+		$query->get_line_config()->set_class_name('\data\Area');
 		
 		$_obj_field_source_floor_list = new SplDoublyLinkedList();
 		if($query->get_row_exists() === TRUE) $_obj_field_source_floor_list = $query->get_line_object_list();

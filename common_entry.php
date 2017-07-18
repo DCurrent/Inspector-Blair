@@ -85,7 +85,7 @@
 		// Repopulate main data object with results from merge query.
 		// We can use common data here because all we need
 		// is the ID for redirection.
-		$query->get_line_params()->set_class_name($_layout->get_main_object_name());
+		$query->get_line_config()->set_class_name($_layout->get_main_object_name());
 		$_main_data = $query->get_line_object();
 		
 		// Now that save operation has completed, reload page using ID from
@@ -122,7 +122,7 @@
 		// Repopulate main data object with results from merge query.
 		// We can use common data here because all we need
 		// is the ID for redirection.
-		$query->get_line_params()->set_class_name($_layout->get_main_object_name());
+		$query->get_line_config()->set_class_name($_layout->get_main_object_name());
 		$_main_data = $query->get_line_object();
 		
 		// Now that save operation has completed, reload page using ID from
@@ -197,13 +197,13 @@
 	$query->query_run();
 	
 	// Get navigation record set and populate navigation object.		
-	$query->get_line_params()->set_class_name('\dc\recordnav\RecordNav');	
+	$query->get_line_config()->set_class_name('\dc\recordnav\RecordNav');	
 	if($query->get_row_exists() === TRUE) $obj_navigation_rec = $query->get_line_object();	
 	
 	// Get primary data record set.	
 	$query->get_next_result();
 	
-	$query->get_line_params()->set_class_name($_layout->get_main_object_name());	
+	$query->get_line_config()->set_class_name($_layout->get_main_object_name());	
 	if($query->get_row_exists() === TRUE) $_main_data = $query->get_line_object();		
 	
 ?>

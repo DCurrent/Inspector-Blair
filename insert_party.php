@@ -100,7 +100,7 @@
 	if($query->get_row_exists())
 	{
 		// Set class name and create an array of objets from query results.
-		$query->get_line_params()->set_class_name('post');
+		$query->get_line_config()->set_class_name('post');
 		$line_all = $query->get_line_object_all();
 		
 		// Interate through array of result objects.

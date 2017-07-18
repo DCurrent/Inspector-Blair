@@ -54,7 +54,7 @@ ALTER TABLE [dbo].[tbl_config_table] CHECK CONSTRAINT [FK_tbl_config_table_tbl_m
 		// We can use common data here because all we need
 		// is the ID for redirection.
 		
-		//$query->get_line_params()->set_class_name('\data\Common');
+		//$query->get_line_config()->set_class_name('\data\Common');
 		//$_main_data = $query->get_line_object();
 		
 		// Now that save operation has completed, reload page using ID from
@@ -103,13 +103,13 @@ ALTER TABLE [dbo].[tbl_config_table] CHECK CONSTRAINT [FK_tbl_config_table_tbl_m
 	$query->query_run();
 	
 	// Get navigation record set and populate navigation object.		
-	$query->get_line_params()->set_class_name('\dc\recordnav\RecordNav');	
+	$query->get_line_config()->set_class_name('\dc\recordnav\RecordNav');	
 	if($query->get_row_exists() === TRUE) $obj_navigation_rec = $query->get_line_object();	
 	
 	// Get primary data record set.	
 	$query->get_next_result();
 	
-	$query->get_line_params()->set_class_name(PRIMARY_DATA_CLASS);	
+	$query->get_line_config()->set_class_name(PRIMARY_DATA_CLASS);	
 	if($query->get_row_exists() === TRUE) $_main_data = $query->get_line_object();		
 	
 ?>

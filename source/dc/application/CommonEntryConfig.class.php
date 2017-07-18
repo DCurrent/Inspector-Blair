@@ -76,7 +76,7 @@
 			// Skip navigation data and get primary data record set.	
 			$database->get_next_result();
 			
-			$database->get_line_params()->set_class_name(__NAMESPACE__.'\CommonEntry');	
+			$database->get_line_config()->set_class_name(__NAMESPACE__.'\CommonEntry');	
 			
 			if($database->get_row_exists() === TRUE) 
 			{

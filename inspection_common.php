@@ -59,7 +59,7 @@
 		// class to populate. Navigation results come first,
 		// so skip to next result.
 		$query_app_form->get_next_result();
-		$query_app_form->get_line_params()->set_class_name('class_application_form_data');
+		$query_app_form->get_line_config()->set_class_name('class_application_form_data');
 		
 		// Populate the class object. First we create
 		// a blank. This is just in case the query produced

@@ -35,7 +35,7 @@
 		// Skip navigation data and get primary data record set.	
 		$database->get_next_result();
 		
-		$database->get_line_params()->set_class_name('\dc\application\CommonEntry');	
+		$database->get_line_config()->set_class_name('\dc\application\CommonEntry');	
 		
 		if($database->get_row_exists() === TRUE) 
 		{
@@ -157,13 +157,13 @@
 	$query->set_params($params);
 	$query->query_run();
 	
-	$query->get_line_params()->set_class_name($primary_data_class);
+	$query->get_line_config()->set_class_name($primary_data_class);
 	$_obj_data_main_list = $query->get_line_object_list();
 
 	// --Paging
 	$query->get_next_result();
 	
-	$query->get_line_params()->set_class_name('\dc\recordnav\Paging');
+	$query->get_line_config()->set_class_name('\dc\recordnav\Paging');
 	
 	//$_obj_data_paging = new \dc\recordnav\Paging();
 	if($query->get_row_exists()) $paging = $query->get_line_object();

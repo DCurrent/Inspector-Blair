@@ -143,7 +143,7 @@
 			$query->query_run();
 			
 			// Repopulate main data object with results from merge query.
-			$query->get_line_params()->set_class_name('\data\Account');
+			$query->get_line_config()->set_class_name('\data\Account');
 			$_main_data = $query->get_line_object();
 			
 			break;			
@@ -176,13 +176,13 @@
 	// Query for primary data.
 	$query->get_next_result();
 	
-	$query->get_line_params()->set_class_name('\data\Account');	
+	$query->get_line_config()->set_class_name('\data\Account');	
 	if($query->get_row_exists() === TRUE) $_main_data = $query->get_line_object();	
 	
 	// Sub table (role) generation
 	$query->get_next_result();
 	
-	$query->get_line_params()->set_class_name('class_role_data');
+	$query->get_line_config()->set_class_name('class_role_data');
 	
 	$_obj_data_sub_arr = array();
 	if($query->get_row_exists() === TRUE) $_obj_data_sub_arr = $query->get_line_object_list();
@@ -198,7 +198,7 @@
 		$query->set_sql('{call role_list_unpaged()}');
 		$query->query_run();
 		
-		$query->get_line_params()->set_class_name('class_role_data');
+		$query->get_line_config()->set_class_name('class_role_data');
 		
 		$_obj_field_source_role_list = array();
 		if($query->get_row_exists() === TRUE) $_obj_field_source_role_list = $query->get_line_object_list();

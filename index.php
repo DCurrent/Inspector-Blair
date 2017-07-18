@@ -42,7 +42,7 @@
 		// Skip navigation data and get primary data record set.	
 		$database->get_next_result();
 		
-		$database->get_line_params()->set_class_name('\dc\application\CommonEntry');	
+		$database->get_line_config()->set_class_name('\dc\application\CommonEntry');	
 		if($database->get_row_exists() === TRUE) 
 		{
 			$_main_data = $database->get_line_object();

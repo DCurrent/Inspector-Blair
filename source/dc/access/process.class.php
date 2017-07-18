@@ -419,7 +419,7 @@
 			if($query->get_row_exists())
 			{
 				// Populate account data object with datbase row.
-				$query->get_line_params()->set_class_name(__NAMESPACE__.'\DataAccount');					
+				$query->get_line_config()->set_class_name(__NAMESPACE__.'\DataAccount');					
 				$this->data_account = $query->get_line_object();
 				
 				// Email is not in the data base as a field, but accounts
@@ -455,7 +455,7 @@
 			if($query->get_row_exists())
 			{
 				// Populate account data object with datbase row.
-				$query->get_line_params()->set_class_name(__NAMESPACE__.'\DataAccount');					
+				$query->get_line_config()->set_class_name(__NAMESPACE__.'\DataAccount');					
 				$this->data_account = $query->get_line_object();									
 			}
 			else

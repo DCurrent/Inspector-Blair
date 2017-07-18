@@ -26,7 +26,7 @@
 			$form_common_query->set_sql('{call account_list_inspector()}');
 			$form_common_query->query_run();
 			
-			$form_common_query->get_line_params()->set_class_name('\data\Account');
+			$form_common_query->get_line_config()->set_class_name('\data\Account');
 			
 			$_obj_field_source_account_list = new SplDoublyLinkedList();
 			if($form_common_query->get_row_exists() === TRUE) $_obj_field_source_account_list = $form_common_query->get_line_object_list();	
@@ -37,7 +37,7 @@
 			$form_common_query->set_sql('{call account_list_party()}');
 			$form_common_query->query_run();
 			
-			$query->get_line_params()->set_class_name('\data\Account');
+			$query->get_line_config()->set_class_name('\data\Account');
 			
 			$_obj_field_source_party_list = new SplDoublyLinkedList();
 			if($form_common_query->get_row_exists() === TRUE) $_obj_field_source_party_list = $form_common_query->get_line_object_list();		
@@ -48,7 +48,7 @@
 			$form_common_query->set_sql('{call inspection_status_list()}');
 			$form_common_query->query_run();
 			
-			$form_common_query->get_line_params()->set_class_name('\data\Common');
+			$form_common_query->get_line_config()->set_class_name('\data\Common');
 			
 			$_obj_data_list_event_type_list = new SplDoublyLinkedList();
 			if($form_common_query->get_row_exists() === TRUE) $_obj_data_list_event_type_list = $form_common_query->get_line_object_list();

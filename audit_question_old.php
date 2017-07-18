@@ -154,7 +154,7 @@
 			$query->query_run();
 			
 			// Repopulate main data object with results from merge query.
-			$query->get_line_params()->set_class_name('class_audit_question_data');
+			$query->get_line_config()->set_class_name('class_audit_question_data');
 			$_main_data = $query->get_line_object();
 			
 			// Now that save operation has completed, reload page using ID from
@@ -187,7 +187,7 @@
 	// Query for navigation data and populate navigation object.
 	$_obj_navigation = new \dc\recordnav\DataNavigation();
 	
-	$query->get_line_params()->set_class_name('\dc\recordnav\DataNavigation');	
+	$query->get_line_config()->set_class_name('\dc\recordnav\DataNavigation');	
 	if($query->get_row_exists() === TRUE) $_obj_navigation = $query->get_line_object();
 		
 	$obj_navigation_rec->set_id_first($_obj_navigation->get_id_first());
@@ -198,13 +198,13 @@
 	// Query for primary data.
 	$query->get_next_result();
 	
-	$query->get_line_params()->set_class_name('class_audit_question_data');	
+	$query->get_line_config()->set_class_name('class_audit_question_data');	
 	if($query->get_row_exists() === TRUE) $_main_data = $query->get_line_object();	
 	
 	// Sub table (category) generation
 	$query->get_next_result();
 	
-	$query->get_line_params()->set_class_name('\data\Common');
+	$query->get_line_config()->set_class_name('\data\Common');
 	
 	$_obj_data_sub_category_list = new SplDoublyLinkedList();
 	if($query->get_row_exists() === TRUE) $_obj_data_sub_category_list = $query->get_line_object_list();
@@ -212,7 +212,7 @@
 	// Sub table (inclusion) generation
 	$query->get_next_result();
 	
-	$query->get_line_params()->set_class_name('\data\Common');
+	$query->get_line_config()->set_class_name('\data\Common');
 	
 	$_obj_data_sub_inclusion_list = new SplDoublyLinkedList();
 	if($query->get_row_exists() === TRUE) $_obj_data_sub_inclusion_list = $query->get_line_object_list();
@@ -220,7 +220,7 @@
 	// Sub table (rating) generation
 	$query->get_next_result();
 	
-	$query->get_line_params()->set_class_name('\data\Common');
+	$query->get_line_config()->set_class_name('\data\Common');
 	
 	$_obj_data_sub_rating_list = new SplDoublyLinkedList();
 	if($query->get_row_exists() === TRUE) $_obj_data_sub_rating_list = $query->get_line_object_list();
@@ -228,7 +228,7 @@
 	// Sub table (reference) generation.
 	$query->get_next_result();
 	
-	$query->get_line_params()->set_class_name('\data\Common');
+	$query->get_line_config()->set_class_name('\data\Common');
 	
 	$_obj_data_sub_reference_list = new SplDoublyLinkedList();
 	if($query->get_row_exists() === TRUE) $_obj_data_sub_reference_list = $query->get_line_object_list();
@@ -245,7 +245,7 @@
 		$query->set_params($params);
 		$query->query_run();
 		
-		$query->get_line_params()->set_class_name('\data\Common');
+		$query->get_line_config()->set_class_name('\data\Common');
 		
 		$_obj_field_source_category_list = new SplDoublyLinkedList();
 		if($query->get_row_exists() === TRUE) $_obj_field_source_category_list = $query->get_line_object_list();
@@ -279,7 +279,7 @@
 		$query->set_params($params);
 		$query->query_run();
 		
-		$query->get_line_params()->set_class_name('\data\Common');
+		$query->get_line_config()->set_class_name('\data\Common');
 		
 		$_obj_field_source_inclusion_list = new SplDoublyLinkedList();
 		if($query->get_row_exists() === TRUE) $_obj_field_source_inclusion_list = $query->get_line_object_list();
@@ -313,7 +313,7 @@
 		$query->set_params($params);
 		$query->query_run();
 		
-		$query->get_line_params()->set_class_name('\data\Common');
+		$query->get_line_config()->set_class_name('\data\Common');
 		
 		$_obj_field_source_rating_list = new SplDoublyLinkedList();
 		if($query->get_row_exists() === TRUE) $_obj_field_source_rating_list = $query->get_line_object_list();

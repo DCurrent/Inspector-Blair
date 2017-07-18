@@ -133,7 +133,7 @@
 			$query->query_run();
 			
 			// Repopulate main data object with results from merge query.
-			$query->get_line_params()->set_class_name('\data\Common');
+			$query->get_line_config()->set_class_name('\data\Common');
 			$_main_data = $query->get_line_object();
 			
 			// Now that save operation has completed, reload page using ID from
@@ -166,7 +166,7 @@
 	// Query for navigation data and populate navigation object.
 	$_obj_navigation = new \dc\recordnav\DataNavigation();
 	
-	$query->get_line_params()->set_class_name('\dc\recordnav\DataNavigation');	
+	$query->get_line_config()->set_class_name('\dc\recordnav\DataNavigation');	
 	if($query->get_row_exists() === TRUE) $_obj_navigation = $query->get_line_object();
 		
 	$obj_navigation_rec->set_id_first($_obj_navigation->get_id_first());
@@ -177,7 +177,7 @@
 	// Query for primary data.
 	$query->get_next_result();
 	
-	$query->get_line_params()->set_class_name('\data\Common');	
+	$query->get_line_config()->set_class_name('\data\Common');	
 	if($query->get_row_exists() === TRUE) $_main_data = $query->get_line_object();	
 	
 	$obj_navigation_rec->generate_button_list();

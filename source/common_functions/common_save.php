@@ -31,7 +31,7 @@
 		// Repopulate main data object with results from merge query.
 		// We can use common data here because all we need
 		// is the ID for redirection.
-		$query->get_line_params()->set_class_name('\data\Common');
+		$query->get_line_config()->set_class_name('\data\Common');
 		$_main_data = $query->get_line_object();
 		
 		// Now that save operation has completed, reload page using ID from

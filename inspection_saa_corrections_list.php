@@ -57,7 +57,7 @@
 	$query->query_run();
 	
 	// Set class object we will push rows from datbase into.
-	$query->get_line_params()->set_class_name('class_audit_question_data');
+	$query->get_line_config()->set_class_name('class_audit_question_data');
 	
 	// Establish linked list of objects and populate with rows assuming that 
 	// rows were returned. 
@@ -96,7 +96,7 @@
 	$query->set_params($params);
 	$query->query_run();
 	
-	$query->get_line_params()->set_class_name('\data\Common');
+	$query->get_line_config()->set_class_name('\data\Common');
 	
 	$_obj_field_source_category_list = new SplDoublyLinkedList();
 	if($query->get_row_exists() === TRUE) $_obj_field_source_category_list = $query->get_line_object_list();
@@ -147,7 +147,7 @@
 			$query_audit_items->execute();		
 			
 			// Set class object we will push rows from datbase into.
-			$query_audit_items->get_line_params()->set_class_name('\data\AuditQuestion');
+			$query_audit_items->get_line_config()->set_class_name('\data\AuditQuestion');
 			
 			// Establish linked list of objects and populate with rows assuming that 
 			// rows were returned. 
