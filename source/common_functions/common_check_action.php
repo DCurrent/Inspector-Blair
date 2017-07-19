@@ -1,6 +1,6 @@
 <?php
 
-function common_check_action($action = NULL, $_layout = NULL)
+function common_check_action($action = NULL, $_layout = NULL, $database = NULL)
 {
 	switch($action)
 	{		
@@ -31,7 +31,7 @@ function common_check_action($action = NULL, $_layout = NULL)
 					
 		case \dc\recordnav\COMMANDS::SAVE:
 			
-			action_save();			
+			action_save($database);			
 			break;			
 	}
 }

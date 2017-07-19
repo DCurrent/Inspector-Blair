@@ -487,7 +487,7 @@
                                 
                             ?>
                                 <tr>
-                                    <td><a href="./?id_form=1599&amp;id=<?php echo $_obj_data_sub_visit->get_visit_type(); ?>" target="_blank"><?php echo $_obj_data_sub_visit->get_visit_type_label(); ?></a>
+                                    <td><a href="audit_type.php?id_form=1599&amp;id=<?php echo $_obj_data_sub_visit->get_visit_type(); ?>" target="_blank"><?php echo $_obj_data_sub_visit->get_visit_type_label(); ?></a>
                                         <input type="hidden"
                                             name 	= "sub_visit_type[]"
                                             id		= "sub_visit_type_<?php echo $_obj_data_sub_visit->get_id_key(); ?>"

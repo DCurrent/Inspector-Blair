@@ -90,7 +90,7 @@
                                         <li><a href="<?php echo $this->directory_prime; ?>/config_common_entry_list.php"><?php echo NAV_INDENT; ?>Common Entry Forms</a></li>
                                     	<li><a href="<?php echo $this->directory_prime; ?>?id_form=1256&amp;list=1"><?php echo NAV_INDENT; ?>Accounts</a></li>
                                     	<li><a href="<?php echo $this->directory_prime; ?>?id_form=1182&amp;list=1"><?php echo NAV_INDENT; ?>Account Roles</a></li>
-                                        <li><a href="<?php echo $this->directory_prime; ?>?id_form=1599&amp;list=1"><?php echo NAV_INDENT; ?>Visit Types</a></li>
+                                        <li><a href="<?php echo $this->directory_prime; ?>/audit_type_list.php?id_form=1599&amp;list=1"><?php echo NAV_INDENT; ?>Visit Types</a></li>
                                     <li class="divider"></li>
                                 	<li class="dropdown-header">Area/Rooms</li>
                                     	<li><a href="<?php echo $this->directory_prime; ?>/area_list.php"><?php echo NAV_INDENT; ?>Areas</a></li>

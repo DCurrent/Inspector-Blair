@@ -1,49 +1,7 @@
 <?php 
 		
-	require(__DIR__.'/source/main.php');
-	require(__DIR__.'/source/common_functions/common_security.php');
-	
-	const LOCAL_STORED_PROC_NAME 	= 'master_version'; 	// Used to call stored procedures for the main record set of this script.
-	const LOCAL_BASE_TITLE 			= 'Revision';			// Title display, button labels, instruction inserts, etc.
-	$primary_data_class				= '';
-	
-	function get_layout($database)
-	{
-		$result = new \dc\application\CommonEntry();
-		$request_form = NULL;
-		
-		if(isset($_REQUEST['id_form']))
-		{
-			$request_form = $_REQUEST['id_form'];
-		}
-		else
-		{
-			return $result;
-		}
-		
-		// Set up primary query with parameters and arguments.
-		$database->set_sql('{call config_form(@param_filter_id = ?)}');
-									
-		$params = array(array($request_form, SQLSRV_PARAM_IN));	
-					
-		// Apply arguments and execute query.
-		$database->set_param_array($params);
-		$database->query_run();
-		
-		// Skip navigation data and get primary data record set.	
-		$database->get_next_result();
-		
-		$database->get_line_config()->set_class_name('\dc\application\CommonEntry');	
-		
-		if($database->get_row_exists() === TRUE) 
-		{
-			$result = $database->get_line_object();
-		}
-		
-		return $result;
-	}
-	
-	$_layout = get_layout($yukon_database);
+	require_once(__DIR__.'/source/main.php');
+	require_once(__DIR__.'/source/common_functions/common_security.php');	
 	
 	class class_filter_control
 	{
@@ -113,8 +71,10 @@
 		}
 	} 
 	
-	// Verify user access.
-	common_security($yukon_database);
+	// Get page configuration (title, description, query names, etc.)
+	$_page_config_config = new \dc\application\CommonEntry($yukon_connection);	
+	$_page_config = new \dc\application\CommonEntryConfig($_page_config_config);	
+	$_layout = $_page_config->create_config_object();
 	
 	// Start page cache.
 	$page_obj = new \dc\cache\PageCache();
@@ -132,39 +92,27 @@
 	// from user (if any).
 	$sorting = new \dc\sorting\SortControl;
 	$sorting->set_sort_field(1);
-	$sorting->set_sort_order(\dc\sorting\ORDER_TYPE::DECENDING);
+	$sorting->set_sort_order(\dc\sorting\ORDER_TYPE::ASCENDING);
 	$sorting->populate_from_request();
-	
-	// Start page cache.
-	$page_obj = new \dc\cache\PageCache();
 	
 	// Set up navigaiton.
 	$navigation_obj = new class_navigation();
-	$navigation_obj->generate_markup_nav();
-	$navigation_obj->generate_markup_footer();	
-	
-	// Set up database.
-	$query = new \dc\yukon\Database($yukon_connection);
 		
 	$paging = new \dc\recordnav\Paging();
-	$paging->set_row_max(APPLICATION_SETTINGS::PAGE_ROW_MAX);	
-	
-	$request = new \data\Common();
+	$paging->set_row_max(APPLICATION_SETTINGS::PAGE_ROW_MAX);
 	
 	// Record navigation.
 	$obj_navigation_rec = new \dc\recordnav\RecordNav();
 	
-	$query->set_sql('{call '.LOCAL_STORED_PROC_NAME.'_list(@page_current 		= ?,														 
-										@page_rows 			= ?,
-										@update_id			= ?,
-										@sort_field			= ?,
-										@sort_order			= ?,
+	$yukon_database->set_sql('{call '.$_layout->get_main_sql_name().'_list(@param_page_current 		= ?,														 
+										@param_page_rows 	= ?,
+										@param_sort_field	= ?,
+										@param_sort_order	= ?,
 										@param_date_start	= ?,
 										@param_date_end		= ?)}');	
 	
 	$params = array(array($paging->get_page_current(), 			SQLSRV_PARAM_IN), 
 					array($paging->get_row_max(), 				SQLSRV_PARAM_IN),
-					array($obj_navigation_rec->get_id(), 		SQLSRV_PARAM_IN),
 					array($sorting->get_sort_field(),			SQLSRV_PARAM_IN),
 					array($sorting->get_sort_order(),			SQLSRV_PARAM_IN),
 					array($filter_control->get_time_start(),	SQLSRV_PARAM_IN),
@@ -174,26 +122,32 @@
 	//var_dump($params);
 	//exit;
 
-	$query->set_param_array($params);
-	$query->query_run();
+	$yukon_database->set_param_array($params);
+	$yukon_database->query_run();
 	
-	$query->get_line_config()->set_class_name('\data\Account');
-	$_obj_data_main_list = $query->get_line_object_list();
+	$yukon_database->get_line_config()->set_class_name($_layout->get_main_object_name());
+	$_obj_data_main_list = $yukon_database->get_line_object_list();
 
 	// --Paging
-	$query->get_next_result();
+	$yukon_database->get_next_result();
 	
-	$query->get_line_config()->set_class_name('\dc\recordnav\Paging');
+	$yukon_database->get_line_config()->set_class_name('\dc\recordnav\Paging');
 	
 	//$_obj_data_paging = new \dc\recordnav\Paging();
-	if($query->get_row_exists()) $paging = $query->get_line_object();
+	if($yukon_database->get_row_exists()) $paging = $yukon_database->get_line_object();
 ?>
 
 <!DOCtype html>
 <html lang="en">
     <head>
         <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1" />
-        <title><?php echo APPLICATION_SETTINGS::NAME. ', '.LOCAL_BASE_TITLE; ?> List</title>        
+        <title><?php echo APPLICATION_SETTINGS::NAME; 
+		
+			// Add page title, if any.
+			if($_layout->get_title())
+			{
+				echo ', '.$_layout->get_title();
+            }?> List</title>        
         
          <!-- CSS -->
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
@@ -209,24 +163,21 @@
     
     <body>    
         <div id="container" class="container">            
-            <?php echo $navigation_obj->get_markup_nav(); ?>                                                                                
+            <?php echo $navigation_obj->generate_markup_nav(); ?>                                                                                
             <div class="page-header">
-                <h1><?php echo LOCAL_BASE_TITLE.' List';
-				
+                <h1><?php
 					// Add page title, if any.
 					if($_layout->get_title())
 					{
-						echo ' - '.$_layout->get_title();
-					}
-					
-					 ?></h1>
-                <p class="lead">This form allows you to view the complete list of revisions for this <?php
-					// Add page title, if any.
-					if($_layout->get_title())
+						echo $_layout->get_title();
+					}?></h1>
+                <?php
+					// Add page description, if any.
+					if($_layout->get_description())
 					{
-						echo $_layout->get_title().' ';
-					}
-					?>record. Click any row to review a specific revision.</p>
+						//echo $_layout->get_description();
+					}?>
+                <p class="lead">This form allows you to view the complete <?php echo $_layout->get_title();?> list. Click any row to view details.</p>
             </div>
             
             	<div class="panel panel-default" id="filter_container">
@@ -241,6 +192,7 @@
                                                        
                             <form class="form-horizontal" role="form" id="form_filter" method="get">
             	                
+                                <input type="hidden" name="id_form" value="<?php echo $_layout->get_id(); ?>" />
                                 <input type="hidden" name="id" value="<?php echo $filter_control->get_id(); ?>" />
                                 <input type="hidden" name="field" value="<?php echo $sorting->get_sort_field(); ?>" />
                                 <input type="hidden" name="order" value="<?php echo $sorting->get_sort_order(); ?>" />
@@ -271,7 +223,7 @@
                                             value="<?php echo $filter_control->get_time_end(); ?>">
                                     </div>
                                 </div><!--#group_filter_time-->
-                                                               
+                                
                                 <button 
                                     type	="submit"
                                     class 	="btn btn-primary btn-block" 
@@ -314,40 +266,47 @@
 				$target_name	= basename(__FILE__, '_list.php').'.php';
 				$target_file	= __DIR__.'/'.$target_name;				
 				
+				// Does the file exisit? If so we can
+				// use the URL, script, and new 
+				// item button.
+				if(file_exists($target_file))
+				{
+					$target_url = $target_name.'?id_form='.$_layout->get_id();
 				?>
                 	<script>
 						// Clickable table row.
 						jQuery(document).ready(function($) {
-							$('.clickable-row').click(function() 
-							{
-								// Get the base URL, so we don't keep adding more
-								// and more to it on subsequent calls.
-								var $base_url = opener.location.href.split('?')[0];
-								
-								// Reload parent with id fields.
-								opener.location.href = $base_url + '?id_form=<?php echo $_layout->get_id(); ?>&id=<?php echo $obj_navigation_rec->get_id(); ?>&id_key=' + $(this).data("href");
-								// Set focus back to parent.
-								opener.focus();
+							$(".clickable-row").click(function() {
+								window.document.location = '<?php echo $target_url; ?>&id=' + $(this).data("href");
 							});
 						});
 					</script>
+                    
+                    <a href="<?php echo $target_url; ?>&amp;nav_command=<?php echo \dc\recordnav\COMMANDS::NEW_BLANK;?>&amp;id=<?php echo \dc\yukon\DEFAULTS::NEW_ID; ?>" class="btn btn-success btn-block" title="Click here to start entering a new item."><span class="glyphicon glyphicon-plus"></span> <?php echo $_layout->get_title(); ?></a>
                 <?php
-					echo $paging->generate_paging_markup();				
-				?>
-          
+				}
+				
+				
+			?>
+            <!-- Top record paging controls -->
+            <br />
+          	<?php echo $paging->generate_paging_markup(); ?>
+            
             <!--div class="table-responsive"-->
                 <table class="table table-striped table-hover">
                     <thead>
                         <tr>
-                            <th><a href="<?php echo $sorting->sort_url(1); ?>">Revision <?php echo $sorting->sorting_markup(1); ?></a></th>
-                            <th><a href="<?php echo $sorting->sort_url(2); ?>">By <?php echo $sorting->sorting_markup(2); ?></a></th>                
+                            <th><a href="<?php echo $sorting->sort_url(2); ?>">Revision <?php echo $sorting->sorting_markup(2); ?></a></th>
+                            <th><a href="<?php echo $sorting->sort_url(1); ?>">Label <?php echo $sorting->sorting_markup(1); ?></a></th> 
+                            <th><a href="<?php echo $sorting->sort_url(3); ?>">Order <?php echo $sorting->sorting_markup(3); ?></a></th>            
                         </tr>
                     </thead>
                     <tfoot>
                     	<tr>
-                            <th><a href="<?php echo $sorting->sort_url(1); ?>">Revision <?php echo $sorting->sorting_markup(1); ?></a></th>
-                            <th><a href="<?php echo $sorting->sort_url(2); ?>">By <?php echo $sorting->sorting_markup(2); ?></a></th>                
-                        </tr>
+                            <th><a href="<?php echo $sorting->sort_url(2); ?>">Revision <?php echo $sorting->sorting_markup(2); ?></a></th>
+                            <th><a href="<?php echo $sorting->sort_url(1); ?>">Label <?php echo $sorting->sorting_markup(1); ?></a></th> 
+                            <th><a href="<?php echo $sorting->sort_url(3); ?>">Order <?php echo $sorting->sorting_markup(3); ?></a></th          
+                        ></tr>
                     </tfoot>
                     <tbody>                        
                         <?php
@@ -357,9 +316,10 @@
 								{						
 									$_obj_data_main = $_obj_data_main_list->current();
                             ?>
-                                        <tr class="clickable-row <?php if($_obj_data_main->get_active()) echo 'success'; ?>" role="button" data-href="<?php echo $_obj_data_main->get_id_key(); ?>">
+                                        <tr class="clickable-row" role="button" data-href="<?php echo $_obj_data_main->get_id(); ?>">
                                             <td><?php if(is_object($_obj_data_main->get_create_time()) === TRUE) echo date(APPLICATION_SETTINGS::TIME_FORMAT, $_obj_data_main->get_create_time()->getTimestamp()); ?></td>
-                                            <td><?php if($_obj_data_main->get_name_l()) echo $_obj_data_main->get_name_l().', '.$_obj_data_main->get_name_f(); ?></td>
+                                            <td><?php echo $_obj_data_main->get_label(); ?></td>
+                                            <td><?php echo $_obj_data_main->get_sort_order(); ?></td>
                                         </tr>                                    
                             <?php								
                             	}
@@ -368,8 +328,8 @@
                     </tbody>                        
                 </table>  
             <?php 
-				echo $paging->generate_paging_markup();
-				echo $navigation_obj->get_markup_footer(); 
+				echo $paging->get_markup();
+				echo $navigation_obj->generate_markup_footer(); 
 			?>
         </div><!--container-->        
 	<script>
