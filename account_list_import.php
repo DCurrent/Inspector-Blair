@@ -38,7 +38,7 @@
 	$params = array(array($paging->get_page_current(), 	SQLSRV_PARAM_IN), 
 					array(1000, 		SQLSRV_PARAM_IN));
 
-	$query->set_params($params);
+	$query->set_param_array($params);
 	$query->query_run();
 	
 	$query->get_line_config()->set_class_name('\data\Account');
@@ -136,7 +136,7 @@
 										
 										
 										
-										$query->set_params($params);			
+										$query->set_param_array($params);			
 										$query->query_run();
 										
 										// Insert the roles.
@@ -145,7 +145,7 @@
 										$params = array(array($_obj_data_main->get_id(), SQLSRV_PARAM_IN),
 														array('cd0a6b6c-ed15-40c0-95be-cbf0953a593e', SQLSRV_PARAM_IN));
 														
-										$query->set_params($params);			
+										$query->set_param_array($params);			
 										$query->query_run();
 									}
 									

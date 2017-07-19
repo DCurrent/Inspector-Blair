@@ -52,7 +52,7 @@
 		$params_app_form = array(array($_obj_app_form_data_url->get_id(), SQLSRV_PARAM_IN));
 	
 		// Apply parameters and execute query.
-		$query_app_form->set_params($params_app_form);
+		$query_app_form->set_param_array($params_app_form);
 		$query_app_form->query_run();	
 		
 		// We use class objects, so set up the target
@@ -118,7 +118,7 @@
 			// Call and execute delete SP.
 			$query->set_sql('{call inspection_primary_delete(@id = ?)}');			
 			
-			$query->set_params(array(array($_main_data->get_id(), SQLSRV_PARAM_IN)));
+			$query->set_param_array(array(array($_main_data->get_id(), SQLSRV_PARAM_IN)));
 			$query->query_run();
 			
 			// Refresh page to the previous record.				

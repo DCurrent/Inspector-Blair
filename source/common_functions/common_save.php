@@ -25,7 +25,7 @@
 					array($_main_data->get_label(), 		SQLSRV_PARAM_IN),						
 					array($_main_data->get_details(),		SQLSRV_PARAM_IN));
 		
-		$query->set_params($params);			
+		$query->set_param_array($params);			
 		$query->query_run();
 		
 		// Repopulate main data object with results from merge query.

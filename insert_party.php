@@ -93,7 +93,7 @@
 	
 	$params = array('%'.$post->get_filter().'%');
 	
-	$query->set_params($params);
+	$query->set_param_array($params);
 	$query->query_run();		
 	
 	// There should always be records, but verify just in case.

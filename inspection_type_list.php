@@ -43,7 +43,7 @@
 					array($page_last, 					SQLSRV_PARAM_OUT, SQLSRV_PHPTYPE_INT),
 					array($row_count, 					SQLSRV_PARAM_OUT, SQLSRV_PHPTYPE_INT));
 
-	$query->set_params($params);
+	$query->set_param_array($params);
 	$query->query_run();
 	
 	$query->get_line_config()->set_class_name('\data\Common');

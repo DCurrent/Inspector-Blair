@@ -33,7 +33,7 @@
 					array($access_obj->get_ip(), 			SQLSRV_PARAM_IN));
 		
 					
-		$query->set_params($params);
+		$query->set_param_array($params);
 		$query->query_run();	
 		
 		// Refrsh page.
@@ -140,7 +140,7 @@
 		
 		var_dump($params);
 		
-		$query->set_params($params);			
+		$query->set_param_array($params);			
 		$query->query_run();
 		
 		// Repopulate main data object with results from merge query.
@@ -219,7 +219,7 @@
 					array($_main_data->get_id_key(), 	SQLSRV_PARAM_IN));
 
 	// Apply arguments and execute query.
-	$query->set_params($params);
+	$query->set_param_array($params);
 	$query->query_run();
 	
 	// Get navigation record set and populate navigation object.		
@@ -269,7 +269,7 @@
 		$query->set_sql('{call audit_question_category_list(@page_current = ?)}');
 		$params = array(array(-1,			SQLSRV_PARAM_IN));
 
-		$query->set_params($params);
+		$query->set_param_array($params);
 		$query->query_run();
 		
 		$query->get_line_config()->set_class_name('\data\Common');
@@ -292,7 +292,7 @@
 		$query->set_sql('{call audit_question_inclusion_list(@page_current = ?)}');											
 		$params = array(array(-1,			SQLSRV_PARAM_IN));
 
-		$query->set_params($params);
+		$query->set_param_array($params);
 		$query->query_run();
 		
 		$query->get_line_config()->set_class_name('\data\Common');
@@ -315,7 +315,7 @@
 		$query->set_sql('{call audit_question_rating_list(@page_current = ?)}');											
 		$params = array(array(-1,			SQLSRV_PARAM_IN));
 
-		$query->set_params($params);
+		$query->set_param_array($params);
 		$query->query_run();
 		
 		$query->get_line_config()->set_class_name('\data\Common');

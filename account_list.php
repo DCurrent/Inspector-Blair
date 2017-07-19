@@ -130,7 +130,7 @@
 					array($sorting->get_sort_field(), 	SQLSRV_PARAM_IN),
 					array($sorting->get_sort_order(), 	SQLSRV_PARAM_IN));
 
-	$query->set_params($params);
+	$query->set_param_array($params);
 	$query->query_run();
 	
 	$query->get_line_config()->set_class_name('\data\Account');

@@ -36,7 +36,7 @@
 		$params = array(array($request_form, 		SQLSRV_PARAM_IN));
 	
 		// Apply arguments and execute query.
-		$database->set_params($params);
+		$database->set_param_array($params);
 		$database->query_run();
 		
 		// Skip navigation data and get primary data record set.	

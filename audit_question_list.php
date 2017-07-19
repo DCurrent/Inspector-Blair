@@ -127,7 +127,7 @@
 	//var_dump($params);
 	//exit;
 
-	$query->set_params($params);
+	$query->set_param_array($params);
 	$query->query_run();
 	
 	$query->get_line_config()->set_class_name($_layout->get_main_object_name());
@@ -153,7 +153,7 @@
 		$params = array(array(-1,			SQLSRV_PARAM_IN),
 						array(NULL,			SQLSRV_PARAM_IN));
 
-		$query->set_params($params);
+		$query->set_param_array($params);
 		$query->query_run();
 		
 		$query->get_line_config()->set_class_name('\data\Common');

@@ -29,7 +29,7 @@
 		$params = array(array($request_form, SQLSRV_PARAM_IN));	
 					
 		// Apply arguments and execute query.
-		$database->set_params($params);
+		$database->set_param_array($params);
 		$database->query_run();
 		
 		// Skip navigation data and get primary data record set.	
@@ -176,7 +176,7 @@
 	//var_dump($params);
 	//exit;
 
-	$query->set_params($params);
+	$query->set_param_array($params);
 	$query->query_run();
 	
 	$query->get_line_config()->set_class_name('\data\Account');

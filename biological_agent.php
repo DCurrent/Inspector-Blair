@@ -47,7 +47,7 @@
 		var_dump($params);
 		//exit;
 		
-		$query->set_params($params);			
+		$query->set_param_array($params);			
 		$query->query_run();
 		
 		// Repopulate main data object with results from merge query.
@@ -108,7 +108,7 @@
 					array($_main_data->get_id_key(), 	SQLSRV_PARAM_IN));
 
 	// Apply arguments and execute query.
-	$query->set_params($params);
+	$query->set_param_array($params);
 	$query->query_run();
 	
 	// Get navigation record set and populate navigation object.		
@@ -143,7 +143,7 @@
 		$_obj_field_source_host_list = new \data\Common();
 	
 		$query->set_sql('{call biological_host_list(@param_page_current = ?)}');
-		$query->set_params(array(-1));
+		$query->set_param_array(array(-1));
 		
 		$query->query_run();
 		$query->get_line_config()->set_class_name('\data\Common');
@@ -169,7 +169,7 @@
 		$_obj_field_source_risk_group_list = new \data\Common();
 	
 		$query->set_sql('{call biological_risk_group_list(@param_page_current = ?)}');
-		$query->set_params(array(-1));
+		$query->set_param_array(array(-1));
 		
 		$query->query_run();
 		$query->get_line_config()->set_class_name('\data\Common');

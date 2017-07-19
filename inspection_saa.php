@@ -33,7 +33,7 @@
 					array($access_obj->get_ip(), 			SQLSRV_PARAM_IN));
 		
 					
-		$query->set_params($params);
+		$query->set_param_array($params);
 		$query->query_run();	
 		
 		// Refrsh page.
@@ -139,7 +139,7 @@
 		//var_dump($params);
 		//exit;
 		
-		$query->set_params($params);
+		$query->set_param_array($params);
 		$query->query_run();
 		
 		// Repopulate main data object with results from merge query.
@@ -218,7 +218,7 @@
 					array($_layout->get_id(), 			SQLSRV_PARAM_IN));
 
 	// Apply arguments and execute query.
-	$query->set_params($params);
+	$query->set_param_array($params);
 	$query->query_run();
 	
 	// Get navigation record set and populate navigation object.		
@@ -279,7 +279,7 @@
 						array(NULL,			SQLSRV_PARAM_IN),
 						array($inspection_type,			SQLSRV_PARAM_IN));
 
-		$query->set_params($params);
+		$query->set_param_array($params);
 		$query->query_run();
 		
 		$query->get_line_config()->set_class_name('\data\Common');
@@ -320,7 +320,7 @@
 										array(&$inspection_type, SQLSRV_PARAM_IN));
 		
 		// Prepare query for execution.
-		$query_audit_items->set_params($query_audit_items_params);
+		$query_audit_items->set_param_array($query_audit_items_params);
 		$query_audit_items->prepare();
 				
 		// Generate a list for new insert. List for existing records are generated per each

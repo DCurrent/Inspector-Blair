@@ -53,7 +53,7 @@
 	$params = array(array($_obj_params->get_category(), SQLSRV_PARAM_IN),
 					array($_obj_params->get_inclusion(), SQLSRV_PARAM_IN));
 	
-	$query->set_params($params);
+	$query->set_param_array($params);
 	$query->query_run();
 	
 	// Set class object we will push rows from datbase into.
@@ -93,7 +93,7 @@
 						array(NULL,			SQLSRV_PARAM_IN),
 						array($_obj_params->get_inclusion(),			SQLSRV_PARAM_IN));
 
-	$query->set_params($params);
+	$query->set_param_array($params);
 	$query->query_run();
 	
 	$query->get_line_config()->set_class_name('\data\Common');
@@ -121,7 +121,7 @@
 									array(&$inspection_type, SQLSRV_PARAM_IN));
 	
 	// Prepare query for execution.
-	$query_audit_items->set_params($query_audit_items_params);
+	$query_audit_items->set_param_array($query_audit_items_params);
 	$query_audit_items->prepare();
 			
 	// Generate a list for new insert. List for existing records are generated per each

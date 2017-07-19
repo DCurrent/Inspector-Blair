@@ -79,7 +79,7 @@
 					array($_main_data->get_label(), 		SQLSRV_PARAM_IN),						
 					array($_main_data->get_details(),		SQLSRV_PARAM_IN));
 		
-		$query->set_params($params);			
+		$query->set_param_array($params);			
 		$query->query_run();
 		
 		// Repopulate main data object with results from merge query.
@@ -116,7 +116,7 @@
 					array($access_obj->get_id(), 				SQLSRV_PARAM_IN),
 					array($access_obj->get_ip(), 			SQLSRV_PARAM_IN));
 		
-		$query->set_params($params);			
+		$query->set_param_array($params);			
 		$query->query_run();
 		
 		// Repopulate main data object with results from merge query.
@@ -193,7 +193,7 @@
 					array($_main_data->get_id_key(), 	SQLSRV_PARAM_IN));
 
 	// Apply arguments and execute query.
-	$query->set_params($params);
+	$query->set_param_array($params);
 	$query->query_run();
 	
 	// Get navigation record set and populate navigation object.		

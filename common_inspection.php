@@ -345,7 +345,7 @@
                                                                     array(&$inspection_type, SQLSRV_PARAM_IN));
                                     
                                     // Prepare query for execution.
-                                    $query_audit_items->set_params($query_audit_items_params);
+                                    $query_audit_items->set_param_array($query_audit_items_params);
                                     $query_audit_items->prepare();
                                      
                                     // Generate table row for each item in list.

@@ -81,7 +81,7 @@
 						array($access_obj->get_ip(), 			SQLSRV_PARAM_IN));
 			
 						
-			$query->set_params($params);
+			$query->set_param_array($params);
 			$query->query_run();
 			
 			// Refrsh page to the previous record.				
@@ -129,7 +129,7 @@
 						array($access_obj->get_id(), 			SQLSRV_PARAM_IN),
 						array($access_obj->get_ip(), 			SQLSRV_PARAM_IN));
 			
-			$query->set_params($params);			
+			$query->set_param_array($params);			
 			$query->query_run();
 			
 			// Repopulate main data object with results from merge query.
@@ -160,7 +160,7 @@
 	$query->set_sql('{call audit_question_inclusion(@id = ?)}');
 	$params = array(array($_main_data->get_id(), SQLSRV_PARAM_IN));
 
-	$query->set_params($params);
+	$query->set_param_array($params);
 	$query->query_run();
 	
 	// Query for navigation data and populate navigation object.

@@ -125,7 +125,7 @@
 	//var_dump($params);
 	//exit;
 
-	$query->set_params($params);
+	$query->set_param_array($params);
 	$query->query_run();
 	
 	$query->get_line_config()->set_class_name($primary_data_class);

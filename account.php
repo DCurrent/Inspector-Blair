@@ -23,7 +23,7 @@
 					array($access_obj->get_ip(), 			SQLSRV_PARAM_IN));
 		
 					
-		$query->set_params($params);
+		$query->set_param_array($params);
 		$query->query_run();
 		
 		// Refrsh page to the previous record.				
@@ -145,7 +145,7 @@
 			//var_dump($params);
 			//exit;
 			
-			$query->set_params($params);			
+			$query->set_param_array($params);			
 			$query->query_run();
 			
 			// Repopulate main data object with results from merge query.
@@ -184,7 +184,7 @@
 	$params = array(array($_main_data->get_id(), 		SQLSRV_PARAM_IN),
 					array($_main_data->get_id_key(), 	SQLSRV_PARAM_IN));
 
-	$query->set_params($params);
+	$query->set_param_array($params);
 	$query->query_run();
 	
 	//Query for navigation data and populate navigation object.	
@@ -225,7 +225,7 @@
 		$query->set_sql('{call account_role_list(@page_current = ?)}');
 		$params = array(array(-1, SQLSRV_PARAM_IN));
 		
-		$query->set_params($params);
+		$query->set_param_array($params);
 		$query->query_run();
 		
 		$query->get_line_config()->set_class_name('\data\Common');

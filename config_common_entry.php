@@ -51,7 +51,7 @@
 					array($_main_data->get_slug(),			SQLSRV_PARAM_IN),
 					array($_main_data->get_file_name(),		SQLSRV_PARAM_IN));
 		
-		$query->set_params($params);			
+		$query->set_param_array($params);			
 		$query->query_run();
 		
 		// Repopulate main data object with results from merge query.
@@ -101,7 +101,7 @@
 					array($_main_data->get_id_key(), 	SQLSRV_PARAM_IN));
 
 	// Apply arguments and execute query.
-	$query->set_params($params);
+	$query->set_param_array($params);
 	$query->query_run();
 	
 	// Get navigation record set and populate navigation object.		

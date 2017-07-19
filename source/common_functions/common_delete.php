@@ -25,7 +25,7 @@
 					array($access_obj->get_ip(), 			SQLSRV_PARAM_IN));
 		
 					
-		$query->set_params($params);
+		$query->set_param_array($params);
 		$query->query_run();	
 		
 		// Refrsh page.

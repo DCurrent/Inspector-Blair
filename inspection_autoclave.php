@@ -74,7 +74,7 @@
 					
 	
 
-	$query->set_params($params);
+	$query->set_param_array($params);
 	$query->query_run();
 	
 	$query->get_line_config()->set_class_name('class_common_inspection_data');
@@ -137,7 +137,7 @@
 			// Call and execute delete SP.
 			$query->set_sql('{call inspection_primary_delete(@id = ?)}');			
 			
-			$query->set_params(array(array($_main_data->get_id(), SQLSRV_PARAM_IN)));
+			$query->set_param_array(array(array($_main_data->get_id(), SQLSRV_PARAM_IN)));
 			$query->query_run();
 			
 			// Refrsh page to the previous record.				
@@ -196,7 +196,7 @@
 			if($valid === TRUE)
 			{
 			
-				$query->set_params($params);			
+				$query->set_param_array($params);			
 				$query->query_run();
 				
 				// Repopulate main data object with results from merge query.
@@ -221,7 +221,7 @@
 								array($access_obj->get_id(),		SQLSRV_PARAM_IN),
 								array($access_obj->get_ip(), 			SQLSRV_PARAM_IN));
 				
-				$query->set_params($params);			
+				$query->set_param_array($params);			
 				$query->query_run();
 				
 				// --visits
@@ -241,7 +241,7 @@
 								array($access_obj->get_id(),		SQLSRV_PARAM_IN),
 								array($access_obj->get_ip(), 			SQLSRV_PARAM_IN));
 				
-				$query->set_params($params);			
+				$query->set_param_array($params);			
 				$query->query_run();
 				
 				// --detail
@@ -261,7 +261,7 @@
 								array($access_obj->get_id(),		SQLSRV_PARAM_IN),
 								array($access_obj->get_ip(), 			SQLSRV_PARAM_IN));
 				
-				$query->set_params($params);			
+				$query->set_param_array($params);			
 				$query->query_run();
 							
 				//echo '<br/> XML: '.$_obj_data_sub_request->xml();

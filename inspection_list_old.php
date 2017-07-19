@@ -151,7 +151,7 @@
 
 	
 
-	$query->set_params($params);
+	$query->set_param_array($params);
 	$query->query_run();
 	
 	$query->get_line_config()->set_class_name('\data\Account');
@@ -220,7 +220,7 @@
 
 	
 
-	$query->set_params($params);
+	$query->set_param_array($params);
 	$query->query_run();	
 	$query->get_line_config()->set_class_name('class_common_inspection_data');
 	$_obj_data_main_list = $query->get_line_object_list();

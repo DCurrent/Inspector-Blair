@@ -123,7 +123,7 @@
 	//var_dump($params);
 	//exit;
 
-	$yukon_database->set_params($params);
+	$yukon_database->set_param_array($params);
 	$yukon_database->query_run();
 	
 	$yukon_database->get_line_config()->set_class_name($_layout->get_main_object_name());

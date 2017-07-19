@@ -38,7 +38,7 @@
 					array($access_obj->get_ip(), 			SQLSRV_PARAM_IN));
 		
 					
-		$query->set_params($params);
+		$query->set_param_array($params);
 		$query->query_run();	
 		
 		// Refrsh page.
@@ -150,7 +150,7 @@
 		//var_dump($params);
 		//exit;
 		
-		$query->set_params($params);			
+		$query->set_param_array($params);			
 		$query->query_run();
 		
 		// Repopulate main data object with results from merge query.
@@ -233,7 +233,7 @@
 				   array($_main_data->get_room_code(), 	SQLSRV_PARAM_IN));
 
 	// Apply arguments and execute query.
-	$query->set_params($params);
+	$query->set_param_array($params);
 	$query->query_run();
 	
 	// Get navigation record set and populate navigation object.		
@@ -272,7 +272,7 @@
 			$_obj_field_source_agent_list = new \data\Common();
 		
 			$query->set_sql('{call biological_agent_list(@param_page_current = ?)}');
-			$query->set_params(array(-1));
+			$query->set_param_array(array(-1));
 			
 			$query->query_run();
 			$query->get_line_config()->set_class_name('\data\Common');
@@ -298,7 +298,7 @@
 			$_obj_field_source_chemical_operations_list = new \data\Common();
 		
 			$query->set_sql('{call chemical_operations_class_list(@param_page_current = ?)}');
-			$query->set_params(array(-1));
+			$query->set_param_array(array(-1));
 			
 			$query->query_run();
 			$query->get_line_config()->set_class_name('\data\Common');
@@ -313,7 +313,7 @@
 			//$_obj_field_source_chemical_lab_list = new \data\Common();
 		
 			//$query->set_sql('{call chemical_operations_lab_list(@param_page_current = ?)}');
-			//$query->set_params(array(-1));
+			//$query->set_param_array(array(-1));
 			
 			//$query->query_run();
 			//$query->get_line_config()->set_class_name('\data\Common');
@@ -334,7 +334,7 @@
 			$_obj_field_source_biosafety_level_list = new \data\Common();
 		
 			$query->set_sql('{call biosafety_level_list(@param_page_current = ?)}');
-			$query->set_params(array(-1));
+			$query->set_param_array(array(-1));
 			
 			$query->query_run();
 			$query->get_line_config()->set_class_name('\data\Common');
