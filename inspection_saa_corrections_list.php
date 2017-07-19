@@ -122,7 +122,7 @@
 	
 	// Prepare query for execution.
 	$query_audit_items->set_param_array($query_audit_items_params);
-	$query_audit_items->prepare();
+	$query_audit_items->query_prepare();
 			
 	// Generate a list for new insert. List for existing records are generated per each
 	// record loop to 'select' the current record value.
@@ -144,7 +144,7 @@
 			// Set bound parameter and execute prepared query.
 			$query_audit_items_param_category = $_obj_field_source_category->get_id();
 			$inspection_type = $_obj_params->get_inclusion(); 			
-			$query_audit_items->execute();		
+			$query_audit_items->query_execute();		
 			
 			// Set class object we will push rows from datbase into.
 			$query_audit_items->get_line_config()->set_class_name('\data\AuditQuestion');

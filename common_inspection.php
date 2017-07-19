@@ -346,7 +346,7 @@
                                     
                                     // Prepare query for execution.
                                     $query_audit_items->set_param_array($query_audit_items_params);
-                                    $query_audit_items->prepare();
+                                    $query_audit_items->query_prepare();
                                      
                                     // Generate table row for each item in list.
                                     for($_obj_data_sub_detail_list->rewind(); $_obj_data_sub_detail_list->valid(); $_obj_data_sub_detail_list->next())
