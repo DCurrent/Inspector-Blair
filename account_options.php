@@ -4,43 +4,31 @@
 
 	require($_SERVER['DOCUMENT_ROOT'].'/libraries/php/classes/database/main.php');
 
-	class class_filter_control
+	class class_filter_control extends \data\Common
 	{		
-		private	$data_common = NULL;
-		private	$name_like	= NULL;
+		private	$account_filter	= NULL;
 		
 		public function __construct()
 		{
-			$this->data_common = new \data\Common();	
+			$this->populate_from_request();	
 		}
 		
 		// Accessors
-		public function get_data_common()
-		{
-			return $this->data_common;
-		}
 		
-		public function get_name_like()
+		public function get_account_filter()
 		{
-			return $this->name_like;
+			return $this->account_filter;
 		}
 		
 		// Mutators
-		public function set_name_like($value)
+		public function set_account_filter($value)
 		{
-			$this->name_like = $value;
-		}
-		
-		public function populate_from_request()
-		{
-			$this->data_common->populate_from_request();
+			$this->account_filter = $value;
 		}
 	}
 	
-	
+	// Initialize filter control object.
 	$filter_control = new class_filter_control();	
-	$filter_control->set_name_like('bar');
-	echo $filter_control->get_name_like();
 
 	// Start page cache.
 	$page_obj = new \dc\cache\PageCache();	
@@ -55,7 +43,7 @@
 					array(NULL, 		SQLSRV_PARAM_IN),	// No page limit.
 					array(2, 	SQLSRV_PARAM_IN),			// Last name.
 					array(0, 	SQLSRV_PARAM_IN),			// Ascending.
-				   array($filter_control->get_name_like(), SQLSRV_PARAM_IN));			
+				   array($filter_control->get_account_filter(), SQLSRV_PARAM_IN));			
 
 	$yukon_database->set_param_array($params);
 	$yukon_database->query_run();
