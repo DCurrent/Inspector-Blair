@@ -12,7 +12,8 @@
 	</style>
 
 		<?php 
-			require __DIR__.'/model_location.php'; 
+			require __DIR__.'/model_location.php';
+			require __DIR__.'/model_party.php';
 			
 			// List queries
 			// --Status
@@ -37,7 +38,7 @@
 			$form_common_query->set_sql('{call account_list_party()}');
 			$form_common_query->query_run();
 			
-			$query->get_line_config()->set_class_name('\data\Account');
+			$yukon_database->get_line_config()->set_class_name('\data\Account');
 			
 			$_obj_field_source_party_list = new SplDoublyLinkedList();
 			if($form_common_query->get_row_exists() === TRUE) $_obj_field_source_party_list = $form_common_query->get_line_object_list();		
@@ -216,7 +217,7 @@
         <!-- Room code entry -->                    
         <div class="form-group">
             <label class="control-label col-sm-2" for="room_code">Room Code</label>
-            <div class="col-sm-9">
+            <div class="col-sm-8">
                 <input type="text" class="form-control"  name="room_code" id="room_code" placeholder="Room code" value="<?php echo $_obj_data_sub_area_list->get_room_code(); ?>">
             </div>
             
@@ -579,14 +580,39 @@
 		
 		$(".modal_building_search").modal();
 	});
-		
+	 
 	$('.room_code_insert').click((function() {
 	
 		$('input[name="room_code"]').val($('.room_code_search').val());
 	
 	}));
- 
- 	// Party add/remove.
+	
+	// Room search and add.
+	$('.account_filter').change(function(event)
+	{
+		options_update(event, null, '#account_search');	
+	});
+	
+	$('.party_insert').click((function() {
+		$('#sub_party_party_'+$party_id).val($('.account_search').val());
+	
+	})); 
+	 
+	var $party_id = 0;
+	 
+	function run_party_search($target_id){
+		
+		$party_id = $target_id;
+		// Need to populate the model with building drop down.
+		//options_update(event, null, '#facility');
+		
+		//options_update(event, null, '#building_code');
+		//options_update(event, null, '#area');
+		
+		$(".modal_party_search").modal();
+	}
+	 
+	 // Party add/remove.
  	var $temp_id_party = 0;	// Temp id for new party rows.
  
  	// Remove a party row.
@@ -635,14 +661,14 @@
 				+'</td>'  
 				
 				+'<td style="width:1px">'
-					+'<a href="#" '
-							+'class			="btn btn-sm btn-info btn-responsive party_search" '
-							+'data-toggle	="modal" '
-							+'data-confirm_target_id="sub_party_party_'+$temp_id_party+'" '
-							+'title			="Find a party selection." '                                               
-							+'><span class="glyphicon glyphicon-search"></span></a>'
+					+'<button ' 
+						+'type	="button" ' 
+						+'class ="btn btn-info btn-sm pull-right" ' 
+						+'name	="party_search" ' 
+						+'id	="party_search_'+$temp_id_party+'" ' 
+						+'onclick="run_party_search('+$temp_id_party+')"><span class="glyphicon glyphicon-search"></span></button>'
 				+'</td>'
-				
+			
 				+'<td style="width:1px">'													
 					+'<input ' 
 						+'type	="hidden" ' 

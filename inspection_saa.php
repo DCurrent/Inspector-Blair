@@ -9,13 +9,10 @@
 	$_layout = $_page_config->create_config_object();
 	
 	// Delete current record.
-	function action_delete($_layout = NULL)
+	function action_delete($_layout = NULL, $database)
 	{
 		// Set up account info.
 		$access_obj = new \dc\access\status();
-		
-		// Initialize database query object.
-		$query 	= new \dc\yukon\Database($yukon_connection);
 		
 		// Initialize main data class and populate it from
 		// post variables. All we need is the ID, so
@@ -24,7 +21,7 @@
 		$_main_data->populate_from_request();
 			
 		// Call and execute delete SP.
-		$query->set_sql('{call master_delete(@id = ?,													 
+		$database->set_sql('{call master_delete(@id = ?,													 
 								@update_by	= ?, 
 								@update_ip 	= ?)}');
 		
@@ -33,8 +30,8 @@
 					array($access_obj->get_ip(), 			SQLSRV_PARAM_IN));
 		
 					
-		$query->set_param_array($params);
-		$query->query_run();	
+		$database->set_param_array($params);
+		$database->query_run();	
 		
 		// Refrsh page.
 		header('Location: '.$_SERVER['PHP_SELF'].'?id_form='.$_layout->get_id());
@@ -86,11 +83,8 @@
 	}
 			
 	// Save this record.
-	function action_save($_layout = NULL)
+	function action_save($_layout = NULL, $database)
 	{		
-		// Initialize database query object.
-		$query 	= new \dc\yukon\Database($yukon_connection);
-		
 		// Set up account info.
 		$access_obj = new \dc\access\status();
 				
@@ -112,7 +106,7 @@
 		$_sub_detail_data->populate_from_request();
 			
 		// Call update stored procedure.
-		$query->set_sql('{call '.$_layout->get_main_sql_name().'_update(@param_id_list			= ?,
+		$database->set_sql('{call '.$_layout->get_main_sql_name().'_update(@param_id_list			= ?,
 												@param_update_by	= ?, 
 												@param_update_host 	= ?,										 
 												@param_label 		= ?,
@@ -134,19 +128,18 @@
 					array($_sub_visit_data->xml(),	SQLSRV_PARAM_IN),
 					array($_sub_detail_data->xml(),	SQLSRV_PARAM_IN));
 		
-		
 		// For debugging.
 		//var_dump($params);
 		//exit;
 		
-		$query->set_param_array($params);
-		$query->query_run();
+		$database->set_param_array($params);
+		$database->query_run();
 		
 		// Repopulate main data object with results from merge query.
 		// We can use common data here because all we need
 		// is the ID for redirection.
-		$query->get_line_config()->set_class_name($_layout->get_main_object_name());
-		$_main_data = $query->get_line_object();
+		$database->get_line_config()->set_class_name($_layout->get_main_object_name());
+		$_main_data = $database->get_line_object();
 		
 		// Now that save operation has completed, reload page using ID from
 		// database. This ensures the ID is always up to date, even with a new
@@ -154,9 +147,7 @@
 		header('Location: '.$_SERVER['PHP_SELF'].'?id_form='.$_layout->get_id().'&id='.$_main_data->get_id());
 	}	
 			
-	
 	///////////////
-	
 	
 	// Verify user access.
 	common_security($yukon_database);
@@ -191,12 +182,9 @@
 					
 		case \dc\recordnav\COMMANDS::SAVE:
 			
-			action_save($_layout);			
+			action_save($_layout, $yukon_database);			
 			break;			
 	}
-	
-	// Initialize database query object.
-	$query 	= new \dc\yukon\Database($yukon_connection);
 	
 	// Class name has to be populated into local var to
 	// be instantiated.
@@ -210,7 +198,7 @@
 	$_main_data->populate_from_request();
 	
 	// Set up primary query with parameters and arguments.
-	$query->set_sql('{call '.$_layout->get_main_sql_name().'(@param_filter_id = ?,
+	$yukon_database->set_sql('{call '.$_layout->get_main_sql_name().'(@param_filter_id = ?,
 									@param_filter_id_key = ?,
 									@param_filter_type = ?)}');
 	$params = array(array($_main_data->get_id(), 		SQLSRV_PARAM_IN),
@@ -218,56 +206,56 @@
 					array($_layout->get_id(), 			SQLSRV_PARAM_IN));
 
 	// Apply arguments and execute query.
-	$query->set_param_array($params);
-	$query->query_run();
+	$yukon_database->set_param_array($params);
+	$yukon_database->query_run();
 	
 	// Get navigation record set and populate navigation object.		
-	$query->get_line_config()->set_class_name('\dc\recordnav\RecordNav');	
-	if($query->get_row_exists() === TRUE) $obj_navigation_rec = $query->get_line_object();	
+	$yukon_database->get_line_config()->set_class_name('\dc\recordnav\RecordNav');	
+	if($yukon_database->get_row_exists() === TRUE) $obj_navigation_rec = $yukon_database->get_line_object();	
 	
 	// Get primary data record set.	
-	$query->get_next_result();
+	$yukon_database->get_next_result();
 	
-	$query->get_line_config()->set_class_name($_layout->get_main_object_name());	
-	if($query->get_row_exists() === TRUE) $_main_data = $query->get_line_object();
+	$yukon_database->get_line_config()->set_class_name($_layout->get_main_object_name());	
+	if($yukon_database->get_row_exists() === TRUE) $_main_data = $yukon_database->get_line_object();
 	
 	// Sub - Party.
-	$query->get_next_result();
+	$yukon_database->get_next_result();
 	
-	$query->get_line_config()->set_class_name('\data\Account');
+	$yukon_database->get_line_config()->set_class_name('\data\Account');
 	
 	$_obj_data_sub_party_list = new SplDoublyLinkedList();
-	if($query->get_row_exists()) $_obj_data_sub_party_list = $query->get_line_object_list();		
+	if($yukon_database->get_row_exists()) $_obj_data_sub_party_list = $yukon_database->get_line_object_list();		
 	
 	// Sub - Visit
-	$query->get_next_result();
+	$yukon_database->get_next_result();
 	
-	$query->get_line_config()->set_class_name('\data\InspectionVisit');
+	$yukon_database->get_line_config()->set_class_name('\data\InspectionVisit');
 	
 	$_obj_data_sub_visit_list = new SplDoublyLinkedList();
-	if($query->get_row_exists()) $_obj_data_sub_visit_list = $query->get_line_object_list();
+	if($yukon_database->get_row_exists()) $_obj_data_sub_visit_list = $yukon_database->get_line_object_list();
 	
 	// Sub - Details
-	$query->get_next_result();
+	$yukon_database->get_next_result();
 	
-	$query->get_line_config()->set_class_name('\data\InspectionDetail');
+	$yukon_database->get_line_config()->set_class_name('\data\InspectionDetail');
 	
 	$_obj_data_sub_detail_list = new SplDoublyLinkedList();
-	if($query->get_row_exists()) $_obj_data_sub_detail_list = $query->get_line_object_list();
+	if($yukon_database->get_row_exists()) $_obj_data_sub_detail_list = $yukon_database->get_line_object_list();
 	
 	// Sub - Area
-	$query->get_next_result();
+	$yukon_database->get_next_result();
 	
-	$query->get_line_config()->set_class_name('\data\Area');
+	$yukon_database->get_line_config()->set_class_name('\data\Area');
 	
 	$_obj_data_sub_area_list = new \data\area();
-	if($query->get_row_exists()) $_obj_data_sub_area_list = $query->get_line_object();
+	if($yukon_database->get_row_exists()) $_obj_data_sub_area_list = $yukon_database->get_line_object();
 	
 	
 	// Item lists....
 	
 	// Categories
-		$query->set_sql('{call audit_question_category_list_for_inspection_entry(@param_page_current 		= ?,
+		$yukon_database->set_sql('{call audit_question_category_list_for_inspection_entry(@param_page_current 		= ?,
 															@param_page_rows								= ?,
 															@param_filter_inclusion							= ?)}');											
 		$page_last 	= NULL;
@@ -279,13 +267,13 @@
 						array(NULL,			SQLSRV_PARAM_IN),
 						array($inspection_type,			SQLSRV_PARAM_IN));
 
-		$query->set_param_array($params);
-		$query->query_run();
+		$yukon_database->set_param_array($params);
+		$yukon_database->query_run();
 		
-		$query->get_line_config()->set_class_name('\data\Common');
+		$yukon_database->get_line_config()->set_class_name('\data\Common');
 		
 		$_obj_field_source_category_list = new SplDoublyLinkedList();
-		if($query->get_row_exists() === TRUE) $_obj_field_source_category_list = $query->get_line_object_list();
+		if($yukon_database->get_row_exists() === TRUE) $_obj_field_source_category_list = $yukon_database->get_line_object_list();
 		
 		// Generate markup for new insert. Markup for existing records are generated per each
 		// record loop to 'select' the current record value.

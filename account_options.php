@@ -70,7 +70,7 @@
 		{						
 			$_obj_data_main = $_obj_data_main_list->current();
 			?>
-			<option value = "<?php echo $_obj_data_main->get_account(); ?>"><?php if($_obj_data_main->get_name_l()) echo $_obj_data_main->get_name_l().', '.$_obj_data_main->get_name_f(); ?></option>
+			<option value = "<?php echo $_obj_data_main->get_id(); ?>"><?php if($_obj_data_main->get_name_l()) echo $_obj_data_main->get_name_l().', '.$_obj_data_main->get_name_f();?> - <?php echo $_obj_data_main->get_account(); ?></option>
 			<?php								
 		}
 	}
