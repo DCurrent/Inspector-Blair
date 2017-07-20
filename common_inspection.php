@@ -375,22 +375,7 @@
                                                             value 	= <?php echo $_obj_data_sub_detail->get_correction(); ?> />								   
                                                     </div>
                                                 </div> 
-                                                
-                                                <!-- Details -->
-                                                <?php
-													if($_obj_data_sub_detail->get_details())
-													{
-												?>
-                                                        <div class="form-group">
-                                                            <label class="control-label col-sm-1" for="sub_detail_details_<?php echo $_obj_data_sub_detail->get_id_key(); ?>" title="Details and notes."><span class="glyphicon glyphicon-list-alt"></span></label>
-                                                            <div class="col-sm-11">	
-                                                                <?php echo $_obj_data_sub_detail->get_details(); ?>	
-                                                            </div>
-                                                        </div>
-                                            	<?php
-													}
-												?>
-                                           		
+                                                                                      	                                           		
                                            		<!-- Complete toggles. Current value: <?php echo $_obj_data_sub_detail->get_complete(); ?>-->
 												<div class="form-group">	
 													<label class="control-label col-sm-1" for="sub_detail_complete_<?php echo $_obj_data_sub_detail->get_id_key(); ?>" title="Complete: Select to indicate this particular correction has been rectified."><span class="glyphicon glyphicon-ok"></span></label>								
@@ -412,14 +397,40 @@
 															<?php if(!$_obj_data_sub_detail->get_complete()){ echo ' checked'; } ?>><span class="glyphicon glyphicon-thumbs-down text-danger" style="font-size:large;"></span></label>   
 													</div>
 												</div>
+                                           
+                                           		<!-- Details -->
+                                                <?php
+													$_common_details_class_add = NULL;
+										
+													if($_obj_data_sub_detail->get_details())
+													{
+														$_common_details_class_add = 'style="background-color:#dff0d8"';
+													}
+												?>
+                                                        <div class="form-group">
+                                                          	<div class="col-sm-12" id="details_container">
+																<div class="panel panel-default">
+																	<div class="panel-heading" <?php echo $_common_details_class_add; ?>>
+																		<h4 id="h41_<?php echo $_obj_data_sub_detail->get_id_key(); ?>" class="panel-title">
+																		<a class="accordion-toggle" data-toggle="collapse" href="#collapse_module_<?php echo $_obj_data_sub_detail->get_id_key(); ?>"><span class="glyphicon glyphicon-list-alt"></span><span class="glyphicon glyphicon-menu-down pull-right"></span></a>
+																		</h4>
+																	</div>
+
+																<div style="" id="collapse_module_<?php echo $_obj_data_sub_detail->get_id_key(); ?>" class="panel-collapse collapse">
+																		<div class="panel-body"> 
+																			<textarea class="form-control wysiwyg" 
+																				rows="5" 
+																				name="sub_detail_details[]" 
+																				id="sub_detail_details_<?php echo $_obj_data_sub_detail->get_id_key(); ?>"><?php echo $_obj_data_sub_detail->get_details(); ?></textarea>                        
+																		</div>
+																	</div>
+																</div>
+															</div><!-- #details_container -->
+                                                        </div>
                                             </td>               
                                                   
                                             <td>
-                                            	<textarea
-													name 	= "sub_detail_details[]"
-													id		= "sub_detail_details_<?php echo $_obj_data_sub_detail->get_id_key(); ?>"
-													style	= "display:none"><?php echo $_obj_data_sub_detail->get_details(); ?></textarea>
-                                                                    
+                                            	                                                                    
                                             	<input 
                                                     type	="hidden" 
                                                     name	="sub_detail_id[]" 
