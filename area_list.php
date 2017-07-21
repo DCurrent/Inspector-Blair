@@ -170,7 +170,7 @@
 		$_obj_field_source_building_list = new \data\Area();
 	
 		$query->set_sql('{call area_building_list(@param_page_current = ?)}');
-		$query->query(array(-1));
+		$query->query_run(array(-1));
 		
 		$query->get_line_config()->set_class_name('\data\Area');
 		
@@ -181,7 +181,7 @@
 		$_obj_field_source_floor_list = new \data\Area();
 	
 		$query->set_sql('{call area_floor_list(@param_page_current = ?)}');
-		$query->query(array(-1));
+		$query->query_run(array(-1));
 		$query->query_run();
 		
 		$query->get_line_config()->set_class_name('\data\Area');
