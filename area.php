@@ -423,7 +423,7 @@
                                                             data-toggle	= ""
                                                             title		= "View log for this record."
                                                              target		= "_new" 
-                            	><?php  //echo date(APPLICATION_SETTINGS::TIME_FORMAT, $_main_data->get_create_time()->getTimestamp()); ?></a>
+                            	><?php  echo date(APPLICATION_SETTINGS::TIME_FORMAT, $_main_data->get_create_time()->getTimestamp()); ?></a>
                         		<?php
 								}
 								else
