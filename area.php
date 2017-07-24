@@ -14,13 +14,10 @@
 	$primary_data_class				= '\data\Area';
 	
 	// Delete current record.
-	function action_delete($_layout = NULL)
+	function action_delete($_layout = NULL, $database)
 	{
 		// Set up account info.
 		$access_obj = new \dc\access\status();
-		
-		// Initialize database query object.
-		$query 	= new \dc\yukon\Database($yukon_connection);
 		
 		// Initialize main data class and populate it from
 		// post variables. All we need is the ID, so
@@ -29,7 +26,7 @@
 		$_main_data->populate_from_request();
 			
 		// Call and execute delete SP.
-		$query->set_sql('{call master_delete(@id = ?,													 
+		$database->set_sql('{call master_delete(@id = ?,													 
 								@update_by	= ?, 
 								@update_ip 	= ?)}');
 		
@@ -38,8 +35,8 @@
 					array($access_obj->get_ip(), 			SQLSRV_PARAM_IN));
 		
 					
-		$query->set_param_array($params);
-		$query->query_run();	
+		$database->set_param_array($params);
+		$database->query_run();	
 		
 		// Refrsh page.
 		header('Location: '.$_SERVER['PHP_SELF']);
@@ -91,11 +88,8 @@
 	}
 
 	// Save this record.
-	function action_save()
+	function action_save($layout, $database)
 	{		
-		// Initialize database query object.
-		$query 	= new \dc\yukon\Database($yukon_connection);
-		
 		// Set up account info.
 		$access_obj = new \dc\access\status();
 				
@@ -111,7 +105,7 @@
 		$_biological_agent_data->populate_from_request();
 		
 		// Call update stored procedure.
-		$query->set_sql('{call '.LOCAL_STORED_PROC_NAME.'_update(@id			= ?,
+		$database->set_sql('{call '.LOCAL_STORED_PROC_NAME.'_update(@id			= ?,
 												@log_update_by	= ?, 
 												@log_update_ip 	= ?,										 
 												@label 			= ?,
@@ -150,14 +144,14 @@
 		//var_dump($params);
 		//exit;
 		
-		$query->set_param_array($params);			
-		$query->query_run();
+		$database->set_param_array($params);			
+		$database->query_run();
 		
 		// Repopulate main data object with results from merge query.
 		// We can use common data here because all we need
 		// is the ID for redirection.
-		$query->get_line_config()->set_class_name('\data\Common');
-		$_main_data = $query->get_line_object();
+		$database->get_line_config()->set_class_name('\data\Common');
+		$_main_data = $database->get_line_object();
 		
 		// Now that save operation has completed, reload page using ID from
 		// database. This ensures the ID is always up to date, even with a new
@@ -193,12 +187,12 @@
 			
 		case \dc\recordnav\COMMANDS::DELETE:						
 			
-			action_delete($_layout);	
+			action_delete($_layout, $yukon_database);	
 			break;				
 					
 		case \dc\recordnav\COMMANDS::SAVE:
 			
-			action_save($_layout);			
+			action_save($_layout, $yukon_database);			
 			break;			
 	}
 
@@ -215,7 +209,6 @@
 	// has been an object established at some point above.
 	
 	// Initialize database query object.
-	$query 	= new \dc\yukon\Database($yukon_connection);
 	
 	// Initialize a blank main data object.
 	$_main_data = new $primary_data_class();	
@@ -225,7 +218,7 @@
 	$_main_data->populate_from_request();
 	
 	// Set up primary query with parameters and arguments.
-	$query->set_sql('{call '.LOCAL_STORED_PROC_NAME.'(@param_filter_id = ?,
+	$yukon_database->set_sql('{call '.LOCAL_STORED_PROC_NAME.'(@param_filter_id = ?,
 									@param_filter_id_key 	= ?,
 									@param_filter_room_code = ?)}');
 	$params = array(array($_main_data->get_id(), 		SQLSRV_PARAM_IN),
@@ -233,54 +226,54 @@
 				   array($_main_data->get_room_code(), 	SQLSRV_PARAM_IN));
 
 	// Apply arguments and execute query.
-	$query->set_param_array($params);
-	$query->query_run();
+	$yukon_database->set_param_array($params);
+	$yukon_database->query_run();
 	
 	// Get navigation record set and populate navigation object.		
-	$query->get_line_config()->set_class_name('\dc\recordnav\RecordNav');	
-	if($query->get_row_exists() === TRUE) $obj_navigation_rec = $query->get_line_object();	
+	$yukon_database->get_line_config()->set_class_name('\dc\recordnav\RecordNav');	
+	if($yukon_database->get_row_exists() === TRUE) $obj_navigation_rec = $yukon_database->get_line_object();	
 	
 	// Get primary data record set.	
-	$query->get_next_result();
+	$yukon_database->get_next_result();
 	
-	$query->get_line_config()->set_class_name($primary_data_class);	
-	if($query->get_row_exists() === TRUE) $_main_data = $query->get_line_object();	
+	$yukon_database->get_line_config()->set_class_name($primary_data_class);	
+	if($yukon_database->get_row_exists() === TRUE) $_main_data = $yukon_database->get_line_object();	
 	
 	// Biological Agents (Taken from main query).
 		$_obj_data_sub_agent_list = new \data\BiologicalAgentSub();
 	
-		$query->get_next_result();
+		$yukon_database->get_next_result();
 		
-		$query->get_line_config()->set_class_name('\data\BiologicalAgentSub');
+		$yukon_database->get_line_config()->set_class_name('\data\BiologicalAgentSub');
 		
 		$_obj_data_sub_agent_list = new SplDoublyLinkedList();
-		if($query->get_row_exists() === TRUE)	$_obj_data_sub_agent_list = $query->get_line_object_list();		
+		if($yukon_database->get_row_exists() === TRUE)	$_obj_data_sub_agent_list = $yukon_database->get_line_object_list();		
 	
 	// Source lists
 	
 		// Types (Taken from main query)
 		$_obj_field_source_type_list = new \data\AreaType();
 	
-		$query->get_next_result();
+		$yukon_database->get_next_result();
 		
-		$query->get_line_config()->set_class_name('\data\AreaType');
+		$yukon_database->get_line_config()->set_class_name('\data\AreaType');
 		
 		$_obj_field_source_type_list = new SplDoublyLinkedList();
-		if($query->get_row_exists() === TRUE) $_obj_field_source_type_list = $query->get_line_object_list();
+		if($yukon_database->get_row_exists() === TRUE) $_obj_field_source_type_list = $yukon_database->get_line_object_list();
 			
 		// Biological agents
 			$_obj_field_source_agent_list = new \data\Common();
 		
-			$query->set_sql('{call biological_agent_list(@param_page_current = ?)}');
-			$query->set_param_array(array(-1));
+			$yukon_database->set_sql('{call biological_agent_list(@param_page_current = ?)}');
+			$yukon_database->set_param_array(array(-1));
 			
-			$query->query_run();
-			$query->get_line_config()->set_class_name('\data\Common');
+			$yukon_database->query_run();
+			$yukon_database->get_line_config()->set_class_name('\data\Common');
 			
 			$_obj_field_source_agent_list = new SplDoublyLinkedList();
-			if($query->get_row_exists() === TRUE)
+			if($yukon_database->get_row_exists() === TRUE)
 			{
-				$_obj_field_source_agent_list = $query->get_line_object_list();
+				$_obj_field_source_agent_list = $yukon_database->get_line_object_list();
 			}
 			
 			// Generate a list for new record insert. List for existing records are generated per each
@@ -297,26 +290,26 @@
 		// Chemical operations
 			$_obj_field_source_chemical_operations_list = new \data\Common();
 		
-			$query->set_sql('{call chemical_operations_class_list(@param_page_current = ?)}');
-			$query->set_param_array(array(-1));
+			$yukon_database->set_sql('{call chemical_operations_class_list(@param_page_current = ?)}');
+			$yukon_database->set_param_array(array(-1));
 			
-			$query->query_run();
-			$query->get_line_config()->set_class_name('\data\Common');
+			$yukon_database->query_run();
+			$yukon_database->get_line_config()->set_class_name('\data\Common');
 			
 			$_obj_field_source_chemical_operations_list = new SplDoublyLinkedList();
-			if($query->get_row_exists() === TRUE)
+			if($yukon_database->get_row_exists() === TRUE)
 			{
-				$_obj_field_source_chemical_operations_list = $query->get_line_object_list();
+				$_obj_field_source_chemical_operations_list = $yukon_database->get_line_object_list();
 			}
 			
 		// Chemical Lab
 			//$_obj_field_source_chemical_lab_list = new \data\Common();
 		
-			//$query->set_sql('{call chemical_operations_lab_list(@param_page_current = ?)}');
-			//$query->set_param_array(array(-1));
+			//$yukon_database->set_sql('{call chemical_operations_lab_list(@param_page_current = ?)}');
+			//$yukon_database->set_param_array(array(-1));
 			
-			//$query->query_run();
-			//$query->get_line_config()->set_class_name('\data\Common');
+			//$yukon_database->query_run();
+			//$yukon_database->get_line_config()->set_class_name('\data\Common');
 			
 			//$_obj_field_source_chemical_lab_list = new SplDoublyLinkedList();
 			
@@ -325,25 +318,25 @@
 			//$_obj_field_source_chemical_lab_list->push(3);
 			//$_obj_field_source_chemical_lab_list->push(4);
 			
-			//if($query->get_row_exists() === TRUE)
+			//if($yukon_database->get_row_exists() === TRUE)
 			//{
-			//	$_obj_field_source_chemical_lab_list = $query->get_line_object_list();
+			//	$_obj_field_source_chemical_lab_list = $yukon_database->get_line_object_list();
 			//}
 			
 		// Biosafety Level
 			$_obj_field_source_biosafety_level_list = new \data\Common();
 		
-			$query->set_sql('{call biosafety_level_list(@param_page_current = ?)}');
-			$query->set_param_array(array(-1));
+			$yukon_database->set_sql('{call biosafety_level_list(@param_page_current = ?)}');
+			$yukon_database->set_param_array(array(-1));
 			
-			$query->query_run();
-			$query->get_line_config()->set_class_name('\data\Common');
+			$yukon_database->query_run();
+			$yukon_database->get_line_config()->set_class_name('\data\Common');
 			
 			$_obj_field_source_biosafety_level_list = new SplDoublyLinkedList();
 			
-			if($query->get_row_exists() === TRUE)
+			if($yukon_database->get_row_exists() === TRUE)
 			{
-				$_obj_field_source_biosafety_level_list = $query->get_line_object_list();
+				$_obj_field_source_biosafety_level_list = $yukon_database->get_line_object_list();
 			}
 
 	
@@ -430,7 +423,7 @@
                                                             data-toggle	= ""
                                                             title		= "View log for this record."
                                                              target		= "_new" 
-                            	><?php  echo date(APPLICATION_SETTINGS::TIME_FORMAT, $_main_data->get_create_time()->getTimestamp()); ?></a>
+                            	><?php  //echo date(APPLICATION_SETTINGS::TIME_FORMAT, $_main_data->get_create_time()->getTimestamp()); ?></a>
                         		<?php
 								}
 								else
