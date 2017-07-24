@@ -22,7 +22,7 @@
 		// First thing we need is the self path.				
 		$file = filter_input(INPUT_SERVER, 'PHP_SELF', FILTER_SANITIZE_URL);
 		
-		// List giles are the name of a single record file
+		// List files are the name of a single record file
 		// with _list added on, so all we need to do is
 		// remove the file suffix, and add '_list.php' to
 		// get the list file's name. This is also all we
