@@ -89,9 +89,16 @@
 	$filter_control->populate_from_request();
 	
 	// Establish sorting object, set defaults, and then get settings
-	// from user (if any).
-	$sorting = new \dc\sorting\SortControl;
-	$sorting->set_sort_field(1);
+	// from user (if any).	
+	class audit_type_sort extends \dc\sorting\SortControl
+	{
+		const SORT_FIELD_LABEL 		= 1;
+		const SORT_FIELD_ORDER 		= 3;
+		const SORT_FIELD_REVISION 	= 3;
+	}
+
+	$sorting = new audit_type_sort;
+	$sorting->set_sort_field(audit_type_sort::SORT_FIELD_REVISION);
 	$sorting->set_sort_order(\dc\sorting\ORDER_TYPE::ASCENDING);
 	$sorting->populate_from_request();
 	
@@ -296,17 +303,17 @@
                 <table class="table table-striped table-hover">
                     <thead>
                         <tr>
-                            <th><a href="<?php echo $sorting->sort_url(2); ?>">Revision <?php echo $sorting->sorting_markup(2); ?></a></th>
-                            <th><a href="<?php echo $sorting->sort_url(1); ?>">Label <?php echo $sorting->sorting_markup(1); ?></a></th> 
-                            <th><a href="<?php echo $sorting->sort_url(3); ?>">Order <?php echo $sorting->sorting_markup(3); ?></a></th>            
+                            <th><a href="<?php echo $sorting->sort_url(audit_type_sort::SORT_FIELD_REVISION); ?>">Revision <?php echo $sorting->sorting_markup(audit_type_sort::SORT_FIELD_REVISION); ?></a></th>
+                            <th><a href="<?php echo $sorting->sort_url(audit_type_sort::SORT_FIELD_LABEL); ?>">Label <?php echo $sorting->sorting_markup(audit_type_sort::SORT_FIELD_LABEL); ?></a></th> 
+                            <th><a href="<?php echo $sorting->sort_url(audit_type_sort::SORT_FIELD_ORDER); ?>">Order <?php echo $sorting->sorting_markup(audit_type_sort::SORT_FIELD_ORDER); ?></a></th>            
                         </tr>
                     </thead>
                     <tfoot>
                     	<tr>
-                            <th><a href="<?php echo $sorting->sort_url(2); ?>">Revision <?php echo $sorting->sorting_markup(2); ?></a></th>
-                            <th><a href="<?php echo $sorting->sort_url(1); ?>">Label <?php echo $sorting->sorting_markup(1); ?></a></th> 
-                            <th><a href="<?php echo $sorting->sort_url(3); ?>">Order <?php echo $sorting->sorting_markup(3); ?></a></th          
-                        ></tr>
+                            <th><a href="<?php echo $sorting->sort_url(audit_type_sort::SORT_FIELD_REVISION); ?>">Revision <?php echo $sorting->sorting_markup(audit_type_sort::SORT_FIELD_REVISION); ?></a></th>
+                            <th><a href="<?php echo $sorting->sort_url(audit_type_sort::SORT_FIELD_LABEL); ?>">Label <?php echo $sorting->sorting_markup(audit_type_sort::SORT_FIELD_LABEL); ?></a></th> 
+                            <th><a href="<?php echo $sorting->sort_url(audit_type_sort::SORT_FIELD_ORDER); ?>">Order <?php echo $sorting->sorting_markup(audit_type_sort::SORT_FIELD_ORDER); ?></a></th>
+                    	</tr>
                     </tfoot>
                     <tbody>                        
                         <?php
