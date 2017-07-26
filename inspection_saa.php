@@ -34,8 +34,7 @@
 		$database->query_run();	
 		
 		// Refrsh page.
-		header('Location: '.$_SERVER['PHP_SELF'].'?id_form='.$_layout->get_id());
-		
+		header('Location: '.$_SERVER['PHP_SELF'].'?id_form='.$_layout->get_id());		
 	}
 
 	// common_list
@@ -177,7 +176,7 @@
 			
 		case \dc\recordnav\COMMANDS::DELETE:						
 			
-			action_delete($_layout);	
+			action_delete($_layout, $yukon_database);	
 			break;				
 					
 		case \dc\recordnav\COMMANDS::SAVE:
