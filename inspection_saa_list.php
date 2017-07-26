@@ -91,8 +91,8 @@
 	// Establish sorting object, set defaults, and then get settings
 	// from user (if any).
 	$sorting = new \dc\sorting\SortControl;
-	$sorting->set_sort_field(1);
-	$sorting->set_sort_order(\dc\sorting\ORDER_TYPE::ASCENDING);
+	$sorting->set_sort_field(\dc\sorting\FIELD::REVISION);
+	$sorting->set_sort_order(\dc\sorting\ORDER_TYPE::DECENDING);
 	$sorting->populate_from_request();
 	
 	// Set up navigaiton.
@@ -298,16 +298,16 @@
                 <table class="table table-striped table-hover">
                     <thead>
                         <tr>
-                            <th><a href="<?php echo $sorting->sort_url(2); ?>">Revision <?php echo $sorting->sorting_markup(2); ?></a></th>
+                            <th><a href="<?php echo $sorting->sort_url(\dc\sorting\FIELD::REVISION); ?>">Revision <?php echo $sorting->sorting_markup(\dc\sorting\FIELD::REVISION); ?></a></th>
                             <th><a href="<?php echo $sorting->sort_url(3); ?>">Area <?php echo $sorting->sorting_markup(3); ?></a></th>
                             <th><a href="<?php echo $sorting->sort_url(1); ?>">Label <?php echo $sorting->sorting_markup(1); ?></a></th>             
                         </tr>
                     </thead>
                     <tfoot>
                     	<tr>
-                            <th><a href="<?php echo $sorting->sort_url(2); ?>">Revision <?php echo $sorting->sorting_markup(2); ?></a></th>
+                            <th><a href="<?php echo $sorting->sort_url(\dc\sorting\FIELD::REVISION); ?>">Revision <?php echo $sorting->sorting_markup(\dc\sorting\FIELD::REVISION); ?></a></th>
                             <th><a href="<?php echo $sorting->sort_url(3); ?>">Area <?php echo $sorting->sorting_markup(3); ?></a></th>
-                            <th><a href="<?php echo $sorting->sort_url(1); ?>">Label <?php echo $sorting->sorting_markup(1); ?></a></th>
+                            <th><a href="<?php echo $sorting->sort_url(\dc\sorting\FIELD::LABEL); ?>">Label <?php echo $sorting->sorting_markup(\dc\sorting\FIELD::LABEL); ?></a></th>
                    		</tr>
                     </tfoot>
                     <tbody>                        

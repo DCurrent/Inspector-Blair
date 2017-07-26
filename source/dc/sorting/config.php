@@ -25,8 +25,8 @@
 
 	abstract class FIELD
 	{
-		const REVISION	= 1;
-		const LABEL 	= 2;
+		const REVISION	= 0;
+		const LABEL 	= 1;
 	}
 
 ?>
