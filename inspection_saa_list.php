@@ -300,14 +300,14 @@
                         <tr>
                             <th><a href="<?php echo $sorting->sort_url(\dc\sorting\FIELD::REVISION); ?>">Revision <?php echo $sorting->sorting_markup(\dc\sorting\FIELD::REVISION); ?></a></th>
                             <th><a href="<?php echo $sorting->sort_url(3); ?>">Area <?php echo $sorting->sorting_markup(3); ?></a></th>
-                            <th><a href="<?php echo $sorting->sort_url(1); ?>">Label <?php echo $sorting->sorting_markup(1); ?></a></th>             
+                            <th><a href="<?php echo $sorting->sort_url(4); ?>">Visit By <?php echo $sorting->sorting_markup(4); ?></a></th>             
                         </tr>
                     </thead>
                     <tfoot>
                     	<tr>
                             <th><a href="<?php echo $sorting->sort_url(\dc\sorting\FIELD::REVISION); ?>">Revision <?php echo $sorting->sorting_markup(\dc\sorting\FIELD::REVISION); ?></a></th>
                             <th><a href="<?php echo $sorting->sort_url(3); ?>">Area <?php echo $sorting->sorting_markup(3); ?></a></th>
-                            <th><a href="<?php echo $sorting->sort_url(\dc\sorting\FIELD::LABEL); ?>">Label <?php echo $sorting->sorting_markup(\dc\sorting\FIELD::LABEL); ?></a></th>
+                            <th><a href="<?php echo $sorting->sort_url(4); ?>">Visit By <?php echo $sorting->sorting_markup(4); ?></a></th>
                    		</tr>
                     </tfoot>
                     <tbody>                        
@@ -325,7 +325,7 @@
 															echo $_obj_data_main->get_building_name().' - '.$_obj_data_main->get_room_id(); 
 														}
 													?></td>
-                                            <td><?php echo $_obj_data_main->get_label(); ?></td>
+                                            <td><?php echo $_obj_data_main->get_visit_by_list_label(); ?></td>
                                         </tr>                                    
                             <?php								
                             	}
