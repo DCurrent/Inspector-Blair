@@ -197,10 +197,14 @@
 	$_main_data->populate_from_request();
 	
 	// Set up primary query with parameters and arguments.
-	$yukon_database->set_sql('{call '.$_layout->get_main_sql_name().'(@param_filter_id = ?,
+	$yukon_database->set_sql('{call '.$_layout->get_main_sql_name().'(@param_sort_field = ?,
+									@param_sort_order = ?,
+									@param_filter_id = ?,
 									@param_filter_id_key = ?,
 									@param_filter_type = ?)}');
-	$params = array(array($_main_data->get_id(), 		SQLSRV_PARAM_IN),
+	$params = array(array(0, 		SQLSRV_PARAM_IN),
+					array(0, 		SQLSRV_PARAM_IN),
+					array($_main_data->get_id(), 		SQLSRV_PARAM_IN),
 					array($_main_data->get_id_key(), 	SQLSRV_PARAM_IN),
 					array($_layout->get_id(), 			SQLSRV_PARAM_IN));
 
