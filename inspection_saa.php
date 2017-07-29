@@ -9,7 +9,7 @@
 	$_layout = $_page_config->create_config_object();
 	
 	// Delete current record.
-	function action_delete($_layout = NULL, $database)
+	function action_delete(\dc\application\CommonEntry $_layout, \dc\yukon\Database $database)
 	{
 		// Set up account info.
 		$access_obj = new \dc\access\status();
@@ -43,7 +43,7 @@
 	//
 	// Switch to list mode for a record. Verifies the list
 	// mode file exists first.
-	function action_list($_layout = NULL)
+	function action_list(\dc\application\CommonEntry $_layout)
 	{				
 		// Final result, and the target forwarding destination.
 		$result 	= '#';
@@ -82,7 +82,7 @@
 	}
 			
 	// Save this record.
-	function action_save($_layout = NULL, $database)
+	function action_save(\dc\application\CommonEntry $_layout, \dc\yukon\Database $database)
 	{		
 		// Set up account info.
 		$access_obj = new \dc\access\status();
@@ -202,8 +202,8 @@
 									@param_filter_id = ?,
 									@param_filter_id_key = ?,
 									@param_filter_type = ?)}');
-	$params = array(array(0, 		SQLSRV_PARAM_IN),
-					array(0, 		SQLSRV_PARAM_IN),
+	$params = array(array(0, 							SQLSRV_PARAM_IN),
+					array(0, 							SQLSRV_PARAM_IN),
 					array($_main_data->get_id(), 		SQLSRV_PARAM_IN),
 					array($_main_data->get_id_key(), 	SQLSRV_PARAM_IN),
 					array($_layout->get_id(), 			SQLSRV_PARAM_IN));
