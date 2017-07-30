@@ -48,6 +48,19 @@
 		// Final result, and the target forwarding destination.
 		$result 	= '#';
 	
+		// Initialize main data class and populate it from
+		// post variables.
+		$_main_data = new \data\Inspection();						
+		$_main_data->populate_from_request();
+		
+		$bookmark;
+		
+		// If we have a target ID, let's include it as a bookmark.
+		if($_main_data->get_id())
+		{
+			$bookmark = '&id='.$_main_data->get_id().'#tr_'.$_main_data->get_id();
+		}
+		
 		// First thing we need is the self path.				
 		$file = filter_input(INPUT_SERVER, 'PHP_SELF', FILTER_SANITIZE_URL);
 		
@@ -74,7 +87,7 @@
 			$result = $target_name;			
 		
 			// Direct to listing.				
-			header('Location: '.$result.'?id_form='.$_layout->get_id());
+			header('Location: '.$result.'?id_form='.$_layout->get_id().$bookmark);
 		}
 		
 		// Return final result. 

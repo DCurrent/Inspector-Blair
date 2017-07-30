@@ -3,7 +3,7 @@
 	require_once(__DIR__.'/source/main.php');
 	require_once(__DIR__.'/source/common_functions/common_security.php');	
 	
-	class class_filter_control
+	class class_filter_control extends \data\Common
 	{
 		const _DATE_FORMAT  = 'Y-m-d H:i:s'; 
 		
@@ -22,16 +22,6 @@
 		}
 		
 		// Accessors
-		public function get_data_common()
-		{
-			return $this->data_common;
-		}
-		
-		public function get_id()
-		{
-			return $this->data_common->get_id();
-		}
-		
 		public function get_time_end()
 		{
 			return $this->time_end;
@@ -63,11 +53,6 @@
 			
 			// Set member.			
 			$this->time_start = $this->time_obj->get_time();	
-		}
-		
-		public function populate_from_request()
-		{
-			$this->data_common->populate_from_request();
 		}
 	} 
 
@@ -295,7 +280,7 @@
           	<?php echo $paging->generate_paging_markup(); ?>
             
             <!--div class="table-responsive"-->
-                <table class="table table-striped table-hover">
+                <table class="table table-hover">
                     <thead>
                         <tr>
                             <th><a href="<?php echo $sorting->sort_url(\dc\sorting\FIELD::REVISION); ?>">Revision <?php echo $sorting->sorting_markup(\dc\sorting\FIELD::REVISION); ?></a></th>
@@ -317,8 +302,18 @@
 								for($_obj_data_main_list->rewind(); $_obj_data_main_list->valid(); $_obj_data_main_list->next())
 								{						
 									$_obj_data_main = $_obj_data_main_list->current();
+									
+									$_class_addition = NULL;
+									
+									// If this is a record that does not exist in 
+									// the local database, let's alert the user
+									// by adding a visual touch.
+									if($filter_control->get_id() == $_obj_data_main->get_id())
+									{
+										$_class_addition = 'alert-success';
+									}
                             ?>
-                                        <tr class="clickable-row" role="button" data-href="<?php echo $_obj_data_main->get_id(); ?>">
+                                        <tr id="tr_<?php echo $_obj_data_main->get_id(); ?>" class="clickable-row <?php echo $_class_addition; ?>" role="button" data-href="<?php echo $_obj_data_main->get_id(); ?>">
                                             <td><?php if(is_object($_obj_data_main->get_create_time()) === TRUE) echo date(APPLICATION_SETTINGS::TIME_FORMAT, $_obj_data_main->get_create_time()->getTimestamp()); ?></td>
                                             <td><?php if(trim($_obj_data_main->get_room_code()))
 														{
