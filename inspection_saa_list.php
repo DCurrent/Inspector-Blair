@@ -33,6 +33,11 @@
 			return $this->time_start;
 		}
 		
+		function set_visit_by($value)
+		{
+			$this->visit_by = $value;
+		}
+		
 		// Mutators
 		public function set_time_end($value)
 		{
@@ -58,11 +63,13 @@
 		
 		// Get and return an xml string for database use.
 		public function visit_by_xml()
-		{
-			$result = '<root>';
-
+		{		
+			
+			
 			if(is_array($this->visit_by) === TRUE)			
-			{			
+			{	
+				$result = '<root>';
+				
 				foreach($this->visit_by as $key => $id)
 				{
 					// Only insert if there is a value.
@@ -70,7 +77,15 @@
 					{								
 						$result .= '<row id="'.$id.'" />';
 					}
-				}			
+					
+					// Temporary all catch.
+					if($id == -1)
+					{
+						$result = NULL;
+						break;
+					}
+				}	
+				
 			}
 
 			$result .= '</root>';
@@ -128,6 +143,7 @@
 					array($filter_control->get_time_end(),		SQLSRV_PARAM_IN));
 
 	// Debugging tools
+	//var_dump($_REQUEST);
 	//var_dump($params);
 	//exit;
 
@@ -260,40 +276,62 @@
 								</fieldset>
                                
                                 <fieldset id="fs_visit_by">
-                                	<legend>Visitors</legend>
+                                	<legend>Visitors <a href="#help_visit_by" data-toggle="collapse" class="glyphicon glyphicon-question-sign"></a></legend>
                                 	
-									<select 
-										name 	= "sub_visit_by[]"
-										id		= "sub_visit_by_" 								
-										class	= "form-control">							
-									<?php							
+                                	<div id="help_visit_by" class="collapse text-info">
+										Add visitors by clicking the + key and selecting from the choices provided. Press the - next to a visitor item to remove it. Remove all visitor items to disable the visitor filter. <a href="#help_visit_by" data-toggle="collapse" class="glyphicon glyphicon-remove-sign text-danger"></a>	
+										<br />
+										&nbsp;
+									</div>
+                                	<p class="small"></p>
+                                	
+                                	<div class="form-group" id="group_visit_by_">
+										<!--<label class="control-label col-md-2" for="account_">Account</label>-->
+										<div class="col-xs-10">
+											<select 
+												name 	= "visit_by[]"
+												id		= "visit_by_" 								
+												class	= "form-control disabled">	
+												<option value="-1" 'selected'>All</option>						
+											<?php											
 
-									// Set up account info.
-									$access_obj = new \dc\access\status();
+											// Set up account info.
+											$access_obj = new \dc\access\status();
 
-									if(is_object($_obj_field_source_account_list) === TRUE)
-									{        
-										// Generate table row for each item in list.
-										for($_obj_field_source_account_list->rewind();	$_obj_field_source_account_list->valid(); $_obj_field_source_account_list->next())
-										{	                                                               
-											$_obj_field_source_account = $_obj_field_source_account_list->current();
+											if(is_object($_obj_field_source_account_list) === TRUE)
+											{        
+												// Generate table row for each item in list.
+												for($_obj_field_source_account_list->rewind();	$_obj_field_source_account_list->valid(); $_obj_field_source_account_list->next())
+												{	                                                               
+													$_obj_field_source_account = $_obj_field_source_account_list->current();
 
-											$sub_account_value 		= $_obj_field_source_account->get_id();																
-											$sub_account_label		= $_obj_field_source_account->get_name_l().', '.$_obj_field_source_account->get_name_f();
-											$sub_account_selected 	= NULL;
+													$sub_account_value 		= $_obj_field_source_account->get_id();																
+													$sub_account_label		= $_obj_field_source_account->get_name_l().', '.$_obj_field_source_account->get_name_f();
+													$sub_account_selected 	= NULL;
 
-											if($_obj_field_source_account->get_account() == $access_obj->get_account())
-											{
-												$sub_account_selected = ' selected ';
-											}									
+													if($_obj_field_source_account->get_account() == $access_obj->get_account())
+													{
+														//$sub_account_selected = ' selected ';
+													}									
 
+													?>
+													<option value="<?php echo $sub_account_value; ?>" <?php echo $sub_account_selected ?>><?php echo $sub_account_label; ?></option>
+													<?php                                
+												}
+											}
 											?>
-											<option value="<?php echo $sub_account_value; ?>" <?php echo $sub_account_selected ?>><?php echo $sub_account_label; ?></option>
-											<?php                                
-										}
-									}
-									?>
-									</select>
+											</select>											
+										</div>		
+                               
+                               			<div class="col-xs-2">			
+											<button 
+											type	= "button" 
+											class 	= "btn btn-danger btn-xs disabled"  
+											name	= "sub_visit_row_del" 
+											id		= "sub_visit_row_del_"  
+											onclick	= "deleteRow_sub_visit(this)"><span class="glyphicon glyphicon-minus"></span></button>						
+										</div>
+									</div>		
                                 </fieldset>
                                 
                                 <hr>
