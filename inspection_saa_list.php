@@ -280,7 +280,7 @@
           	<?php echo $paging->generate_paging_markup(); ?>
             
             <!--div class="table-responsive"-->
-                <table class="table table-hover">
+                <table class="table table-striped table-hover">
                     <thead>
                         <tr>
                             <th><a href="<?php echo $sorting->sort_url(\dc\sorting\FIELD::REVISION); ?>">Revision <?php echo $sorting->sorting_markup(\dc\sorting\FIELD::REVISION); ?></a></th>
@@ -310,7 +310,7 @@
 									// by adding a visual touch.
 									if($filter_control->get_id() == $_obj_data_main->get_id())
 									{
-										$_class_addition = 'alert-success';
+										$_class_addition = 'success';
 									}
                             ?>
                                         <tr id="tr_<?php echo $_obj_data_main->get_id(); ?>" class="clickable-row <?php echo $_class_addition; ?>" role="button" data-href="<?php echo $_obj_data_main->get_id(); ?>">
