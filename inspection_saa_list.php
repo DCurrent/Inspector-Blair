@@ -210,7 +210,9 @@
                     </div><!--#filter_header-->
                 
                 	<div style="" id="collapse_module_1" class="panel-collapse collapse" id="filter_collapse">
-                        <div class="panel-body" id="filter_body">                         
+                        <div class="panel-body" id="filter_body">        
+                                                      
+                            <p>Filters allow you to limit the records displayed for ease of access and reporting. Choose from the criteria below and press Apply Filters key when you are ready.</p>                 
                                                        
                             <form class="form-horizontal" role="form" id="form_filter" method="get">
             	                
@@ -218,33 +220,45 @@
                                 <input type="hidden" name="id" value="<?php echo $filter_control->get_id(); ?>" />
                                 <input type="hidden" name="field" value="<?php echo $sorting->get_sort_field(); ?>" />
                                 <input type="hidden" name="order" value="<?php echo $sorting->get_sort_order(); ?>" />
-                                                         
-                                <div class="form-group" id="group_filter_time">
-                                    <label class="control-label col-sm-2" for="filter_time_start">Time (from):</label>
-                                    <div class="col-sm-4">
-                                        <input 
-                                            type	="datetime-local" 
-                                            class	="form-control time_start_filter"  
-                                            name	="time_start" 
-                                            id		="time_start" 
-                                            step	="1"                                            
-                                            placeholder="yyyy-mm-dd hh:mm:ss"
-                                            value="<?php echo $filter_control->get_time_start(); ?>">
-                                    </div>
                                 
-                                    <label class="control-label col-sm-2" for="filter_time_end">Time (to):</label>
-                                    <div class="col-sm-4">
-                                        <input  
-                                            name	="time_end" 
-                                            type	="datetime-local" 
-                                            class	="form-control time_end_filter" 
-                                            id		="time_end" 
-                                            step	="1"
-                                            placeholder="yyyy-mm-dd hh:mm:ss" autocomplete="on"
-                                            min="01"
-                                            value="<?php echo $filter_control->get_time_end(); ?>">
-                                    </div>
-                                </div><!--#group_filter_time-->
+                                <fieldset id="fs_revision">
+                                	<legend>Revision <a href="#help_revision" data-toggle="collapse" class="glyphicon glyphicon-question-sign"></a></legend> 
+                                	
+                                	<div id="help_revision" class="collapse text-info">
+										Enter a start and ending time to filter records by the revision time stamp. Leave these fields blank for no revision filtering. <a href="#help_revision" data-toggle="collapse" class="glyphicon glyphicon-remove-sign text-danger"></a>	
+										<br />
+										&nbsp;
+									</div>
+                                	<p class="small"></p>
+                                	
+									<div class="form-group" id="group_filter_time">
+										<label class="control-label col-sm-2" for="filter_time_start">Start</label>
+										<div class="col-sm-4">
+											<input 
+												type	="datetime-local" 
+												class	="form-control time_start_filter"  
+												name	="time_start" 
+												id		="time_start" 
+												step	="1"                                            
+												placeholder="yyyy-mm-dd hh:mm:ss"
+												value="<?php echo $filter_control->get_time_start(); ?>">
+										</div>
+
+										<label class="control-label col-sm-2" for="filter_time_end">End</label>
+										<div class="col-sm-4">
+											<input  
+												name	="time_end" 
+												type	="datetime-local" 
+												class	="form-control time_end_filter" 
+												id		="time_end" 
+												step	="1"
+												placeholder="yyyy-mm-dd hh:mm:ss" autocomplete="on"
+												min="01"
+												value="<?php echo $filter_control->get_time_end(); ?>">
+										</div>
+									</div><!--#group_filter_time-->
+								</fieldset>
+                               
                                 <fieldset id="fs_visit_by">
                                 	<legend>Visitors</legend>
                                 	
@@ -281,6 +295,8 @@
 									?>
 									</select>
                                 </fieldset>
+                                
+                                <hr>
                                 <button 
                                     type	="submit"
                                     class 	="btn btn-primary btn-block" 
