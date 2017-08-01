@@ -285,6 +285,7 @@
                         <tr>
                             <th><a href="<?php echo $sorting->sort_url(\dc\sorting\FIELD::REVISION); ?>">Revision <?php echo $sorting->sorting_markup(\dc\sorting\FIELD::REVISION); ?></a></th>
                             <th><a href="<?php echo $sorting->sort_url(3); ?>">Area <?php echo $sorting->sorting_markup(3); ?></a></th>
+                            <th><a href="<?php echo $sorting->sort_url(5); ?>">Status <?php echo $sorting->sorting_markup(5); ?></a></th>
                             <th><a href="<?php echo $sorting->sort_url(4); ?>">Visit By <?php echo $sorting->sorting_markup(4); ?></a></th>             
                         </tr>
                     </thead>
@@ -292,6 +293,7 @@
                     	<tr>
                             <th><a href="<?php echo $sorting->sort_url(\dc\sorting\FIELD::REVISION); ?>">Revision <?php echo $sorting->sorting_markup(\dc\sorting\FIELD::REVISION); ?></a></th>
                             <th><a href="<?php echo $sorting->sort_url(3); ?>">Area <?php echo $sorting->sorting_markup(3); ?></a></th>
+                            <th><a href="<?php echo $sorting->sort_url(5); ?>">Status <?php echo $sorting->sorting_markup(5); ?></a></th>
                             <th><a href="<?php echo $sorting->sort_url(4); ?>">Visit By <?php echo $sorting->sorting_markup(4); ?></a></th>
                    		</tr>
                     </tfoot>
@@ -320,6 +322,7 @@
 															echo $_obj_data_main->get_building_name().' - '.$_obj_data_main->get_room_id(); 
 														}
 													?></td>
+                                           	<td><?php echo $_obj_data_main->get_status_label(); ?></td>
                                             <td><?php echo $_obj_data_main->get_visit_by_list_label(); ?></td>
                                         </tr>                                    
                             <?php								
