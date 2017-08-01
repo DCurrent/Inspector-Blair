@@ -13,7 +13,8 @@
 			$floor		= NULL,
 			$time_obj	= NULL,
 			$time_end 	= NULL,
-			$time_start	= NULL;
+			$time_start	= NULL,
+			$visit_by	= NULL;
 		
 		public function __construct(\dc\chronofix\Chronofix $iChronofix)
 		{
@@ -53,6 +54,28 @@
 			
 			// Set member.			
 			$this->time_start = $this->time_obj->get_time();	
+		}
+		
+		// Get and return an xml string for database use.
+		public function visit_by_xml()
+		{
+			$result = '<root>';
+
+			if(is_array($this->visit_by) === TRUE)			
+			{			
+				foreach($this->visit_by as $key => $id)
+				{
+					// Only insert if there is a value.
+					if($id)
+					{								
+						$result .= '<row id="'.$id.'" />';
+					}
+				}			
+			}
+
+			$result .= '</root>';
+
+			return $result;
 		}
 	} 
 
