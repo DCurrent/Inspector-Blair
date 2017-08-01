@@ -144,6 +144,18 @@
 	
 	//$_obj_data_paging = new \dc\recordnav\Paging();
 	if($yukon_database->get_row_exists()) $paging = $yukon_database->get_line_object();
+
+	// Source lists.
+	// --Accounts (Inspector)
+	$_obj_field_source_account_list = new \data\Account();
+
+	$yukon_database->set_sql('{call account_list_inspector()}');
+	$yukon_database->query_run();
+
+	$yukon_database->get_line_config()->set_class_name('\data\Account');
+
+	$_obj_field_source_account_list = new SplDoublyLinkedList();
+	if($yukon_database->get_row_exists() === TRUE) $_obj_field_source_account_list = $yukon_database->get_line_object_list();
 ?>
 
 <!DOCtype html>
