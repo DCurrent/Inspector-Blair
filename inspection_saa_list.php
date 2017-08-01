@@ -81,8 +81,7 @@
 					// Temporary all catch.
 					if($id == -1)
 					{
-						$result = NULL;
-						break;
+						return NULL;						
 					}
 				}	
 				
@@ -133,14 +132,16 @@
 										@param_sort_field	= ?,
 										@param_sort_order	= ?,
 										@param_date_start	= ?,
-										@param_date_end		= ?)}');
+										@param_date_end		= ?,
+										@param_inspector	= ?)}');
 	
 	$params = array(array($paging->get_page_current(), 			SQLSRV_PARAM_IN), 
 					array($paging->get_row_max(), 				SQLSRV_PARAM_IN),
 					array($sorting->get_sort_field(),			SQLSRV_PARAM_IN),
 					array($sorting->get_sort_order(),			SQLSRV_PARAM_IN),
 					array($filter_control->get_time_start(),	SQLSRV_PARAM_IN),
-					array($filter_control->get_time_end(),		SQLSRV_PARAM_IN));
+					array($filter_control->get_time_end(),		SQLSRV_PARAM_IN),
+				   	array($filter_control->visit_by_xml(),		SQLSRV_PARAM_IN));
 
 	// Debugging tools
 	//var_dump($_REQUEST);
@@ -292,7 +293,7 @@
 												name 	= "visit_by[]"
 												id		= "visit_by_" 								
 												class	= "form-control disabled">	
-												<option value="-1" 'selected'>All</option>						
+												<option value="-1" 'selected'>All</option>					
 											<?php											
 
 											// Set up account info.
