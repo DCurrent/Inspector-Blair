@@ -245,7 +245,42 @@
                                             value="<?php echo $filter_control->get_time_end(); ?>">
                                     </div>
                                 </div><!--#group_filter_time-->
-                                
+                                <fieldset id="fs_visit_by">
+                                	<legend>Visitors</legend>
+                                	
+									<select 
+										name 	= "sub_visit_by[]"
+										id		= "sub_visit_by_" 								
+										class	= "form-control">							
+									<?php							
+
+									// Set up account info.
+									$access_obj = new \dc\access\status();
+
+									if(is_object($_obj_field_source_account_list) === TRUE)
+									{        
+										// Generate table row for each item in list.
+										for($_obj_field_source_account_list->rewind();	$_obj_field_source_account_list->valid(); $_obj_field_source_account_list->next())
+										{	                                                               
+											$_obj_field_source_account = $_obj_field_source_account_list->current();
+
+											$sub_account_value 		= $_obj_field_source_account->get_id();																
+											$sub_account_label		= $_obj_field_source_account->get_name_l().', '.$_obj_field_source_account->get_name_f();
+											$sub_account_selected 	= NULL;
+
+											if($_obj_field_source_account->get_account() == $access_obj->get_account())
+											{
+												$sub_account_selected = ' selected ';
+											}									
+
+											?>
+											<option value="<?php echo $sub_account_value; ?>" <?php echo $sub_account_selected ?>><?php echo $sub_account_label; ?></option>
+											<?php                                
+										}
+									}
+									?>
+									</select>
+                                </fieldset>
                                 <button 
                                     type	="submit"
                                     class 	="btn btn-primary btn-block" 
