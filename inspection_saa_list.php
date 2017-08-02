@@ -64,7 +64,7 @@
 		// Get and return an xml string for database use.
 		public function visit_by_xml()
 		{		
-			
+			$result = NULL;
 			
 			if(is_array($this->visit_by) === TRUE)			
 			{	
@@ -85,9 +85,8 @@
 					}
 				}	
 				
+				$result .= '</root>';
 			}
-
-			$result .= '</root>';
 
 			return $result;
 		}
@@ -280,15 +279,15 @@
                                 	<legend>Visitors <a href="#help_visit_by" data-toggle="collapse" class="glyphicon glyphicon-question-sign"></a></legend>
                                 	
                                 	<div id="help_visit_by" class="collapse text-info">
-										Add visitors by clicking the + key and selecting from the choices provided. Press the - next to a visitor item to remove it. Remove all visitor items to disable the visitor filter. <a href="#help_visit_by" data-toggle="collapse" class="glyphicon glyphicon-remove-sign text-danger"></a>	
+										 Filter records by visitor - records that have been visited by any of the personnel you select here will be shown. Add a visitor item by clicking the <span class="glyphicon glyphicon-plus btn-success"></span> key and selecting from the choices provided. To remove a visitor item, press the <span class="glyphicon glyphicon-minus btn-danger"></span> key next to it. If you would like to see records from every visitor, just remove all visitor items and the visitor filter will be disabled. <a href="#help_visit_by" data-toggle="collapse" class="glyphicon glyphicon-remove-sign text-danger"></a>	
 										<br />
 										&nbsp;
 									</div>
                                 	<p class="small"></p>
-                                	
+                                	                                	                                	
                                 	<div class="form-group" id="group_visit_by_">
 										<!--<label class="control-label col-md-2" for="account_">Account</label>-->
-										<div class="col-xs-10">
+										<div class="col-md-10 col-xs-8 col-8">
 											<select 
 												name 	= "visit_by[]"
 												id		= "visit_by_" 								
@@ -324,15 +323,24 @@
 											</select>											
 										</div>		
                                
-                               			<div class="col-xs-2">			
+                               			<div class="col-xs-2 col-2">			
 											<button 
 											type	= "button" 
-											class 	= "btn btn-danger btn-xs disabled"  
-											name	= "sub_visit_row_del" 
-											id		= "sub_visit_row_del_"  
+											class 	= "btn btn-danger btn-sm disabled"  
+											name	= "filter_visit_row_del" 
+											id		= "filter_visit_row_del_"  
 											onclick	= "deleteRow_sub_visit(this)"><span class="glyphicon glyphicon-minus"></span></button>						
 										</div>
 									</div>		
+                               
+                               		<button 
+										type	="button" 
+										class 	="btn btn-success" 
+										name	="filter_visit_row_add" 
+										id		="filter_visit_row_add"
+										title	="Add new item."
+										onclick	="filter_visit_by_add()">
+										<span class="glyphicon glyphicon-plus"></span></button>
                                 </fieldset>
                                 
                                 <hr>
