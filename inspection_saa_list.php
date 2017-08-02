@@ -195,7 +195,8 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
         <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
         <script src="source/javascript/modernizr.js"></script>
-        <script src="source/javascript/iChronofix.js"></script>       
+        <script src="source/javascript/iChronofix.js"></script>
+        <script src="source/dc/klondike/main.js"></script>       
     </head>
     
     <body>    
@@ -284,70 +285,105 @@
 										&nbsp;
 									</div>
                                 	<p class="small"></p>
-                                	                                	                                	
-                                	<div class="form-group visit_by_row" id="group_visit_by_1">
-										<!--<label class="control-label col-md-2" for="account_">Account</label>-->
-										<div class="col-md-10 col-xs-8 col-8">
-											<select 
-												name 	= "visit_by[]"
-												id		= "visit_by_" 								
-												class	= "form-control disabled">	
-												<option value="-1" 'selected'>All</option>					
-											<?php											
+                                	
+                                	<div id="filter_visit_by_row_container" class="filter_visit_by_row_container">                            	                                	
+										<div class="form-group visit_by_row" id="group_visit_by_1">
+											<!--<label class="control-label col-md-2" for="account_">Account</label>-->
+											<div class="col-md-10 col-xs-8 col-8">
+												<select 
+													name 	= "visit_by[]"
+													id		= "visit_by_" 								
+													class	= "form-control disabled">	
+													<option value="-1" 'selected'>All</option>					
+												<?php											
 
-											// Set up account info.
-											$access_obj = new \dc\access\status();
+												// Set up account info.
+												$access_obj = new \dc\access\status();
 
-											if(is_object($_obj_field_source_account_list) === TRUE)
-											{        
-												// Generate table row for each item in list.
-												for($_obj_field_source_account_list->rewind();	$_obj_field_source_account_list->valid(); $_obj_field_source_account_list->next())
-												{	                                                               
-													$_obj_field_source_account = $_obj_field_source_account_list->current();
+												if(is_object($_obj_field_source_account_list) === TRUE)
+												{        
+													// Generate table row for each item in list.
+													for($_obj_field_source_account_list->rewind();	$_obj_field_source_account_list->valid(); $_obj_field_source_account_list->next())
+													{	                                                               
+														$_obj_field_source_account = $_obj_field_source_account_list->current();
 
-													$sub_account_value 		= $_obj_field_source_account->get_id();																
-													$sub_account_label		= $_obj_field_source_account->get_name_l().', '.$_obj_field_source_account->get_name_f();
-													$sub_account_selected 	= NULL;
+														$sub_account_value 		= $_obj_field_source_account->get_id();																
+														$sub_account_label		= $_obj_field_source_account->get_name_l().', '.$_obj_field_source_account->get_name_f();
+														$sub_account_selected 	= NULL;
 
-													if($_obj_field_source_account->get_account() == $access_obj->get_account())
-													{
-														//$sub_account_selected = ' selected ';
-													}									
+														if($_obj_field_source_account->get_account() == $access_obj->get_account())
+														{
+															//$sub_account_selected = ' selected ';
+														}									
 
-													?>
-													<option value="<?php echo $sub_account_value; ?>" <?php echo $sub_account_selected ?>><?php echo $sub_account_label; ?></option>
-													<?php                                
+														?>
+														<option value="<?php echo $sub_account_value; ?>" <?php echo $sub_account_selected ?>><?php echo $sub_account_label; ?></option>
+														<?php                                
+													}
 												}
-											}
-											?>
-											</select>											
+												?>
+												</select>											
+											</div>		
+
+											<div class="col-xs-2 col-2" id="remove_container_1">			
+												<button 
+												type	= "button" 
+												class 	= "btn btn-danger btn-sm filter_visit_by_remove"  
+												name	= "filter_visit_row_del" 
+												id		= "filter_visit_row_del_"><span class="glyphicon glyphicon-minus"></span></button>						
+											</div>
 										</div>		
-                               
-                               			<div class="col-xs-2 col-2" id="remove_container_1">			
-											<button 
-											type	= "button" 
-											class 	= "btn btn-danger btn-sm filter_visit_by_remove"  
-											name	= "filter_visit_row_del" 
-											id		= "filter_visit_row_del_"><span class="glyphicon glyphicon-minus"></span></button>						
-										</div>
-									</div>		
-                               
+                               		</div> 
+                               		 
                                		<button 
 										type	="button" 
-										class 	="btn btn-success" 
+										class 	="btn btn-success filter_visit_by_add" 
 										name	="filter_visit_row_add" 
 										id		="filter_visit_row_add"
-										title	="Add new item."
-										onclick	="filter_visit_by_add()">
+										title	="Add new item.">
 										<span class="glyphicon glyphicon-plus"></span></button>
                                 </fieldset>
                                 
-                                <script>
-									$( ".filter_visit_by_remove" ).click(function() {
-									  	var $id = $(".filter_visit_by_remove").closest("div.visit_by_row").remove();										
+                                <script>	
+									function add_visit_by_row()
+									{										
+										var $id = dc_klondike_guid();		
+
+										$('.filter_visit_by_row_container').append(
+											'<div class="form-group visit_by_row" id="group_visit_by_row_' + $id + '">'
+												+'<div class="col-md-10 col-xs-8 col-8" id="filter_visit_by_select_container_' + $id + '">'
+													+'<select '
+														+'name 	= "visit_by[]" '
+														+'id	= "visit_by_' + $id + '" '								
+														+'class	= "form-control disabled">'	
+														+'<option value="-1" selected>All</option>'
+													+'</select>'											
+												+'</div>'		
+
+												+'<div class="col-xs-2 col-2" id="filter_visit_by_remove_container_' + $id + '">'			
+													+'<button '
+													+'type	= "button" '
+													+'class = "btn btn-danger btn-sm filter_visit_by_remove" ' 
+													+'name	= "filter_visit_row_del" '
+													+'id	= "filter_visit_row_del_' + $id + '"><span class="glyphicon glyphicon-minus"></span></button>'						
+												+'</div>'
+											+'</div>'
+										);
+										
+										// In progress. Replace addrow with function we want to activate.
+										$(".filter_visit_by_remove").on("click", addRow);
+									}
+									
+									$( ".filter_visit_by_add" ).click(function() {
+										add_visit_by_row();
+									 });
+																		
+									$( ".filter_visit_by_remove" ).click(function($e) {
+										var $idClicked = $e.target.id;
+									  	var $id = $('#'+$idClicked).closest("div.visit_by_row").prop('id');
+										
+										alert('id ' + $id);
 									});
-									
-									
 								</script>
                                 
                                 <hr>
