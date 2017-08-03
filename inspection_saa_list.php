@@ -195,9 +195,9 @@
 				$label		= $current->get_name_l().', '.$current->get_name_f();
 				$selected 	= NULL;
 
-				if($current->get_account() == $select_target)
+				if($value == $select_target)
 				{
-					//$sub_account_selected = ' selected ';
+					$selected = ' selected ';
 				}									
 
 				$result .= '<option value="'.$value.'"'.$selected.'>'.$label.'</option>';                 
@@ -421,7 +421,7 @@
 										{
 											?>
 											<script>
-												alert('id <?php echo $id; ?>');
+												filter_visit_by_row_add('<?php echo visit_by_options($_obj_field_source_account_list, $id); ?>');
 											</script>
 											<?php	
 										}
