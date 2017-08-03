@@ -11,7 +11,7 @@
 			$data_common = NULL,
 			$building	= NULL,
 			$floor		= NULL,
-			$set_filter	= NULL,
+			$apply_filter = NULL,
 			$time_obj	= NULL,
 			$time_end 	= NULL,
 			$time_start	= NULL,
@@ -24,9 +24,9 @@
 		}
 		
 		// Accessors
-		public function get_set_filter()
+		public function get_apply_filter()
 		{
-			return $this->set_filter;	
+			return $this->apply_filter;	
 		}
 		
 		public function get_time_end()
@@ -45,9 +45,9 @@
 		}
 		
 		// Mutators
-		public function set_set_filter($value)
+		public function set_apply_filter($value)
 		{
-			$this->set_filter = $value;
+			$this->apply_filter = $value;
 		}
 		
 		public function set_time_end($value)
@@ -108,6 +108,12 @@
 		}
 	} 
 
+	// Verify user access.
+	common_security($yukon_database);
+
+	// Set up account info.
+	$access_obj = new \dc\access\status();
+
 	// Get page configuration (title, description, query names, etc.)
 	$_page_config_config = new \dc\application\CommonEntry($yukon_connection);	
 	$_page_config = new \dc\application\CommonEntryConfig($_page_config_config);	
@@ -124,6 +130,14 @@
 	
 	$filter_control = new class_filter_control($iChronofix);
 	$filter_control->populate_from_request();
+
+	// If this is initial load, let's add
+	// some default filter items.
+	if(!$filter_control->get_apply_filter())
+	{
+		// Visit By - Current account.
+		$filter_control->set_visit_by(array($access_obj->get_id()));
+	}
 	
 	// Establish sorting object, set defaults, and then get settings
 	// from user (if any).
@@ -419,15 +433,24 @@
 											</script>
 											<?php	
 										}
-									}//else if()
+									}
+									else if(!$filter_control->get_apply_filter())
+									{
+										// Default to current account.										
+										?>
+										<script>
+											filter_visit_by_row_add('<?php echo visit_by_options($_obj_field_source_account_list, $access_obj->get_id()); ?>');
+										</script>
+										<?php
+									}
 								?>
                                 
                                 <hr>
                                 <button 
                                     type	="submit"
                                     class 	="btn btn-primary btn-block" 
-                                    name	="set_filter" 
-                                    id		="set_filter"
+                                    name	="apply_filter" 
+                                    id		="apply_filter"
                                     value	="1"
                                     title	="Apply selected filters to list."
                                     ><span class="glyphicon glyphicon-filter"></span>Apply Filters</button>       
