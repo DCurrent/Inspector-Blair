@@ -10,3 +10,6 @@
 [submodule "source/dc/klondike"]
 	path = source/dc/klondike
 	url = https://github.com/DCurrent/klondike
+[submodule "source/dc/Joffrey"]
+	path = source/dc/Joffrey
+	url = https://github.com/DCurrent/Joffrey
