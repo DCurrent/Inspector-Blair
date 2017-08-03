@@ -33,9 +33,9 @@
 			return $this->time_start;
 		}
 		
-		function set_visit_by($value)
+		public function get_visit_by()
 		{
-			$this->visit_by = $value;
+			return $this->visit_by;
 		}
 		
 		// Mutators
@@ -59,6 +59,11 @@
 			
 			// Set member.			
 			$this->time_start = $this->time_obj->get_time();	
+		}
+		
+		function set_visit_by($value)
+		{
+			$this->visit_by = $value;
 		}
 		
 		// Get and return an xml string for database use.
@@ -287,7 +292,7 @@
                                 	<p class="small"></p>
                                 	
                                 	<div id="filter_visit_by_row_container" class="filter_visit_by_row_container">                            	                                	
-										<div class="form-group visit_by_row" id="group_visit_by_1">
+										<div class="form-group visit_by_row filter_row" id="group_visit_by_1">
 											<!--<label class="control-label col-md-2" for="account_">Account</label>-->
 											<div class="col-md-10 col-xs-8 col-8">
 												<select 
@@ -295,34 +300,7 @@
 													id		= "visit_by_" 								
 													class	= "form-control disabled">	
 													<option value="-1" 'selected'>All</option>					
-												<?php											
-
-												// Set up account info.
-												$access_obj = new \dc\access\status();
-
-												if(is_object($_obj_field_source_account_list) === TRUE)
-												{        
-													// Generate table row for each item in list.
-													for($_obj_field_source_account_list->rewind();	$_obj_field_source_account_list->valid(); $_obj_field_source_account_list->next())
-													{	                                                               
-														$_obj_field_source_account = $_obj_field_source_account_list->current();
-
-														$sub_account_value 		= $_obj_field_source_account->get_id();																
-														$sub_account_label		= $_obj_field_source_account->get_name_l().', '.$_obj_field_source_account->get_name_f();
-														$sub_account_selected 	= NULL;
-
-														if($_obj_field_source_account->get_account() == $access_obj->get_account())
-														{
-															//$sub_account_selected = ' selected ';
-														}									
-
-														?>
-														<option value="<?php echo $sub_account_value; ?>" <?php echo $sub_account_selected ?>><?php echo $sub_account_label; ?></option>
-														<?php                                
-													}
-												}
-												?>
-												</select>											
+													</select>											
 											</div>		
 
 											<div class="col-xs-2 col-2" id="remove_container_1">			
@@ -344,47 +322,89 @@
 										<span class="glyphicon glyphicon-plus"></span></button>
                                 </fieldset>
                                 
+                                <?php											
+
+									// Set up account info.
+									$access_obj = new \dc\access\status();
+									$filter_visit_by_option_list = NULL;
+								
+									if(is_object($_obj_field_source_account_list) === TRUE)
+									{        
+										// Generate table row for each item in list.
+										for($_obj_field_source_account_list->rewind();	$_obj_field_source_account_list->valid(); $_obj_field_source_account_list->next())
+										{	                                                               
+											$_obj_field_source_account = $_obj_field_source_account_list->current();
+
+											$sub_account_value 		= $_obj_field_source_account->get_id();																
+											$sub_account_label		= $_obj_field_source_account->get_name_l().', '.$_obj_field_source_account->get_name_f();
+											$sub_account_selected 	= NULL;
+
+											if($_obj_field_source_account->get_account() == $access_obj->get_account())
+											{
+												//$sub_account_selected = ' selected ';
+											}									
+
+											$filter_visit_by_option_list .= '<option value="'.$sub_account_value.'">'.$sub_account_label.'</option>';                 
+										}
+									}
+									?>
+                                
                                 <script>	
-									function add_visit_by_row()
-									{										
+									// Add a visit by row.
+									function filter_visit_by_row_add($option_list = null)
+									{	
+										// Guid
 										var $id = dc_klondike_guid();		
 
 										$('.filter_visit_by_row_container').append(
-											'<div class="form-group visit_by_row" id="group_visit_by_row_' + $id + '">'
+											'<div class="form-group filter_row" id="group_visit_by_row_' + $id + '">'
 												+'<div class="col-md-10 col-xs-8 col-8" id="filter_visit_by_select_container_' + $id + '">'
 													+'<select '
 														+'name 	= "visit_by[]" '
 														+'id	= "visit_by_' + $id + '" '								
 														+'class	= "form-control disabled">'	
 														+'<option value="-1" selected>All</option>'
+														+ $option_list
 													+'</select>'											
 												+'</div>'		
-
+												
 												+'<div class="col-xs-2 col-2" id="filter_visit_by_remove_container_' + $id + '">'			
 													+'<button '
 													+'type	= "button" '
-													+'class = "btn btn-danger btn-sm filter_visit_by_remove" ' 
-													+'name	= "filter_visit_row_del" '
-													+'id	= "filter_visit_row_del_' + $id + '"><span class="glyphicon glyphicon-minus"></span></button>'						
+													+'class = "btn btn-danger btn-sm filter_row_remove" ' 
+													+'name	= "filter_row_remove" '
+													+'id	= "filter_row_remove_' + $id + '"><span class="glyphicon glyphicon-minus"></span></button>'						
 												+'</div>'
 											+'</div>'
 										);
 										
-										// In progress. Replace addrow with function we want to activate.
-										$(".filter_visit_by_remove").on("click", addRow);
+										// Initialize a remove listener for this row.
+										$(".filter_row_remove").on("click", filter_row_remove);
 									}
 									
-									$( ".filter_visit_by_add" ).click(function() {
-										add_visit_by_row();
-									 });
-																		
-									$( ".filter_visit_by_remove" ).click(function($e) {
+									// Remove target filter row.
+									function filter_row_remove($e)
+									{
 										var $idClicked = $e.target.id;
-									  	var $id = $('#'+$idClicked).closest("div.visit_by_row").prop('id');
+									  	var $id = $('#'+$idClicked).closest("div.filter_row").remove();
 										
-										alert('id ' + $id);
+										//alert('id ' + $id);
+									}
+									
+									// Filter visit by add listener.
+									$( ".filter_visit_by_add" ).click(function() {
+										filter_visit_by_row_add('<?php echo $filter_visit_by_option_list; ?>');
+									 });
+													
+									// Filter row remove listener.
+									$( ".filter_row_remove" ).click(function($e) {
+										filter_row_remove($e);
 									});
 								</script>
+                               
+                               	<?php
+									$filter_control->get
+								?>
                                 
                                 <hr>
                                 <button 
