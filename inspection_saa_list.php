@@ -409,6 +409,9 @@
 									// Filter visit by add listener.
 									$( ".filter_visit_by_add" ).click(function() {
 										filter_visit_by_row_add('<?php echo visit_by_options($_obj_field_source_account_list); ?>');
+										
+										
+										//$('.filter_visit_by_row_container').append($('<div />').load('source/common_includes/visit_by_row.php') );
 									 });
 													
 									// Filter row remove listener.

@@ -1,12 +1,6 @@
 <?php
 	require(__DIR__.'/../../source/main.php');
 
-	$guid_obj		= new \dc\joffrey\Guid();
-	$guid 			= NULL;
-	$option_list	= NULL;
-
-	
-
 	// Output options markup for visit by select.
 	function options_markup(SplDoublyLinkedList $_list, $select_target = NULL)
 	{
@@ -36,6 +30,11 @@
 		return $result;
 	}
 
+
+	$guid_obj		= new \dc\joffrey\Guid();
+	$guid 			= $guid_obj->generate_guid();
+	$option_list	= NULL;   	
+
 	// --Accounts (Inspector)
 	$_obj_field_source_account_list = new \data\Account();
 
@@ -52,15 +51,6 @@
 
 ?>
 
-
-<!doctype html>
-<html>
-<head>
-<meta charset="utf-8">
-<title>Untitled Document</title>
-</head>
-
-<body>
 
 <div class="form-group filter_row" id="group_visit_by_row_<?php echo $guid; ?>">
 	<div class="col-md-10 col-xs-8 col-8" id="filter_visit_by_select_container_<?php echo $guid; ?>">
@@ -81,6 +71,3 @@
 		id		= "filter_row_remove_<?php echo $guid; ?>"><span class="glyphicon glyphicon-minus"></span></button>				
 	</div>
 </div>
-
-</body>
-</html>
