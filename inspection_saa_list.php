@@ -11,6 +11,7 @@
 			$data_common = NULL,
 			$building	= NULL,
 			$floor		= NULL,
+			$set_filter	= NULL,
 			$time_obj	= NULL,
 			$time_end 	= NULL,
 			$time_start	= NULL,
@@ -23,6 +24,11 @@
 		}
 		
 		// Accessors
+		public function get_set_filter()
+		{
+			return $this->set_filter;	
+		}
+		
 		public function get_time_end()
 		{
 			return $this->time_end;
@@ -39,6 +45,11 @@
 		}
 		
 		// Mutators
+		public function set_set_filter($value)
+		{
+			$this->set_filter = $value;
+		}
+		
 		public function set_time_end($value)
 		{
 			// Run time through sanitizer to 
@@ -321,27 +332,10 @@
                                 	<p class="small"></p>
                                 	
                                 	<div id="filter_visit_by_row_container" class="filter_visit_by_row_container">                            	                                	
-										<div class="form-group visit_by_row filter_row" id="group_visit_by_1">
-											<!--<label class="control-label col-md-2" for="account_">Account</label>-->
-											<div class="col-md-10 col-xs-8 col-8">
-												<select 
-													name 	= "visit_by[]"
-													id		= "visit_by_" 								
-													class	= "form-control disabled">	
-													<option value="-1" 'selected'>All</option>					
-													</select>											
-											</div>		
-
-											<div class="col-xs-2 col-2" id="remove_container_1">			
-												<button 
-												type	= "button" 
-												class 	= "btn btn-danger btn-sm filter_visit_by_remove"  
-												name	= "filter_visit_row_del" 
-												id		= "filter_visit_row_del_"><span class="glyphicon glyphicon-minus"></span></button>						
-											</div>
-										</div>		
+										<!--Populated by script. -->		
                                		</div> 
-                               		 
+                               		
+                               		<!-- Adds a visit row. --> 
                                		<button 
 										type	="button" 
 										class 	="btn btn-success filter_visit_by_add" 
@@ -425,7 +419,7 @@
 											</script>
 											<?php	
 										}
-									}
+									}//else if()
 								?>
                                 
                                 <hr>
