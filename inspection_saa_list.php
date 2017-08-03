@@ -378,7 +378,7 @@
 														+'name 	= "visit_by[]" '
 														+'id	= "visit_by_' + $id + '" '								
 														+'class	= "form-control disabled">'	
-														+'<option value="-1" selected>All</option>'
+														+'<option value="">Select Visitor</option>'
 														+ $option_list
 													+'</select>'											
 												+'</div>'		
@@ -427,11 +427,14 @@
 										
 										foreach($filter_visit_by_array as $key => $id)
 										{
-											?>
-											<script>
-												filter_visit_by_row_add('<?php echo visit_by_options($_obj_field_source_account_list, $id); ?>');
-											</script>
-											<?php	
+											if($id)
+											{
+												?>
+												<script>
+													filter_visit_by_row_add('<?php echo visit_by_options($_obj_field_source_account_list, $id); ?>');
+												</script>
+												<?php
+											}
 										}
 									}
 									else if(!$filter_control->get_apply_filter())
