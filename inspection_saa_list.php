@@ -177,6 +177,35 @@
 
 	$_obj_field_source_account_list = new SplDoublyLinkedList();
 	if($yukon_database->get_row_exists() === TRUE) $_obj_field_source_account_list = $yukon_database->get_line_object_list();
+
+	// Output options markup for visit by select.
+	function visit_by_options(SplDoublyLinkedList $_list, $select_target = NULL)
+	{
+		$result		= NULL;
+		$current 	= NULL;
+
+		if(is_object($_list) === TRUE)
+		{        
+			// Generate table row for each item in list.
+			for($_list->rewind(); $_list->valid(); $_list->next())
+			{	                                                               
+				$current = $_list->current();
+
+				$value 		= $current->get_id();																
+				$label		= $current->get_name_l().', '.$current->get_name_f();
+				$selected 	= NULL;
+
+				if($current->get_account() == $select_target)
+				{
+					//$sub_account_selected = ' selected ';
+				}									
+
+				$result .= '<option value="'.$value.'"'.$selected.'>'.$label.'</option>';                 
+			}
+		}
+		
+		return $result;
+	}
 ?>
 
 <!DOCtype html>
@@ -324,29 +353,7 @@
                                 
                                 <?php											
 
-									// Set up account info.
-									$access_obj = new \dc\access\status();
-									$filter_visit_by_option_list = NULL;
-								
-									if(is_object($_obj_field_source_account_list) === TRUE)
-									{        
-										// Generate table row for each item in list.
-										for($_obj_field_source_account_list->rewind();	$_obj_field_source_account_list->valid(); $_obj_field_source_account_list->next())
-										{	                                                               
-											$_obj_field_source_account = $_obj_field_source_account_list->current();
-
-											$sub_account_value 		= $_obj_field_source_account->get_id();																
-											$sub_account_label		= $_obj_field_source_account->get_name_l().', '.$_obj_field_source_account->get_name_f();
-											$sub_account_selected 	= NULL;
-
-											if($_obj_field_source_account->get_account() == $access_obj->get_account())
-											{
-												//$sub_account_selected = ' selected ';
-											}									
-
-											$filter_visit_by_option_list .= '<option value="'.$sub_account_value.'">'.$sub_account_label.'</option>';                 
-										}
-									}
+									
 									?>
                                 
                                 <script>	
@@ -393,7 +400,7 @@
 									
 									// Filter visit by add listener.
 									$( ".filter_visit_by_add" ).click(function() {
-										filter_visit_by_row_add('<?php echo $filter_visit_by_option_list; ?>');
+										filter_visit_by_row_add('<?php echo visit_by_options($_obj_field_source_account_list); ?>');
 									 });
 													
 									// Filter row remove listener.
@@ -403,7 +410,22 @@
 								</script>
                                
                                	<?php
-									$filter_control->get
+									$filter_visit_by_array = $filter_control->get_visit_by();
+								
+									if(is_array($filter_visit_by_array) === TRUE)			
+									{
+										$key 	= NULL;
+										$id		= NULL;
+										
+										foreach($filter_visit_by_array as $key => $id)
+										{
+											?>
+											<script>
+												alert('id <?php echo $id; ?>');
+											</script>
+											<?php	
+										}
+									}
 								?>
                                 
                                 <hr>
