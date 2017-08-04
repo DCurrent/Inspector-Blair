@@ -378,7 +378,7 @@
 										//alert('id ' + $id);
 									}
 									
-									// Even listener - Visit By Add Button.
+									// Event listener - Visit By Add Button.
 									$( ".filter_visit_by_add" ).click(function(){										
 										filter_visit_by_row_add(null);										
 									 });
@@ -386,15 +386,28 @@
 								</script>
                                
                                	<?php
+									// Get an array of all current visit by filter selections.
 									$filter_visit_by_array = $filter_control->get_visit_by();
 								
+									// Loop over array of filter selections. For each one we
+									// find, run the ajax load to build an option list
+									// and send the ID (selection) so our option list
+									// building script will mark it as selected.
+								
+									// If there are NO filter selections AND the apply filter
+									// variable is NULL, then this is an initial page load. In
+									// that case, we will default to the current account as
+									// a filter selection.
 									if(is_array($filter_visit_by_array) === TRUE)			
 									{
 										$key 	= NULL;
 										$id		= NULL;
 										
+										// Loop.
 										foreach($filter_visit_by_array as $key => $id)
 										{
+											// If the ID exisits, then
+											// load the list with ID pre-selected.
 											if($id)
 											{
 												?>
@@ -410,7 +423,7 @@
 										// Default to current account.										
 										?>
 										<script>
-											filter_visit_by_row_add('<?php echo visit_by_options($_obj_field_source_account_list, $access_obj->get_id()); ?>');
+											filter_visit_by_row_add('<?php echo $access_obj->get_id(); ?>');
 										</script>
 										<?php
 									}
