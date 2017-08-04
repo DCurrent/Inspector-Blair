@@ -11,7 +11,7 @@
         $file_name = '';
         $namespace = '';
 
-		echo '<!-- Class request: '.$class_name.' -->'.PHP_EOL;
+		//echo '<!-- Class request: '.$class_name.' -->'.PHP_EOL;
 
         // Sets the include path as the "src" directory
         $include_path = __DIR__;
@@ -48,7 +48,7 @@
 		} 
 		else 
 		{
-            echo '<-- '.$file_name_full.' not found. -->'.PHP_EOL;
+            //echo '<-- '.$file_name_full.' not found. -->'.PHP_EOL;
         }
     }
 	
