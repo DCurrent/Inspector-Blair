@@ -336,14 +336,35 @@
 									?>
                                 
                                 <script>	
-									// Add a visit by row.
+									// Add a Visit By Filter Row.
 									function filter_visit_by_row_add($select_target = null)
-									{	
-
-										// Guid
-										var $id = dc_klondike_guid();
+									{
+										var $id;			// Guid for elements.
+										var $url_base;		// Base file url.
+										var $url_request;	// Request vars sent with URL.
+										var $url_complete;	// File with request elements.
 										
-										$('.filter_visit_by_container').append($('<div id="filter_visit_by_row_container_' + $id + '" class="filter_visit_by_row_container" />').load('source/common_includes/visit_by_row.php?id_guid=' + $id + '&select_target=' + $select_target) );
+										// Guid - Will be concatenated to IDs of the elements
+										// we are appending. This ensures the appended IDs will
+										// be unique without us having to track a glocal variable.
+										$id = dc_klondike_guid();
+										
+										// Base file name will we load with ajax.
+										$url_base = 'source/common_includes/visit_by_row.php';
+										
+										// Prepare quest vars.
+										// -- Guid for elements.
+										$url_request = '?id_guid=' + $id;
+										
+										// -- Option to be pre selected.
+										$url_request = $url_request + '&select_target=' + $select_target;
+										
+										// Complete the URL.
+										$url_complete = $url_base + $url_request;
+										
+										// Append a new container <div> and load contents of target PHP
+										// file.
+										$('.filter_visit_by_container').append($('<div id="filter_visit_by_row_container_' + $id + '" class="filter_visit_by_row_container" />').load($url_complete));
 									}
 									
 									// Remove target filter row.
