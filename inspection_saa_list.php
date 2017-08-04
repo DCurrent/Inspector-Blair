@@ -225,7 +225,6 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
         <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
         <script src="source/javascript/modernizr.js"></script>
-        <script src="source/javascript/iChronofix.js"></script>
         <script src="source/dc/klondike/main.js"></script>       
     </head>
     
@@ -329,11 +328,6 @@
 										title	="Add new item.">
 										<span class="glyphicon glyphicon-plus"></span></button>
                                 </fieldset>
-                                
-                                <?php											
-
-									
-									?>
                                 
                                 <script>	
 									// Add a Visit By Filter Row.
