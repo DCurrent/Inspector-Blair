@@ -202,35 +202,6 @@
 
 	$_obj_field_source_account_list = new SplDoublyLinkedList();
 	if($yukon_database->get_row_exists() === TRUE) $_obj_field_source_account_list = $yukon_database->get_line_object_list();
-
-	// Output options markup for visit by select.
-	function visit_by_options(SplDoublyLinkedList $_list, $select_target = NULL)
-	{
-		$result		= NULL;
-		$current 	= NULL;
-
-		if(is_object($_list) === TRUE)
-		{        
-			// Generate table row for each item in list.
-			for($_list->rewind(); $_list->valid(); $_list->next())
-			{	                                                               
-				$current = $_list->current();
-
-				$value 		= $current->get_id();																
-				$label		= $current->get_name_l().', '.$current->get_name_f();
-				$selected 	= NULL;
-
-				if($value == $select_target)
-				{
-					$selected = ' selected ';
-				}									
-
-				$result .= '<option value="'.$value.'"'.$selected.'>'.$label.'</option>';                 
-			}
-		}
-		
-		return $result;
-	}
 ?>
 
 <!DOCtype html>
@@ -345,9 +316,9 @@
 									</div>
                                 	<p class="small"></p>
                                 	
-                                	<div id="filter_visit_by_row_container" class="filter_visit_by_row_container">                            	                                	
-										<!--Populated by script. -->		
-                               		</div> 
+                                	<!--Filter rows are appended to this container by script. -->
+                                	<div id="filter_visit_by_container" class="filter_visit_by_container">                            	                                	
+									</div> 
                                		
                                		<!-- Adds a visit row. --> 
                                		<button 
@@ -366,55 +337,31 @@
                                 
                                 <script>	
 									// Add a visit by row.
-									function filter_visit_by_row_add($option_list = null)
+									function filter_visit_by_row_add($select_target = null)
 									{	
-										// Guid
-										var $id = dc_klondike_guid();		
 
-										$('.filter_visit_by_row_container').append(
-											'<div class="form-group filter_row" id="group_visit_by_row_' + $id + '">'
-												+'<div class="col-md-10 col-xs-8 col-8" id="filter_visit_by_select_container_' + $id + '">'
-													+'<select '
-														+'name 	= "visit_by[]" '
-														+'id	= "visit_by_' + $id + '" '								
-														+'class	= "form-control disabled">'	
-														+'<option value="">Select Visitor</option>'
-														+ $option_list
-													+'</select>'											
-												+'</div>'		
-												
-												+'<div class="col-xs-2 col-2" id="filter_visit_by_remove_container_' + $id + '">'			
-													+'<button '
-													+'type	= "button" '
-													+'class = "btn btn-danger btn-sm filter_row_remove" ' 
-													+'name	= "filter_row_remove" '
-													+'id	= "filter_row_remove_' + $id + '"><span class="glyphicon glyphicon-minus"></span></button>'						
-												+'</div>'
-											+'</div>'
-										);
+										// Guid
+										var $id = dc_klondike_guid();
 										
-										// Initialize a remove listener for this row.
-										$(".filter_row_remove").on("click", filter_row_remove);
+										$('.filter_visit_by_container').append($('<div id="filter_visit_by_row_container_' + $id + '" class="filter_visit_by_row_container" />').load('source/common_includes/visit_by_row.php?id_guid=' + $id + '&select_target=' + $select_target) );
 									}
 									
 									// Remove target filter row.
 									function filter_row_remove($e)
 									{
+										//alert('click ');
+										
 										var $idClicked = $e.target.id;
-									  	var $id = $('#'+$idClicked).closest("div.filter_row").remove();
+									  	var $id = $('#'+$idClicked).closest("div.filter_visit_by_row_container").remove();
 										
 										//alert('id ' + $id);
 									}
 									
-									// Filter visit by add listener.
-									$( ".filter_visit_by_add" ).click(function() {
-										$('.filter_visit_by_row_container').append($('<div />').load('source/common_includes/visit_by_row.php') );
+									// Even listener - Visit By Add Button.
+									$( ".filter_visit_by_add" ).click(function(){										
+										filter_visit_by_row_add(null);										
 									 });
-													
-									// Filter row remove listener.
-									$( ".filter_row_remove" ).click(function($e) {
-										filter_row_remove($e);
-									});
+										
 								</script>
                                
                                	<?php
@@ -431,7 +378,7 @@
 											{
 												?>
 												<script>
-													filter_visit_by_row_add('<?php echo visit_by_options($_obj_field_source_account_list, $id); ?>');
+													filter_visit_by_row_add('<?php echo $id; ?>');
 												</script>
 												<?php
 											}

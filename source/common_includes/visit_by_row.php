@@ -30,9 +30,39 @@
 		return $result;
 	}
 
+	class ConfigLocal extends data\Common
+	{
+		private $id_guid;
+		private $select_target;
+		
+		// Accessors
+		public function get_id_guid()
+		{
+			return $this->id_guid;
+		}
+		
+		public function get_select_target()
+		{
+			return $this->select_target;
+		}
+		
+		// Mutators
+		public function set_id_guid($value)
+		{
+			$this->id_guid = $value;
+		}
+		
+		public function set_select_target($value)
+		{
+			$this->select_target = $value;
+		}
+	}
 
-	$guid_obj		= new \dc\joffrey\Guid();
-	$guid 			= $guid_obj->generate_guid();
+	$config = new ConfigLocal();
+	$config->populate_from_request();
+
+
+	$guid 			= $config->get_id_guid();
 	$option_list	= NULL;   	
 
 	// --Accounts (Inspector)
@@ -47,7 +77,7 @@
 	if($yukon_database->get_row_exists() === TRUE) $_obj_field_source_account_list = $yukon_database->get_line_object_list();
 
 	//
-	$option_list = options_markup($_obj_field_source_account_list);
+	$option_list = options_markup($_obj_field_source_account_list, $config->get_select_target());
 
 ?>
 
@@ -71,3 +101,8 @@
 		id		= "filter_row_remove_<?php echo $guid; ?>"><span class="glyphicon glyphicon-minus"></span></button>				
 	</div>
 </div>
+
+<script>
+	// Initialize a remove listener for this row.
+	$(".filter_row_remove").on("click", filter_row_remove);
+</script>
