@@ -81,9 +81,8 @@
 
 ?>
 
-
 <div class="form-group filter_row" id="group_visit_by_row_<?php echo $guid; ?>">
-	<div class="col-md-10 col-xs-8 col-8" id="filter_visit_by_select_container_<?php echo $guid; ?>">
+	<div class="col-md-11 col-xs-9 col-9" id="filter_visit_by_select_container_<?php echo $guid; ?>">
 		<select 
 			name 	= "visit_by[]"
 			id		= "visit_by_<?php echo $guid; ?>" 							
@@ -93,7 +92,7 @@
 		</select>											
 	</div>	
 
-	<div class="col-xs-2 col-2" id="filter_visit_by_remove_container_<?php echo $guid; ?>">		
+	<div class="col-xs-1 col-1" id="filter_visit_by_remove_container_<?php echo $guid; ?>">		
 		<button 
 		type	= "button"
 		class 	= "btn btn-danger btn-sm filter_row_remove"

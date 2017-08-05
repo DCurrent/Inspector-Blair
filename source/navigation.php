@@ -150,7 +150,7 @@
 		?>
         	
             <div id="nav_footer" class="container well" style="width:95%; margin-top:20px;">
-            	<a href="//www.uky.edu"><img src="<?php echo $this->directory_prime; ?>/media/uk_logo.png" alt="University of Kentucky" style="float:left; margin-top:10px; margin-bottom:5px;"></a>
+            	<a href="//www.uky.edu"><img src="<?php echo $this->directory_prime; ?>/media/uk_logo.png" alt="University of Kentucky" class="img-responsive" style="float:left; margin-top:10px; margin-bottom:5px;"></a>
                             
                 <ul class="list-inline">                       
                     <li>

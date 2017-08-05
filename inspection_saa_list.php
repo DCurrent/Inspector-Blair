@@ -268,18 +268,17 @@
                                 <input type="hidden" name="order" value="<?php echo $sorting->get_sort_order(); ?>" />
                                 
                                 <fieldset id="fs_revision">
-                                	<legend>Revision <a href="#help_revision" data-toggle="collapse" class="glyphicon glyphicon-question-sign"></a></legend> 
+                                	<legend><span class="glyphicon glyphicon-time"></span> Revision <a href="#help_revision" data-toggle="collapse" class="glyphicon glyphicon-question-sign"></a></legend> 
                                 	
                                 	<div id="help_revision" class="collapse text-info">
 										Enter a start and ending time to filter records by the revision time stamp. Leave these fields blank for no revision filtering. <a href="#help_revision" data-toggle="collapse" class="glyphicon glyphicon-remove-sign text-danger"></a>	
 										<br />
 										&nbsp;
 									</div>
-                                	<p class="small"></p>
-                                	
-									<div class="form-group" id="group_filter_time">
-										<label class="control-label col-sm-2" for="filter_time_start">Start</label>
-										<div class="col-sm-4">
+                                	                                	
+									<div class="form-group" id="group_filter_time_start">
+										<label class="control-label col-xs-1 col-1" for="filter_time_start"><span class="glyphicon glyphicon-flag text-success"></span></label>
+										<div class="col-md-11 col-xs-10 col-10">
 											<input 
 												type	="datetime-local" 
 												class	="form-control time_start_filter"  
@@ -289,9 +288,11 @@
 												placeholder="yyyy-mm-dd hh:mm:ss"
 												value="<?php echo $filter_control->get_time_start(); ?>">
 										</div>
-
-										<label class="control-label col-sm-2" for="filter_time_end">End</label>
-										<div class="col-sm-4">
+									</div><!--#group_filter_time_start-->
+									
+									<div class="form-group" id="group_filter_time_end">										
+										<label class="control-label col-xs-1 col-1" for="filter_time_end"><span class="glyphicon glyphicon-flag text-danger"></span></label>
+										<div class="col-md-11 col-xs-10 col-10">
 											<input  
 												name	="time_end" 
 												type	="datetime-local" 
@@ -302,11 +303,12 @@
 												min="01"
 												value="<?php echo $filter_control->get_time_end(); ?>">
 										</div>
-									</div><!--#group_filter_time-->
+									</div><!--#group_filter_time_end-->
 								</fieldset>
                                
                                 <fieldset id="fs_visit_by">
-                                	<legend>Visitors <a href="#help_visit_by" data-toggle="collapse" class="glyphicon glyphicon-question-sign"></a></legend>
+                                	<legend><span class="glyphicon glyphicon-user"></span>
+		Visitors <a href="#help_visit_by" data-toggle="collapse" class="glyphicon glyphicon-question-sign"></a></legend>
                                 	
                                 	<div id="help_visit_by" class="collapse text-info">
 										 Filter records by visitor - records that have been visited by any of the personnel you select here will be shown. Add a visitor item by clicking the <span class="glyphicon glyphicon-plus btn-success"></span> key and selecting from the choices provided. To remove a visitor item, press the <span class="glyphicon glyphicon-minus btn-danger"></span> key next to it. If you would like to see records from every visitor, just remove all visitor items and the visitor filter will be disabled. <a href="#help_visit_by" data-toggle="collapse" class="glyphicon glyphicon-remove-sign text-danger"></a>	
