@@ -315,13 +315,13 @@
 										<br />
 										&nbsp;
 									</div>
-                                	<p class="small"></p>
                                 	
                                 	<!--Filter rows are appended to this container by script. -->
                                 	<div id="filter_visit_by_container" class="filter_visit_by_container">                            	                                	
 									</div> 
                                		
                                		<!-- Adds a visit row. --> 
+                               		<div id="filter_visit_row_progress"></div>
                                		<button 
 										type	="button" 
 										class 	="btn btn-success filter_visit_by_add" 
@@ -358,9 +358,17 @@
 										// Complete the URL.
 										$url_complete = $url_base + $url_request;
 										
+										// Hide the add button and show loading alert.
+										$("#filter_visit_row_progress").empty().append('<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%">Loading...</div>');
+										
+										$("#filter_visit_row_add").hide();
+										
 										// Append a new container <div> and load contents of target PHP
 										// file.
-										$('.filter_visit_by_container').append($('<div id="filter_visit_by_row_container_' + $id + '" class="filter_visit_by_row_container" />').load($url_complete));
+										$('.filter_visit_by_container').append($('<div id="filter_visit_by_row_container_' + $id + '" class="filter_visit_by_row_container" />').load($url_complete, function(){
+											$("#filter_visit_row_progress").empty();
+											$("#filter_visit_row_add").show();
+										}));
 									}
 									
 									// Remove target filter row.

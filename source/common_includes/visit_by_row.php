@@ -78,7 +78,6 @@
 
 	//
 	$option_list = options_markup($_obj_field_source_account_list, $config->get_select_target());
-
 ?>
 
 <div class="form-group filter_row" id="group_visit_by_row_<?php echo $guid; ?>">
