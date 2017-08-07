@@ -115,7 +115,7 @@
 	<div class="col-xs-1 col-1" id="filter_visit_by_remove_container_<?php echo $guid; ?>">		
 		<button 
 		type	= "button"
-		class 	= "btn btn-danger btn-sm filter_row_remove"
+		class 	= "btn btn-danger filter_row_remove"
 		name	= "filter_row_remove"
 		id		= "filter_row_remove_<?php echo $guid; ?>"><span class="glyphicon glyphicon-minus"></span></button>				
 	</div>

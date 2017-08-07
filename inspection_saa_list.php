@@ -324,11 +324,20 @@
                                		<div id="filter_visit_row_progress"></div>
                                		<button 
 										type	="button" 
-										class 	="btn btn-success filter_visit_by_add" 
+										class 	="btn btn-success filter_visit_by_add btn_visit_by_set" 
 										name	="filter_visit_row_add" 
 										id		="filter_visit_row_add"
 										title	="Add new item.">
 										<span class="glyphicon glyphicon-plus"></span></button>
+                               		
+                               		<!-- Clears visit rows. -->
+                               		<button 
+										type	="button" 
+										class 	="btn btn-danger filter_visit_clear btn_visit_by_set" 
+										name	="filter_visit_clear" 
+										id		="filter_visit_clear"
+										title	="Clear visit by filters.">
+										<span class="glyphicon glyphicon-ban-circle"></span></button>
                                 </fieldset>
                                 
                                 <script>	
@@ -358,16 +367,17 @@
 										// Complete the URL.
 										$url_complete = $url_base + $url_request;
 										
-										// Hide the add button and show loading alert.
-										$("#filter_visit_row_progress").empty().append('<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%">Loading...</div>');
+										// Hide the control buttons and show loading alert.
+										$('#filter_visit_row_progress').empty().append('<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%">Loading...</div>');
 										
-										$("#filter_visit_row_add").hide();
+										$('.btn_visit_by_set').hide();
 										
 										// Append a new container <div> and load contents of target PHP
-										// file.
+										// file. When complete, make the controls visible and remove 
+										// progress bar.
 										$('.filter_visit_by_container').append($('<div id="filter_visit_by_row_container_' + $id + '" class="filter_visit_by_row_container" />').load($url_complete, function(){
-											$("#filter_visit_row_progress").empty();
-											$("#filter_visit_row_add").show();
+											$('#filter_visit_row_progress').empty();
+											$('.btn_visit_by_set').show();
 										}));
 									}
 									
@@ -377,16 +387,21 @@
 										//alert('click ');
 										
 										var $idClicked = $e.target.id;
-									  	var $id = $('#'+$idClicked).closest("div.filter_visit_by_row_container").remove();
+									  	var $id = $('#'+$idClicked).closest('div.filter_visit_by_row_container').remove();
 										
 										//alert('id ' + $id);
 									}
 									
 									// Event listener - Visit By Add Button.
-									$( ".filter_visit_by_add" ).click(function(){										
+									$('.filter_visit_by_add').click(function(){										
 										filter_visit_by_row_add(null);										
 									 });
-										
+									
+									// Clear visit by listener.
+									$('.filter_visit_clear').click(function(){
+										$('.filter_visit_by_container').empty();
+									});
+									
 								</script>
                                
                                	<?php
