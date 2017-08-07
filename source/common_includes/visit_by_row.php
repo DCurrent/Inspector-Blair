@@ -58,9 +58,12 @@
 		}
 	}
 
+	// Start page cache.
+	$page_obj = new \dc\cache\PageCache();
+
+	// Get request variables.
 	$config = new ConfigLocal();
 	$config->populate_from_request();
-
 
 	$guid 			= $config->get_id_guid();
 	$option_list	= NULL;   	
@@ -104,3 +107,9 @@
 	// Initialize a remove listener for this row.
 	$(".filter_row_remove").on("click", filter_row_remove);
 </script>
+
+
+<?php
+	// Collect and output page markup.
+	echo $page_obj->markup_and_flush();
+?>
