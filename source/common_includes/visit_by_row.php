@@ -117,7 +117,7 @@
 		type	= "button"
 		class 	= "btn btn-danger filter_row_remove"
 		name	= "filter_row_remove"
-		id		= "filter_row_remove_<?php echo $guid; ?>"><span class="glyphicon glyphicon-minus"></span></button>				
+		id		= "filter_row_remove_<?php echo $guid; ?>"><span class="glyphicon glyphicon-minus"></span>&nbsp;<span class="glyphicon glyphicon-user"></span></button>				
 	</div>
 </div>
 

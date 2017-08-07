@@ -267,6 +267,26 @@
                                 <input type="hidden" name="field" value="<?php echo $sorting->get_sort_field(); ?>" />
                                 <input type="hidden" name="order" value="<?php echo $sorting->get_sort_order(); ?>" />
                                 
+                                
+                                <!--fieldset id="fs_page_rows">
+                                	<legend><span class="glyphicon glyphicon-time"></span> Revision <a href="#help_revision" data-toggle="collapse" class="glyphicon glyphicon-question-sign"></a></legend> 
+                                	
+									<div class="form-group" id="group_filter_time_end">										
+										<label class="control-label col-xs-1 col-1" for="filter_time_end"><span class="glyphicon glyphicon-flag text-danger"></span></label>
+										<div class="col-md-11 col-xs-10 col-10">
+											<input  
+												name	="time_end" 
+												type	="datetime-local" 
+												class	="form-control time_end_filter" 
+												id		="time_end" 
+												step	="1"
+												placeholder="yyyy-mm-dd hh:mm:ss" autocomplete="on"
+												min="01"
+												value="<?php echo $filter_control->get_time_end(); ?>">
+										</div>
+									</div>
+								</fieldset -->
+                                
                                 <fieldset id="fs_revision">
                                 	<legend><span class="glyphicon glyphicon-time"></span> Revision <a href="#help_revision" data-toggle="collapse" class="glyphicon glyphicon-question-sign"></a></legend> 
                                 	
@@ -328,7 +348,7 @@
 										name	="filter_visit_row_add" 
 										id		="filter_visit_row_add"
 										title	="Add new item.">
-										<span class="glyphicon glyphicon-plus"></span></button>
+										<span class="glyphicon glyphicon-plus"></span>&nbsp;<span class="glyphicon glyphicon-user"></span></button>
                                		
                                		<!-- Clears visit rows. -->
                                		<button 
@@ -337,7 +357,7 @@
 										name	="filter_visit_clear" 
 										id		="filter_visit_clear"
 										title	="Clear visit by filters.">
-										<span class="glyphicon glyphicon-ban-circle"></span></button>
+										<span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span class="glyphicon glyphicon-user"></span></button>
                                 </fieldset>
                                 
                                 <script>	
