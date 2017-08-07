@@ -83,16 +83,34 @@
 	$option_list = options_markup($_obj_field_source_account_list, $config->get_select_target());
 ?>
 
+
+
 <div class="form-group filter_row" id="group_visit_by_row_<?php echo $guid; ?>">
 	<div class="col-md-11 col-xs-9 col-9" id="filter_visit_by_select_container_<?php echo $guid; ?>">
-		<select 
-			name 	= "visit_by[]"
-			id		= "visit_by_<?php echo $guid; ?>" 							
-			class	= "form-control disabled">
-			<option value="">Select Visitor</option>
-			<?php echo $option_list; ?>
-		</select>											
-	</div>	
+		<?php
+			$temp = 0;
+		
+			if($temp == 1)
+			{
+		?>
+		<a href=""></a>
+		<input type="hidden" name = "visit_by[]" id = "visit_by_<?php echo $guid; ?>" value="<?php echo $config->select_target(); ?>">
+		<?php		
+			}
+			else
+			{
+		?>
+				<select 
+					name 	= "visit_by[]"
+					id		= "visit_by_<?php echo $guid; ?>" 							
+					class	= "form-control disabled">
+					<option value="">Select Visitor</option>
+					<?php echo $option_list; ?>
+				</select>
+		<?php
+			}
+		?>
+	</div>
 
 	<div class="col-xs-1 col-1" id="filter_visit_by_remove_container_<?php echo $guid; ?>">		
 		<button 
@@ -110,6 +128,9 @@
 
 
 <?php
+	// So the loading bar doesn't look like a glitch when loading is fast.
+	sleep(2);
+
 	// Collect and output page markup.
 	echo $page_obj->markup_and_flush();
 ?>
