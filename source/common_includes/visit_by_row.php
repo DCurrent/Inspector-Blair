@@ -129,7 +129,7 @@
 
 <?php
 	// So the loading bar doesn't look like a glitch when loading is fast.
-	sleep(2);
+	sleep(1);
 
 	// Collect and output page markup.
 	echo $page_obj->markup_and_flush();
