@@ -58,9 +58,15 @@
 	if($yukon_database->get_row_exists() === TRUE) $_obj_data_main = $yukon_database->get_line_object();
 
 	
+
+	// Prepare human readable building code.
+	$building_code_display = NULL;
+
+	if($_obj_data_main->get_building_code())
+	{
+		$building_code_display = trim($_obj_data_main->get_building_code()).' - '.$_obj_data_main->get_building_name(); 
+	}
 ?>
-
-
 
 <table class="table table-striped table-condensed">
 	<thead>
@@ -70,11 +76,11 @@
 	<tbody id="tbody_room_data" class="">
 		<tr>
 			<td>Area</td>
-			<td><a href = "area.php?id=<?php //echo $room_code;  ?>"
+			<td><a href = "area.php?id=<?php echo $_obj_data_main->get_room_code();  ?>"
 			data-toggle	= ""
 			title		= "View location detail."
 			target		= "_new" 
-			><?php //echo $building_code_display; ?></a></td>
+			><?php echo $building_code_display; ?></a></td>
 		</tr>
 
 		<tr>
