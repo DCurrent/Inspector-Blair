@@ -11,8 +11,7 @@
 		}
 	</style>
 
-		<?php 
-			require __DIR__.'/model_location.php';
+		<?php 			
 			require __DIR__.'/model_party.php';
 			
 			// List queries
@@ -56,169 +55,21 @@
 				
 			?>
         
-        
-        
         <!-- Location display. -->
-        <?php 
-        
-            $building_code_display = NULL;
-            
-            if($_obj_data_sub_area_list->get_building_code())
-            {
-                $building_code_display = trim($_obj_data_sub_area_list->get_building_code()).' - '.$_obj_data_sub_area_list->get_building_name(); 
-            }
-        
-        ?>        
-        
         <div class="form-group">
-            <label class="control-label col-sm-2" for="building">Location</label>
-            	<div class="col-sm-10">
-            		<?php 
-						$room_code = trim($_obj_data_sub_area_list->get_room_code());
-						if($room_code)
-						{
-					?>
-                            <table class="table table-striped table-condensed">
-                                <thead>
-                                </thead>
-                                <tfoot>
-                                </tfoot>
-                                <tbody id="tbody_room_data" class="">
-                                    <tr>
-                                        <td>Area</td>
-                                        <td><a href = "area.php?id=<?php echo $room_code;  ?>"
-                                        data-toggle	= ""
-                                        title		= "View location detail."
-                                        target		= "_new" 
-                                        ><?php echo $building_code_display; ?></a></td>
-                                    </tr>
-                                    
-                                    <tr>
-                                        <td>Biosafety Level</td>
-                                        <td><?php 
-                                            if($_obj_data_sub_area_list->get_biosafety_level())  
-                                            {									
-                                                echo $_obj_data_sub_area_list->get_biosafety_level();									
-                                            }
-                                            else
-                                            {	
-                                            ?>
-                                                <span class="glyphicon glyphicon-remove alert-info"></span>
-                                            <?php
-                                            }
-                                            ?></td>
-                                    </tr>
-                                    
-                                    <tr>
-                                        <td>Chemical Lab Class</td>
-                                        <td><?php 
-                                            if($_obj_data_sub_area_list->get_chemical_lab_class())  
-                                            {									
-                                                echo $_obj_data_sub_area_list->get_chemical_lab_class();									
-                                            }
-                                            else
-                                            {	
-                                            ?>
-                                                <span class="glyphicon glyphicon-remove alert-info"></span>
-                                            <?php
-                                            }
-                                            ?>                                    					
-                                        </td>
-                                    </tr>
-                                    
-                                    <tr>
-                                        <td>Chemical Operations Class</td>
-                                        <td><?php 
-                                            if($_obj_data_sub_area_list->get_chemical_operations_class())  
-                                            {									
-                                                echo $_obj_data_sub_area_list->get_chemical_operations_class();									
-                                            }
-                                            else
-                                            {	
-                                            ?>
-                                                <span class="glyphicon glyphicon-remove alert-info"></span>
-                                            <?php
-                                            }
-                                            ?></td>
-                                    </tr>
-                                    
-                                    <tr>
-                                        <td>Department</td>
-                                        <td><?php echo $_obj_data_sub_area_list->get_department();  ?></td>
-                                    </tr>
-                                    
-                                    <tr>
-                                        <td>Hazardous Waste</td>
-                                        <td><?php 
-                                            if($_obj_data_sub_area_list->get_hazardous_waste_generated())  
-                                            {
-                                            ?>									
-                                                <span class="glyphicon glyphicon-ok alert-warning"></span>									
-                                            <?php
-                                            }
-                                            else
-                                            {	
-                                            ?>
-                                                <span class="glyphicon glyphicon-remove alert-info"></span>
-                                            <?php
-                                            }
-                                            ?></td>
-                                    </tr>
-                                    
-                                    <tr>
-                                        <td>Radiation Usage</td>
-                                        <td><?php 
-                                            if($_obj_data_sub_area_list->get_radiation_usage())  
-                                            {
-                                            ?>									
-                                                <span class="glyphicon glyphicon-ok alert-warning"></span>									
-                                            <?php
-                                            }
-                                            else
-                                            {	
-                                            ?>
-                                                <span class="glyphicon glyphicon-remove alert-info"></span>
-                                            <?php
-                                            }
-                                            ?></td>
-                                    </tr>
-                                    <tr>
-                                        <td>X-ray Usage</td>
-                                        <td><?php 
-                                            if($_obj_data_sub_area_list->get_x_ray_usage())  
-                                            {
-                                            ?>									
-                                                <span class="glyphicon glyphicon-ok alert-warning"></span>									
-                                            <?php
-                                            }
-                                            else
-                                            {	
-                                            ?>
-                                                <span class="glyphicon glyphicon-remove alert-info"></span>
-                                            <?php
-                                            }
-                                            ?></td>
-                                    </tr>
-                                    
-                                </tbody>
-                            </table>
-                	<?php
-						}
-						else
-						{
-					?>
-                    		<span class="alert-info">Enter Room Code and save record to display location information.</span>
-                    <?php
-						}
-					?>
-                </div>
-            </div>
+            <label class="control-label col-sm-2" for="building">Location</label>  
+            <div class="col-sm-10 area-survey-row-progress" id="area-survey-row-progress"></div>          	
+			<div class="col-sm-10 area-survey">            		
+			</div>
+        </div>		
         
-        <!-- Room code entry -->                    
-        <div class="form-group">
-            <label class="control-label col-sm-2" for="room_code">Room Code</label>
+        <!-- Area code entry -->  
+        <?php require __DIR__.'/model_location.php'; ?>
+        
+        <div class="form-group area-entry-container">
+            <label class="control-label col-sm-2" for="room_code">Area Code</label>
             <div class="col-sm-8">
-                <input type="text" class="form-control"  name="room_code" id="room_code" placeholder="Room code" value="<?php echo $_obj_data_sub_area_list->get_room_code(); ?>">
+                <input type="text" class="form-control area-entry-field"  name="room_code" id="room_code" placeholder="Room code" value="<?php echo $_obj_data_sub_area_list->get_room_code(); ?>">
             </div>
             
             <div class="col-sm-1">
@@ -230,6 +81,74 @@
                     ><span class="glyphicon glyphicon-search"></span></a>
             </div>
         </div>
+        
+        <script>
+			// Add a location.
+			function area_survey_row_add($select_target = null)
+			{
+				var $id;			// Guid for elements.
+				var $url_base;		// Base file url.
+				var $url_request;	// Request vars sent with URL.
+				var $url_complete;	// File with request elements.
+
+				// Guid - Will be concatenated to IDs of the elements
+				// we are appending. This ensures the appended IDs will
+				// be unique without us having to track a glocal variable.
+				$id = dc_klondike_guid();
+
+				// Base file name will we load with ajax.
+				$url_base = 'area_survey.php';
+
+				// Prepare quest vars.
+				// -- Guid for elements.
+				$url_request = '?id_guid=' + $id;
+
+				// -- Option to be pre selected.
+				$url_request = $url_request + '&filter_area_code=' + $select_target;
+
+				// Complete the URL.
+				$url_complete = $url_base + $url_request;
+
+				// Hide the control buttons and show loading alert.
+				$('.area-survey-row-progress').empty().append('<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%">Loading...</div>');
+
+				$('.area-entry-container').hide();
+
+				// Append a new container <div> and load contents of target PHP
+				// file. When complete, make the controls visible and remove 
+				// progress bar.
+				$('.area-survey').empty().append($('<div id="area-survey-row-container-' + $id + '" class="area-survey-row-container" />').load($url_complete, function(){
+					$('.area-survey-row-progress').empty();
+					$('.area-entry-container').show();
+				}));
+			}
+			
+			// area/room entry change listener.
+			$('.area-entry-field').change(function(){
+		
+				var $value = $('.area-entry-field').val();
+				area_survey_row_add($value);
+			});
+			
+			// Listener for area search dialog insert key.
+			$('.room_code_insert').click((function() {
+	
+				var $value = $('.room_code_search').val();
+
+				$('input[name="room_code"]').val($value);	
+				area_survey_row_add($value)
+			}));
+			
+		</script>
+        <?php         
+            // load the list with ID pre-selected.
+			$room_code = trim($_obj_data_sub_area_list->get_room_code());			
+		?>
+		<script>
+			area_survey_row_add('<?php echo $room_code; ?>');
+		</script>
+				
+        
         
         <!-- Parties -->
         <div class="form-group">
@@ -592,11 +511,7 @@
 		$(".modal_building_search").modal();
 	});
 	 
-	$('.room_code_insert').click((function() {
 	
-		$('input[name="room_code"]').val($('.room_code_search').val());
-	
-	}));
 	
 	// Room search and add.
 	$('.account_filter').change(function(event)

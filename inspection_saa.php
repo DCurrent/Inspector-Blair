@@ -399,6 +399,9 @@
         <!-- WYSIWYG Text boxes -->
 		<script type="text/javascript" src="source/javascript/tinymce/tinymce.min.js"></script>
         <script type="text/javascript" src="source/javascript/tinymce/settings.js"></script>
+        
+        <!-- Guid generator -->
+        <script src="source/dc/klondike/main.js"></script>
     </head>
     
     <body>    

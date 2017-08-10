@@ -62,10 +62,10 @@
 	// Prepare human readable building code.
 	$building_code_display = NULL;
 
-	if($_obj_data_main->get_building_code())
+	if($_obj_data_main->get_room_code())
 	{
-		$building_code_display = trim($_obj_data_main->get_building_code()).' - '.$_obj_data_main->get_building_name(); 
-	}
+		$building_code_display = trim(trim($_obj_data_main->get_room_id()).', '.$_obj_data_main->get_building_name()); 
+	
 ?>
 
 <table class="table table-striped table-condensed">
@@ -82,7 +82,7 @@
 			target		= "_new" 
 			><?php echo $building_code_display; ?></a></td>
 		</tr>
-
+		
 		<tr>
 			<td>Biosafety Level</td>
 			<td><?php 
@@ -192,9 +192,16 @@
 
 	</tbody>
 </table>
-
-
 <?php
+	}
+	else
+	{
+?>
+	<span class ="alert-success">No location information available. Please enter a valid area code.</span>
+<?php
+	}
+		
+		
 	// So the loading bar doesn't look like a glitch when loading is fast.
 	sleep(1);
 
