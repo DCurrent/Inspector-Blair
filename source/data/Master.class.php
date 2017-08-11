@@ -143,7 +143,7 @@
 		public function set_fk_id($value)
 		{
 			// Ensure empty values are NULL, not ''.
-			if(!$value)
+			if(!is_numeric($value))
 			{
 				$value = NULL;
 			}
@@ -154,7 +154,7 @@
 		public function set_id($value)
 		{
 			// Ensure empty values are NULL, not ''.
-			if(!$value)
+			if(!is_numeric($value))
 			{
 				$value = NULL;
 			}
@@ -166,7 +166,7 @@
 		public function set_id_key($value)
 		{
 			// Ensure empty values are NULL, not ''.
-			if(!$value)
+			if(!is_numeric($value))
 			{
 				$value = NULL;
 			}
