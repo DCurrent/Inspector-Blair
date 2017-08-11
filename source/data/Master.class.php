@@ -122,6 +122,13 @@
 		
 		public function set_create_by($value)
 		{
+			// Ensure values are numeric. Otherwise 
+			// set NULL.
+			if(!is_numeric($value))
+			{
+				$value = NULL;
+			}
+			
 			$this->create_by = $value;
 		}
 		
@@ -142,7 +149,8 @@
 		
 		public function set_fk_id($value)
 		{
-			// Ensure empty values are NULL, not ''.
+			// Ensure values are numeric. Otherwise 
+			// set NULL.
 			if(!is_numeric($value))
 			{
 				$value = NULL;
@@ -153,7 +161,8 @@
 		
 		public function set_id($value)
 		{
-			// Ensure empty values are NULL, not ''.
+			// Ensure values are numeric. Otherwise 
+			// set NULL.
 			if(!is_numeric($value))
 			{
 				$value = NULL;
@@ -165,7 +174,8 @@
 		
 		public function set_id_key($value)
 		{
-			// Ensure empty values are NULL, not ''.
+			// Ensure values are numeric. Otherwise 
+			// set NULL.
 			if(!is_numeric($value))
 			{
 				$value = NULL;
@@ -176,6 +186,13 @@
 		
 		public function set_update_by($value)
 		{
+			// Ensure values are numeric. Otherwise 
+			// set NULL.
+			if(!is_numeric($value))
+			{
+				$value = NULL;
+			}
+			
 			$this->update_by = $value;
 		}
 		
