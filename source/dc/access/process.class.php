@@ -291,7 +291,7 @@
 			$req_credential	= NULL;					
 								
 			// Get values.
-			$req_account 			= $this->data_account->get_account();
+			$req_account 			= ''.$this->data_account->get_account();
 			$req_credential			= $this->data_account->get_credential();				
 				
 			// User provided credentials? 
@@ -311,7 +311,7 @@
 					if(!$ldap) trigger_error("Cannot connect to LDAP: ".$this->config->get_ldap_host_dir(), E_USER_ERROR); 
 					
 					// Search for account name.
-					$result = ldap_search($ldap, $this->config->get_ldap_base_dn(), 'uid='.$req_account);			
+					$result = ldap_search($ldap, $this->config->get_ldap_base_dn(), 'cn='.$req_account);			
 					
 					// Trigger error if no result located.			
 					if (!$result) trigger_error("Could not locate entry in EDIR.", E_USER_ERROR);
@@ -364,16 +364,21 @@
 			$account		= NULL;		// Prepared account string to attempt bind.
 			$prefix_list 	= array();
 			$prefix 		= NULL;		// Singular prefix value taken from array.
+			$ldap_host_list	= NULL;		// List of LDAP connection strings.
 			$ldap 			= NULL;
+			
+			// Dereference account name and remove any domain prefixes. We'll add our own below.
+			$account = str_ireplace($prefix, '', $account);
+			
+			// Move connection list to local var.
+			$ldap_host_list = array('ldap://ad.uky.edu:3268', 'ldap://ad.uky.edu:3269');
+			
 			
 			$ldap = ldap_connect($this->config->get_ldap_host_bind());
 			if(!$ldap) trigger_error("Cannot connect to LDAP: ".$this->config->get_ldap_host_bind(), E_USER_ERROR);
 									
 			ldap_set_option($ldap, LDAP_OPT_PROTOCOL_VERSION, 3);
-			
-			// Dereference account name and remove any domain prefixes. We'll add our own below.
-			$account = str_ireplace($prefix, '', $account);
-			
+						
 			//$prefix_list = explode(',', $this->config->get_dn_prefix());
 			$prefix_list = array(NULL, 'ad/', 'ad\\', 'mc/', 'mc\\');
 						
@@ -386,8 +391,15 @@
 				$result = @ldap_bind($ldap, $account, $this->data_account->get_credential());
 				
 				// If successfull bind.
-				if($result === TRUE) break;
+				if($result == TRUE) 
+				{
+					echo 'BIND!';
+					break;					
+				}
 			}	
+			
+			echo $this->config->get_ldap_host_bind();
+			echo $account;
 			
 			// Close ldap connection.
 			ldap_close($ldap);				
@@ -461,7 +473,75 @@
 			else
 			{				
 			}
-		}	
+		}
+		
+		
+		private function ldapSearch($BIND, $attributes)
+		{
+			// Initialize return code
+			$rc = 0;
+
+			$host 			= $this->config->get_ldap_host_bind();
+			$filter	 		= 'samaccountname='.$this->data_account->get_account();
+			$credential		= $this->data_account->get_credential();
+			$base_context 	= $this->config->get_ldap_base_dn();
+			
+			echo 'HOST: '.$host.'\n';
+			echo "BIND: $bind\n";
+
+			// Try and find this user in Active Directory
+			if (!($conn = ldap_connect($host))) 
+			{
+				echo "error connecting to LDAP server\n";
+			}
+			else 
+			{
+				////////  ADDED THESE TWO LINES TO ACCESS LDAP FOR AD UNDER SERVER 2003
+				ldap_set_option($conn, LDAP_OPT_REFERRALS, 0);
+				ldap_set_option($conn, LDAP_OPT_PROTOCOL_VERSION, 3);
+				///////////////////////////////////////////////////////////////////////
+
+				if (!($goob = @ldap_bind($conn, $BIND, $credential))) 
+				{
+					// Set error message and pass it to rError
+					echo "Bad username or password.\n";
+					ldap_error($conn);
+				}
+				else 
+				{
+					// Pull attributes for the AD domain
+					$sr=ldap_search($conn, $base_context, $filter, $attributes);
+
+					// If no entries are found, return 0.
+					if (!($count = ldap_count_entries($conn, $sr))) 
+					{
+						return $rc;
+					}
+					else 
+					{
+						echo "found $count entrie(s)\n";
+
+						$rc = 1;
+
+						// get the entries
+						$info = ldap_get_entries($conn, $sr);
+						echo "DN is: " . $info[0]["dn"] . "\n";
+						echo "First Name " . $info[0]["givenname"][0]. "\n";
+						echo "surname " . $info[0]["sn"][0]. "\n";
+						echo "displayName: " . $info[0]["displayname"][0]. "\n";
+						echo "pwdlastset: " . $info[0]["pwdlastset"][0]. "\n";
+
+						print_r($info);
+					}
+
+				}
+
+				// Get rid of our connection
+				ldap_unbind($conn);
+
+			}
+			return $rc;
+		}
 	}
 
 	

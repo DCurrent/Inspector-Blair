@@ -5,9 +5,9 @@
 	abstract class DEFAULTS
 	{	
 		const ADMINISTRATOR		= 'dvcask2';					// Administrator.
-		const LDAP_HOST_BIND	= 'LDAP://gc.ad.uky.edu';		// LDAP host for binding.
-		const LDAP_HOST_DIR		= 'ukldap.uky.edu';				// LDAP host for directory
-		const LDAP_BASE_DN		= 'o=uky';						// LDAP Base Domain Name.
+		const LDAP_HOST_BIND	= 'ldap://ad.uky.edu:3268, ldap://ad.uky.edu:3269';		// LDAP host for binding.
+		const LDAP_HOST_DIR		= 'advip.uky.edu';				// LDAP host for directory
+		const LDAP_BASE_DN		= 'dc=uky,dc=edu';				// LDAP Base Domain Name.
 		const AUTHENTICATE_URL	= '/z_authenticate_dev.php';	// Authenticate page URL.
 		const DOMAIN_PREFIX		= ', ad/, ad\, mc\, mc/';
 		const DIAGNOSTIC		= FALSE;						// Record user info to outside database for diagnostics.
