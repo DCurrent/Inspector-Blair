@@ -312,12 +312,16 @@
 			{
 				return $this->login_result = LOGIN_RESULT::NO_BIND;
 			}
-				
+			
 			// Connect to LDAP EDIR.
 			$ldap = ldap_connect($this->config->get_ldap_host_dir());
 
 			if(!$ldap) trigger_error("Cannot connect to LDAP: ".$this->config->get_ldap_host_dir(), E_USER_ERROR); 
 
+			// Accomidate win2k3. Needs moving to config.
+			ldap_set_option($ldap, LDAP_OPT_REFERRALS, 0);
+      		ldap_set_option($ldap, LDAP_OPT_PROTOCOL_VERSION, 3);
+			
 			// Search for account name.
 			$result = ldap_search($ldap, $this->config->get_ldap_base_dn(), 'cn='.$req_account);			
 
