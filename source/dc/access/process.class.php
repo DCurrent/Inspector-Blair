@@ -184,8 +184,6 @@
 				case LOGIN_RESULT::LOCAL:      			
 				case LOGIN_RESULT::LDAP:			
 				
-					
-				
 					// Get account information from
 					// application database.
 					$this->login_application();
@@ -297,7 +295,7 @@
 			// User provided credentials? 
 			if ($req_account != NULL && $req_credential != NULL)
 			{
-											
+								
 				// Attempt to bind user through LDAP using all known domain prefixes.
 				$bind = $this->ldap_bind_check();
 				
@@ -365,45 +363,69 @@
 			$prefix_list 	= array();
 			$prefix 		= NULL;		// Singular prefix value taken from array.
 			$ldap_host_list	= NULL;		// List of LDAP connection strings.
-			$ldap 			= NULL;
+			$ldap_host		= NULL;
 			
 			// Dereference account name and remove any domain prefixes. We'll add our own below.
 			$account = str_ireplace($prefix, '', $account);
 			
 			// Move connection list to local var.
-			$ldap_host_list = array('ldap://ad.uky.edu:3268', 'ldap://ad.uky.edu:3269');
+			$ldap_host_list = array(',', $this->config->get_ldap_host_bind());
 			
+			// We'll attempt to bind on all known hosts.
+			// Here we loop through each host connection
+			// string.
+			foreach($ldap_host_list as $ldap_host)
+			{
+				// Check connection string integrity and get a connection
+				// resource handle. Don't let the name fool you - this 
+				// does NOT connect to the LDAP server.
+				$ldap = ldap_connect($this->config->get_ldap_host_bind());
+				
+				// If we failed to get a connection resource, then 
+				// exit this iteration of loop.
+				if(!$ldap)
+				{
+					continue;
+				}
+				
+				// Need this for win2k3.
+				ldap_set_option($ldap, LDAP_OPT_PROTOCOL_VERSION, 3);
 			
-			$ldap = ldap_connect($this->config->get_ldap_host_bind());
-			if(!$ldap) trigger_error("Cannot connect to LDAP: ".$this->config->get_ldap_host_bind(), E_USER_ERROR);
-									
-			ldap_set_option($ldap, LDAP_OPT_PROTOCOL_VERSION, 3);
-						
-			//$prefix_list = explode(',', $this->config->get_dn_prefix());
-			$prefix_list = array(NULL, 'ad/', 'ad\\', 'mc/', 'mc\\');
-						
-			// Keep trying prefixes until there is a bind or we run out.
-			foreach($prefix_list as $prefix)
-			{		
-				$account = $prefix.$this->data_account->get_account();
+				// Now we will attempt the bind using all
+				// possible domain prefixes.
 				
-				// Attempt to bind with account (prefix included) and password.
-				$result = @ldap_bind($ldap, $account, $this->data_account->get_credential());
+				// Break prefix list into an array.
+				//$prefix_list = explode(',', $this->config->get_dn_prefix());
+				$prefix_list = array(NULL, 'ad/', 'ad\\', 'mc/', 'mc\\');
+			
+				// Keep trying prefixes until there is a bind or we run out.
+				foreach($prefix_list as $prefix)
+				{		
+					$account = $prefix.$this->data_account->get_account();
+
+					// Attempt to bind with account (prefix included) and password.
+					$result = @ldap_bind($ldap, $account, $this->data_account->get_credential());
+
+					// If successfull bind break out of loop.
+					if($result == TRUE) 
+					{
+						break;					
+					}
+				}
 				
-				// If successfull bind.
+				// If successfull bind break out of loop.
 				if($result == TRUE) 
 				{
-					echo 'BIND!';
 					break;					
 				}
-			}	
-			
-			echo $this->config->get_ldap_host_bind();
-			echo $account;
+			}
+					
+			// If we never managed to get a connection resource, trigger an error here. 
+			if(!$ldap) trigger_error("Could not get a connection resource: ".$this->config->get_ldap_host_bind(), E_USER_ERROR);
 			
 			// Close ldap connection.
-			ldap_close($ldap);				
-					
+			ldap_close($ldap);
+			
 			// Return results.
 			return $result;
 		}
