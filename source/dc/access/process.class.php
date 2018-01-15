@@ -234,9 +234,11 @@
 					$_SESSION[SES_KEY::DIALOG] = ob_get_contents();
 					ob_end_clean();
 					
-					break;			
+					break;	
 				
+				case LOGIN_RESULT::NO_ACCOUNT:
 				case LOGIN_RESULT::NO_INPUT:
+				case LOGIN_RESULT::NO_PRINCIPAL:
 				default: 				
 				
 					// Default log in dialog.
@@ -297,55 +299,56 @@
 			// anything else.
 			if ($req_account == NULL || $req_credential == NULL)
 			{
-				return $result;
+				return $this->login_result = LOGIN_RESULT::NO_ACCOUNT;
 			}
-			// Attempt to bind user through LDAP using all known domain prefixes.
+			
+			// Attempt to bind user through LDAP.
 			$bind = $this->ldap_bind_check();
 
-			// If we were able to bind user through AD LDAP, we will then run search in EDIR to get their basic information. 
-			// Otherwise the account doesn't exist or user entered bad credentials. 
-			if($bind === TRUE)
-			{									
-				// Connect to LDAP EDIR.
-				$ldap = ldap_connect($this->config->get_ldap_host_dir());
-
-				if(!$ldap) trigger_error("Cannot connect to LDAP: ".$this->config->get_ldap_host_dir(), E_USER_ERROR); 
-
-				// Search for account name.
-				$result = ldap_search($ldap, $this->config->get_ldap_base_dn(), 'cn='.$req_account);			
-
-				// Trigger error if no result located.			
-				if (!$result) trigger_error("Could not locate entry in EDIR.", E_USER_ERROR);
-
-				// Get user info array.
-				$entries = ldap_get_entries($ldap, $result);
-
-				// Trigger error if entries array is empty.
-				if($entries["count"] < 0) trigger_error("Entry found but contained no data.", E_USER_ERROR);
-
-				// Populate account object members with user info.
-				if(isset($entries[0]['cn'][0])) 			$this->data_account->set_account($entries[0]['cn'][0]);
-				if(isset($entries[0]['givenname'][0])) 		$this->data_account->set_name_f($entries[0]['givenname'][0]);
-				if(isset($entries[0]['initials'][0]))		$this->data_account->set_name_m($entries[0]['initials'][0]);
-				if(isset($entries[0]['sn'][0]))				$this->data_account->set_name_l($entries[0]['sn'][0]);					
-				if(isset($entries[0]['workforceid'][0]))	$this->data_account->set_account_id($entries[0]['workforceid'][0]);
-				if(isset($entries[0]['mail'][0]))			$this->data_account->set_email($entries[0]['mail'][0]);				
-
-				// Save account data into session.
-				$this->data_account->session_save();
-
-				$this->login_result = LOGIN_RESULT::LDAP;			
-
-				// Release ldap query result.
-				ldap_free_result($result);		
-
-				// Close ldap connection.
-				ldap_close($ldap);									
-			}
-			else // No Bind.
+			// If we didn't get a bind, the account doesn't exist or 
+			// user entered bad credentials. If we did get a bind, we 
+			// will then run search to get their account attributes.  
+			if($bind != TRUE)
 			{
-				$this->login_result = LOGIN_RESULT::NO_BIND;
-			}	
+				return $this->login_result = LOGIN_RESULT::NO_BIND;
+			}
+				
+			// Connect to LDAP EDIR.
+			$ldap = ldap_connect($this->config->get_ldap_host_dir());
+
+			if(!$ldap) trigger_error("Cannot connect to LDAP: ".$this->config->get_ldap_host_dir(), E_USER_ERROR); 
+
+			// Search for account name.
+			$result = ldap_search($ldap, $this->config->get_ldap_base_dn(), 'cn='.$req_account);			
+
+			// Trigger error if no result located.			
+			if (!$result) trigger_error("Could not locate entry in EDIR.", E_USER_ERROR);
+
+			// Get user info array.
+			$entries = ldap_get_entries($ldap, $result);
+
+			// Trigger error if entries array is empty.
+			if($entries["count"] < 0) trigger_error("Entry found but contained no data.", E_USER_ERROR);
+
+			// Populate account object members with user info.
+			if(isset($entries[0]['cn'][0])) 			$this->data_account->set_account($entries[0]['cn'][0]);
+			if(isset($entries[0]['givenname'][0])) 		$this->data_account->set_name_f($entries[0]['givenname'][0]);
+			if(isset($entries[0]['initials'][0]))		$this->data_account->set_name_m($entries[0]['initials'][0]);
+			if(isset($entries[0]['sn'][0]))				$this->data_account->set_name_l($entries[0]['sn'][0]);					
+			if(isset($entries[0]['workforceid'][0]))	$this->data_account->set_account_id($entries[0]['workforceid'][0]);
+			if(isset($entries[0]['mail'][0]))			$this->data_account->set_email($entries[0]['mail'][0]);				
+
+			// Save account data into session.
+			$this->data_account->session_save();
+
+			$this->login_result = LOGIN_RESULT::LDAP;			
+
+			// Release ldap query result.
+			ldap_free_result($result);		
+
+			// Close ldap connection.
+			ldap_close($ldap);									
+				
 			
 			// Return results.
 			return $this->login_result;		
