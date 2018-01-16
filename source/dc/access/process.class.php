@@ -36,6 +36,7 @@
 			$data_account	= NULL,	// Object containing acount data (name, account etc.)
 			$data_common	= NULL,	// Object containing basic data and operations.
 			$login_result	= NULL, // Result of login attempt.
+			$lookup			= NULL,	// Lookup object.
 			$config 		= NULL,	// config object.
 			$feedback		= NULL, // Feedback.
 			$redirect		= NULL;	// URL user came from and should be sent back to after login.
@@ -71,6 +72,9 @@
 			{
 				$this->data_account = new DataAccount();			
 			}
+			
+			// Establish lookup object.
+			$this->lookup = new lookup();
 
 			session_start();
 
