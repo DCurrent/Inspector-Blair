@@ -186,8 +186,8 @@
 				
 					// Get account information from
 					// application database.
-					$this->login_application();
-							
+					//$this->login_application();
+					
 					// Record client information information into session.
 					$this->data_account->session_save();				
 										
