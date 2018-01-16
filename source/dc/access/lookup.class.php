@@ -92,8 +92,8 @@
 				}
 				
 				// Need this for win2k3.
-				ldap_set_option($conn, LDAP_OPT_REFERRALS, 0);
-      			ldap_set_option($conn, LDAP_OPT_PROTOCOL_VERSION, 3);
+				ldap_set_option($ldap, LDAP_OPT_REFERRALS, 0);
+      			ldap_set_option($ldap, LDAP_OPT_PROTOCOL_VERSION, 3);
 			
 				$prefix_list = array('ad/', 'ad\\', 'mc/', 'mc\\');
 				
