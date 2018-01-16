@@ -12,7 +12,7 @@
 		function set_data_account($value);			
 		
 		// Operations.
-		function lookup($account); // Performs the user lookup against LDAP on a login attempt.
+		function lookup(); // Performs the user lookup against LDAP on a login attempt.
 	}
 
 	class lookup
@@ -58,7 +58,7 @@
 		// Look up account entries.
 		// This allows us to get information
 		// from LDAP, like name, mail, etc.
-		public function lookup($account)
+		public function lookup()
 		{		
 			
 			$result			= FALSE;	// Final result.
