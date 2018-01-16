@@ -103,7 +103,7 @@
 				$filter = "samaccountname=$req_account";
 				
 				// Pull attributes for the AD domain
-         		$search_result = ldap_search($ldap, "dc=uky,dc=edu", $filter, $attributes);
+         		$search_result = ldap_search($ldap, "dc=uky,dc=edu", $filter);
 				
 				$entry_count = ldap_count_entries($ldap, $search_result);
 				
