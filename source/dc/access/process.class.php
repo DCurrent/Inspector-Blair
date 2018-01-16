@@ -187,13 +187,10 @@
 					// Get account information from
 					// application database.
 					$this->login_application();
-				
-					
-				
+							
 					// Record client information information into session.
 					$this->data_account->session_save();				
-					
-					
+										
 						
 					// Set dialog.					
 					// Start caching page contents.
@@ -313,45 +310,15 @@
 				return $this->login_result = LOGIN_RESULT::NO_BIND;
 			}
 			
-			// Connect to LDAP EDIR.
-			$ldap = ldap_connect($this->config->get_ldap_host_dir());
-
-			if(!$ldap) trigger_error("Cannot connect to LDAP: ".$this->config->get_ldap_host_dir(), E_USER_ERROR); 
-
-			// Accomidate win2k3. Needs moving to config.
-			ldap_set_option($ldap, LDAP_OPT_REFERRALS, 0);
-      		ldap_set_option($ldap, LDAP_OPT_PROTOCOL_VERSION, 3);
-			
-			// Search for account name.
-			$result = ldap_search($ldap, $this->config->get_ldap_base_dn(), 'cn='.$req_account);			
-
-			// Trigger error if no result located.			
-			if (!$result) trigger_error("Could not locate entry in EDIR.", E_USER_ERROR);
-
-			// Get user info array.
-			$entries = ldap_get_entries($ldap, $result);
-
-			// Trigger error if entries array is empty.
-			if($entries["count"] < 0) trigger_error("Entry found but contained no data.", E_USER_ERROR);
-
-			// Populate account object members with user info.
-			if(isset($entries[0]['cn'][0])) 			$this->data_account->set_account($entries[0]['cn'][0]);
-			if(isset($entries[0]['givenname'][0])) 		$this->data_account->set_name_f($entries[0]['givenname'][0]);
-			if(isset($entries[0]['initials'][0]))		$this->data_account->set_name_m($entries[0]['initials'][0]);
-			if(isset($entries[0]['sn'][0]))				$this->data_account->set_name_l($entries[0]['sn'][0]);					
-			if(isset($entries[0]['workforceid'][0]))	$this->data_account->set_account_id($entries[0]['workforceid'][0]);
-			if(isset($entries[0]['mail'][0]))			$this->data_account->set_email($entries[0]['mail'][0]);				
-
-			// Save account data into session.
-			$this->data_account->session_save();
+			// Lookup Attributes.
 
 			$this->login_result = LOGIN_RESULT::LDAP;			
 
 			// Release ldap query result.
-			ldap_free_result($result);		
+			//ldap_free_result($result);		
 
 			// Close ldap connection.
-			ldap_close($ldap);									
+			//ldap_close($ldap);									
 				
 			
 			// Return results.
@@ -438,7 +405,6 @@
 			// Return results.
 			return $result;
 		}
-		
 		
 		// Process login attempt through local database.
 		public function login_local()
