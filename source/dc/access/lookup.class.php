@@ -54,56 +54,92 @@
 		{
 			$this->data_account = $value;
 		}
-			
+		
+		// Look up account entries.
+		// This allows us to get information
+		// from LDAP, like name, mail, etc.
 		public function lookup($account)
 		{		
-			/*
-			login
-			Damon Vaughn Caskey
-			2012-02-03
 			
-			Process login attempt.		
-			*/
-						
-			$result			= NULL;		// Active directory account search result.
-			$entries		= NULL;		// Active directory entry array.
+			$result			= FALSE;	// Final result.
+			$account		= NULL;		// Prepared account string.
+			$prefix_list 	= array();
+			$prefix 		= NULL;		// Singular prefix value taken from array.
+			$ldap_host_list	= NULL;		// List of LDAP connection strings.
+			$ldap_host		= NULL;
 			
-			$bind			= FALSE;	// Result of bind attempt.
-			$ldap			= NULL;		// ldap connection reference.
+			// Dereference account name and remove any domain prefixes. We'll add our own below.
+			$account = str_ireplace($prefix, '', $account);
+			
+			// Move connection list to local var.
+			$ldap_host_list = array(',', $this->config->get_ldap_host_bind());
+			
+			// We'll attempt to bind on all known hosts.
+			// Here we loop through each host connection
+			// string.
+			foreach($ldap_host_list as $ldap_host)
+			{
+				// Check connection string integrity and get a connection
+				// resource handle. Don't let the name fool you - this 
+				// does NOT connect to the LDAP server.
+				$ldap = ldap_connect($this->config->get_ldap_host_bind());
 				
-			// No account? Get out before we cause a nasty error.
-			if ($account === NULL) return;
-									
-			// Connect to LDAP EDIR.
-			$ldap = ldap_connect($this->config->get_ldap_host_dir());
+				// If we failed to get a connection resource, then 
+				// exit this iteration of loop.
+				if(!$ldap)
+				{
+					continue;
+				}
+				
+				// Need this for win2k3.
+				ldap_set_option($conn, LDAP_OPT_REFERRALS, 0);
+      			ldap_set_option($conn, LDAP_OPT_PROTOCOL_VERSION, 3);
 			
-			if(!$ldap) trigger_error("Cannot connect to LDAP: ".$this->config->get_ldap_host_dir(), E_USER_ERROR); 
+				$prefix_list = array('ad/', 'ad\\', 'mc/', 'mc\\');
+				
+				// Remove the prefix, if any.
+				$req_account = str_replace($prefix_list, '', $this->data_account->get_account());
+				
+				$filter = "samaccountname=$req_account";
+				
+				// Pull attributes for the AD domain
+         		$search_result = ldap_search($ldap, "dc=uky,dc=edu", $filter, $attributes);
+				
+				$entry_count = ldap_count_entries($ldap, $search_result);
+				
+				if(!$entry_count)
+				{
+					continue;
+				}
+				
+				// Get user info array.
+				$entries = ldap_get_entries($ldap, $result);
+
+				// Trigger error if entries array is empty.
+				if($entries["count"] < 0) trigger_error("Entry found but contained no data.", E_USER_ERROR);
+
+				// Populate account object members with user info.
+				if(isset($entries[0]['cn'][0])) 			$this->data_account->set_account($entries[0]['cn'][0]);
+				if(isset($entries[0]['givenname'][0])) 		$this->data_account->set_name_f($entries[0]['givenname'][0]);
+				if(isset($entries[0]['initials'][0]))		$this->data_account->set_name_m($entries[0]['initials'][0]);
+				if(isset($entries[0]['sn'][0]))				$this->data_account->set_name_l($entries[0]['sn'][0]);					
+				if(isset($entries[0]['workforceid'][0]))	$this->data_account->set_account_id($entries[0]['workforceid'][0]);
+				if(isset($entries[0]['mail'][0]))			$this->data_account->set_email($entries[0]['mail'][0]);				
+
+				// Save account data into session.
+				$this->data_account->session_save();
+				
+				break;
+			}
+					
+			// If we never managed to get a connection resource, trigger an error here. 
+			if(!$$entry_count) trigger_error("Could search entries: ".$this->config->get_ldap_host_bind(), E_USER_ERROR);
 			
-			// Search for account name.
-			$result = ldap_search($ldap, $this->config->get_ldap_base_dn(), 'uid='.$account);			
-			
-			// Trigger error if no result located.			
-			if (!$result) trigger_error("Could not locate entry in EDIR.", E_USER_ERROR);
-			
-			// Get user info array.
-			$entries = ldap_get_entries($ldap, $result);
-			
-			// Trigger error if entries array is empty.
-			if($entries["count"] < 0) trigger_error("Entry found but contained no data.", E_USER_ERROR);
-			
-			// Populate account object members with user info.
-			if(isset($entries[0]['cn'][0])) 			$this->data_account->set_account($entries[0]['cn'][0]);
-			if(isset($entries[0]['givenname'][0])) 		$this->data_account->set_name_f($entries[0]['givenname'][0]);
-			if(isset($entries[0]['initials'][0]))		$this->data_account->set_name_m($entries[0]['initials'][0]);
-			if(isset($entries[0]['sn'][0]))				$this->data_account->set_name_l($entries[0]['sn'][0]);					
-			if(isset($entries[0]['workforceid'][0]))	$this->data_account->set_account_id($entries[0]['workforceid'][0]);
-			if(isset($entries[0]['mail'][0]))			$this->data_account->set_email($entries[0]['mail'][0]);				
-									
-			// Release ldap query result.
-			ldap_free_result($result);		
-								
 			// Close ldap connection.
-			ldap_close($ldap);						
+			ldap_close($ldap);
+			
+			// Return results.
+			return $result;					
 		}			
 	}
 
