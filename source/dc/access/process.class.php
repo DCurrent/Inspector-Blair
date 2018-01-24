@@ -192,6 +192,8 @@
 					// application database.
 					//$this->login_application();
 					
+					//$this->lookup->lookup();
+					
 					// Record client information information into session.
 					$this->data_account->session_save();				
 										
@@ -336,8 +338,7 @@
 			
 		//	Attempt to bind ldap adding all possible prefixes.
 		private function ldap_bind_check()
-		{
-			
+		{			
 			$result			= FALSE;	// Final result.
 			$account		= NULL;		// Prepared account string to attempt bind.
 			$prefix_list 	= array();
@@ -396,7 +397,44 @@
 				// If successfull bind break out of loop.
 				if($result == TRUE) 
 				{
-					break;					
+					//break;	
+					
+					
+					// Search goes here.
+					
+					// Prepare account filter.
+					$filter = "samaccountname=".$this->data_account->get_account();
+					
+					echo 'filter: '.$filter;
+					
+					// Pull attributes for the AD domain
+					$attributes = array("displayname", "sn", "givenname", "pwdlastset", "cn");
+										
+					$sr = ldap_search($ldap, "dc=uky,dc=edu", $filter, $attributes);
+
+					$count = ldap_count_entries($ldap, $sr);
+						
+					// If no entries are found, return 0.
+					if (!$count) 
+					{
+						return $rc;
+					}
+					else 
+					{
+						echo "found $count entrie(s)\n";
+
+						$rc = 1;
+
+						// get the entries
+						$info = ldap_get_entries($ldap, $sr);
+						echo "DN is: " . $info[0]["dn"] . "\n";
+						echo "First Name " . $info[0]["givenname"][0]. "\n";
+						echo "surname " . $info[0]["sn"][0]. "\n";
+						echo "displayName: " . $info[0]["displayname"][0]. "\n";
+						echo "pwdlastset: " . $info[0]["pwdlastset"][0]. "\n";
+
+						print_r($info);
+					}					
 				}
 			}
 					
@@ -404,7 +442,9 @@
 			if(!$ldap) trigger_error("Could not get a connection resource: ".$this->config->get_ldap_host_bind(), E_USER_ERROR);
 			
 			// Close ldap connection.
-			ldap_close($ldap);
+			// 2018-01-24, Commented out so lookup  
+			// can work. It requires a current bind.
+			//ldap_close($ldap);
 			
 			// Return results.
 			return $result;
