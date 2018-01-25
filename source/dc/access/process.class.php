@@ -426,14 +426,22 @@
 						$rc = 1;
 
 						// get the entries
-						$info = ldap_get_entries($ldap, $sr);
-						echo "DN is: " . $info[0]["dn"] . "\n";
-						echo "First Name " . $info[0]["givenname"][0]. "\n";
-						echo "surname " . $info[0]["sn"][0]. "\n";
-						echo "displayName: " . $info[0]["displayname"][0]. "\n";
-						echo "pwdlastset: " . $info[0]["pwdlastset"][0]. "\n";
+						$entries = ldap_get_entries($ldap, $sr);
+						echo "DN is: " . $entries[0]["dn"] . "\n";
+						echo "First Name " . $entries[0]["givenname"][0]. "\n";
+						echo "surname " . $entries[0]["sn"][0]. "\n";
+						echo "displayName: " . $entries[0]["displayname"][0]. "\n";
+						echo "pwdlastset: " . $entries[0]["pwdlastset"][0]. "\n";
 
-						print_r($info);
+						print_r($entries);
+						
+						// Populate account object members with user info.
+						if(isset($entries[0]['cn'][0])) 			$this->data_account->set_account($entries[0]['cn'][0]);
+						if(isset($entries[0]['givenname'][0])) 		$this->data_account->set_name_f($entries[0]['givenname'][0]);
+						if(isset($entries[0]['initials'][0]))		$this->data_account->set_name_m($entries[0]['initials'][0]);
+						if(isset($entries[0]['sn'][0]))				$this->data_account->set_name_l($entries[0]['sn'][0]);					
+						if(isset($entries[0]['department'][0]))		$this->data_account->set_account_id($entries[0]['department'][0]);
+						if(isset($entries[0]['mail'][0]))			$this->data_account->set_email($entries[0]['mail'][0]);
 					}
 					
 					break;
