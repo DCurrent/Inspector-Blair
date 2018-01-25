@@ -434,7 +434,9 @@
 						echo "pwdlastset: " . $info[0]["pwdlastset"][0]. "\n";
 
 						print_r($info);
-					}					
+					}
+					
+					break;
 				}
 			}
 					
