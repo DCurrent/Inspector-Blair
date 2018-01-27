@@ -405,7 +405,7 @@
 					// Prepare account filter.
 					$filter = "samaccountname=".$this->data_account->get_account();
 					
-					echo 'filter: '.$filter;
+					//echo 'filter: '.$filter;
 					
 					// Pull attributes for the AD domain
 					$attributes = array("displayname", "sn", "givenname", "pwdlastset", "cn");
@@ -421,19 +421,19 @@
 					}
 					else 
 					{
-						echo "found $count entrie(s)\n";
+						//echo "found $count entrie(s)\n";
 
 						$rc = 1;
 
 						// get the entries
 						$entries = ldap_get_entries($ldap, $sr);
-						echo "DN is: " . $entries[0]["dn"] . "\n";
-						echo "First Name " . $entries[0]["givenname"][0]. "\n";
-						echo "surname " . $entries[0]["sn"][0]. "\n";
-						echo "displayName: " . $entries[0]["displayname"][0]. "\n";
-						echo "pwdlastset: " . $entries[0]["pwdlastset"][0]. "\n";
+						//echo "DN is: " . $entries[0]["dn"] . "\n";
+						//echo "First Name " . $entries[0]["givenname"][0]. "\n";
+						//echo "surname " . $entries[0]["sn"][0]. "\n";
+						//echo "displayName: " . $entries[0]["displayname"][0]. "\n";
+						//echo "pwdlastset: " . $entries[0]["pwdlastset"][0]. "\n";
 
-						print_r($entries);
+						//print_r($entries);
 						
 						// Populate account object members with user info.
 						if(isset($entries[0]['cn'][0])) 			$this->data_account->set_account($entries[0]['cn'][0]);
