@@ -13,3 +13,6 @@
 [submodule "source/dc/Joffrey"]
 	path = source/dc/Joffrey
 	url = https://github.com/DCurrent/Joffrey
+[submodule "source/dc/stoeckl"]
+	path = source/dc/stoeckl
+	url = https://github.com/DCurrent/Stoeckl
