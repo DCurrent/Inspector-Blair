@@ -26,7 +26,7 @@
 	$url_query->set_data('id', $obj_navigation_rec->get_id());
 		
 	// User access.
-	$access_obj = new \dc\dc\access\status();
+	$access_obj = new \dc\dc\stoeckl\status();
 	$access_obj->get_config()->set_authenticate_url(APPLICATION_SETTINGS::DIRECTORY_PRIME);
 	$access_obj->get_config()->set_database($yukon_database);
 	$access_obj->set_redirect($url_query->return_url());
@@ -113,7 +113,7 @@
 		
 			// Let's get account info fromt he active directory system. We'll need to put
 			// names int our own database so we can control ordering of output.
-			$account_lookup = new \dc\dc\access\lookup();
+			$account_lookup = new \dc\dc\stoeckl\lookup();
 			$account_lookup->access_lookup($_main_data->get_account());
 		
 			// Call update stored procedure.

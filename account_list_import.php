@@ -6,7 +6,7 @@
 	$url_query	= new \dc\url\URLFix;
 		
 	// User access.
-	$access_obj = new \dc\dc\access\status();
+	$access_obj = new \dc\dc\stoeckl\status();
 	$access_obj->get_config()->set_authenticate_url(APPLICATION_SETTINGS::DIRECTORY_PRIME);
 	$access_obj->get_config()->set_database($yukon_database);
 	$access_obj->set_redirect($url_query->return_url());
@@ -96,7 +96,7 @@
                     </tfoot>
                     <tbody>                        
                         <?php
-							$account_lookup = new \dc\dc\access\lookup();
+							$account_lookup = new \dc\dc\stoeckl\lookup();
 							
 						
                             if(is_object($_obj_data_main_list) === TRUE)

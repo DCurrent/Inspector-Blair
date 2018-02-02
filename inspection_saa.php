@@ -12,7 +12,7 @@
 	function action_delete(\dc\application\CommonEntry $_layout, \dc\yukon\Database $database)
 	{
 		// Set up account info.
-		$access_obj = new \dc\access\status();
+		$access_obj = new \dc\stoeckl\status();
 		
 		// Initialize main data class and populate it from
 		// post variables. All we need is the ID, so
@@ -98,7 +98,7 @@
 	function action_save(\dc\application\CommonEntry $_layout, \dc\yukon\Database $database)
 	{		
 		// Set up account info.
-		$access_obj = new \dc\access\status();
+		$access_obj = new \dc\stoeckl\status();
 				
 		// Initialize main data class and populate it from
 		// post variables.

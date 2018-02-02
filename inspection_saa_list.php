@@ -112,7 +112,7 @@
 	common_security($yukon_database);
 
 	// Set up account info.
-	$access_obj = new \dc\access\status();
+	$access_obj = new \dc\stoeckl\status();
 
 	// Get page configuration (title, description, query names, etc.)
 	$_page_config_config = new \dc\application\CommonEntry($yukon_connection);	

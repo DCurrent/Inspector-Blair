@@ -17,7 +17,7 @@
 	function action_delete($_layout = NULL, $database)
 	{
 		// Set up account info.
-		$access_obj = new \dc\access\status();
+		$access_obj = new \dc\stoeckl\status();
 		
 		// Initialize main data class and populate it from
 		// post variables. All we need is the ID, so
@@ -91,7 +91,7 @@
 	function action_save($layout, $database)
 	{		
 		// Set up account info.
-		$access_obj = new \dc\access\status();
+		$access_obj = new \dc\stoeckl\status();
 				
 		// Initialize main data class and populate it from
 		// post variables.
