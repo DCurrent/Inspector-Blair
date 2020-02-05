@@ -8,4 +8,8 @@
 <file name="content.min.css" server="arftp.ad.uky.edu//ehs/apps/blair/" local="131619088556323537" remote="131618917200000000" Dst="1" />
 <file name="skin.ie7.min.css" server="arftp.ad.uky.edu//ehs/apps/blair/" local="131619088556468924" remote="131618917200000000" Dst="1" />
 <file name="skin.min.css" server="arftp.ad.uky.edu//ehs/apps/blair/" local="131619088556478947" remote="131618917200000000" Dst="1" />
+<file name="content.inline.min.css" server="ftp.caskeys.com" local="131619088556318540" remote="131710246200000000" Dst="2" />
+<file name="content.min.css" server="ftp.caskeys.com" local="131619088556323537" remote="131710246200000000" Dst="2" />
+<file name="skin.ie7.min.css" server="ftp.caskeys.com" local="131619088556468924" remote="131710246200000000" Dst="2" />
+<file name="skin.min.css" server="ftp.caskeys.com" local="131619088556478947" remote="131710246200000000" Dst="2" />
 </dwsync>

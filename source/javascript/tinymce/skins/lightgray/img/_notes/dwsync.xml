@@ -8,4 +8,8 @@
 <file name="loader.gif" server="arftp.ad.uky.edu//ehs/apps/blair/" local="131619088556443861" remote="131618917200000000" Dst="1" />
 <file name="object.gif" server="arftp.ad.uky.edu//ehs/apps/blair/" local="131619088556448875" remote="131618917200000000" Dst="1" />
 <file name="trans.gif" server="arftp.ad.uky.edu//ehs/apps/blair/" local="131619088556458893" remote="131618917200000000" Dst="1" />
+<file name="anchor.gif" server="ftp.caskeys.com" local="131619088556438848" remote="131710246200000000" Dst="2" />
+<file name="loader.gif" server="ftp.caskeys.com" local="131619088556443861" remote="131710246200000000" Dst="2" />
+<file name="object.gif" server="ftp.caskeys.com" local="131619088556448875" remote="131710246200000000" Dst="2" />
+<file name="trans.gif" server="ftp.caskeys.com" local="131619088556458893" remote="131710246200000000" Dst="2" />
 </dwsync>
